@@ -1,10 +1,13 @@
 package sample;
 
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -16,11 +19,17 @@ import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import java.awt.*;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
-public class Main extends Application {
+public class Main extends Application implements Serializable {
     public ArrayList<Game> list = new ArrayList<>();
     public Game activeGame;
+    public ArrayList<Game> savedGamesList = new ArrayList<>();
+    ObservableList<Game> observableListSavedGames = FXCollections.observableArrayList(savedGamesList);
+    ListView<Game> listView = new ListView<Game>(observableListSavedGames);
     @Override
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
@@ -34,7 +43,7 @@ public class Main extends Application {
         StackPane pane = new StackPane();
         Button btnNewGame = new Button("Play New Game");setBtnNewGame(btnNewGame, this);
         Button btnloadSavedGame = new Button("Load saved Game. ");setBtnLoadSavedGame(btnloadSavedGame);
-        Button btnExitApp = new Button("Exit Game. ");setExitGame(btnExitApp);
+        Button btnExitApp = new Button("Exit Game. ");setBtnExitGame(btnExitApp, primaryStage);
         pane.getChildren().add(btnNewGame);
         pane.getChildren().add(btnloadSavedGame);
         pane.getChildren().add(btnExitApp);
@@ -65,16 +74,22 @@ public class Main extends Application {
         btnLoadSavedGame.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
+                Stage stage = new Stage();
+                Pane pane = new Pane();
                 System.out.println("Load saved Game. ");
+               pane.getChildren().add(listView);
+                Scene scene = new Scene(pane, 100, 100);
+               stage.setScene(scene);
+               stage.show();
             }
         });
         btnLoadSavedGame.setTranslateY(120);
     }
-    public  void setExitGame(Button btnExitApp){
+    public  void setBtnExitGame(Button btnExitApp, Stage stage){
         btnExitApp.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                System.out.println("Exit Game");
+                System.out.println("Exit Game"); stage.close();
             }
         });
         btnExitApp.setTranslateY(200);

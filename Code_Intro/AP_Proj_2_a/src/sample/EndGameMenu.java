@@ -1,4 +1,6 @@
 package sample;
 
-public class EndGameMenu{
+import java.io.Serializable;
+
+public class EndGameMenu implements Serializable {
 }

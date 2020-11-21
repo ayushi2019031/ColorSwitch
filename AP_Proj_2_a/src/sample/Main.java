@@ -2,13 +2,10 @@ package sample;
 
 import javafx.animation.*;
 import javafx.application.Application;
-import javafx.beans.property.ReadOnlyObjectWrapper;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ListView;
@@ -17,8 +14,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Arc;
 import javafx.scene.shape.ArcType;
-import javafx.scene.shape.Line;
-import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -44,6 +39,8 @@ public class Main extends Application implements Serializable {
     public ArrayList<Game> savedGamesList = new ArrayList<>();
     ObservableList<Game> observableListSavedGames = FXCollections.observableArrayList(savedGamesList);
     ListView<Game> listView = new ListView<Game>(observableListSavedGames);
+    Stage ori;
+    Stage primaryStage;
     @Override
     public void start(Stage primaryStage) throws Exception{
         //Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
@@ -51,6 +48,8 @@ public class Main extends Application implements Serializable {
         showGameMenu(primaryStage);
     }
     public void showGameMenu(Stage primaryStage) throws IOException{
+        ori = primaryStage;
+        this.primaryStage= primaryStage;
         primaryStage.setTitle("Hello World");
         primaryStage.show();
         primaryStage.setResizable(false);
@@ -58,11 +57,60 @@ public class Main extends Application implements Serializable {
         AnchorPane pane = new AnchorPane();
 
         Button btnNewGame = new Button();
-        btnNewGame.setLayoutX(210);
+        btnNewGame.setLayoutX(213);
         btnNewGame.setLayoutY(220);
-        Image imageDecline = new Image(getClass().getResourceAsStream("Playbutton.jpg"), 100, 100, false, false);
+        Image imageDecline = new Image(getClass().getResourceAsStream("Untitled.png"), 100, 100, false, false);
         setBtnNewGame(btnNewGame, this);
         btnNewGame.setGraphic(new ImageView(imageDecline));
+        btnNewGame.setStyle("-fx-border-color: #393f38;");
+
+        Arc arc11 = new Arc();
+        arc11.setCenterX(273);
+        arc11.setCenterY(316);
+        arc11.setLength(90.0);
+        arc11.setRadiusX(72);
+        arc11.setRadiusY(72);
+        arc11.setStartAngle(-50.1);
+        arc11.setFill(Color.TRANSPARENT);
+        arc11.setStroke(Color.GREEN);
+        arc11.setStrokeWidth(12);
+        arc11.setType(ArcType.OPEN);
+
+        Arc arc22 = new Arc();
+        arc22.setCenterX(273);
+        arc22.setCenterY(316);
+        arc22.setLength(90);
+        arc22.setRadiusX(72);
+        arc22.setRadiusY(72);
+        arc22.setStartAngle(39);
+        arc22.setFill(javafx.scene.paint.Color.TRANSPARENT);
+        arc22.setStroke(Color.RED);
+        arc22.setStrokeWidth(12);
+        arc22.setType(ArcType.OPEN);
+
+        Arc arc33 = new Arc();
+        arc33.setCenterX(273);
+        arc33.setCenterY(316);
+        arc33.setLength(90);
+        arc33.setRadiusX(72);
+        arc33.setRadiusY(72);
+        arc33.setStartAngle(-140.4);
+        arc33.setFill(Color.TRANSPARENT);
+        arc33.setStroke(Color.BLUE);
+        arc33.setStrokeWidth(12);
+        arc33.setType(ArcType.OPEN);
+
+        Arc arc44 = new Arc();
+        arc44.setCenterX(273);
+        arc44.setCenterY(316);
+        arc44.setLength(90);
+        arc44.setRadiusX(72);
+        arc44.setRadiusY(72);
+        arc44.setStartAngle(129.8);
+        arc44.setFill(Color.TRANSPARENT);
+        arc44.setStroke(Color.YELLOW);
+        arc44.setStrokeWidth(12);
+        arc44.setType(ArcType.OPEN);
 
         Arc arc1 = new Arc();
         arc1.setCenterX(273);
@@ -77,8 +125,8 @@ public class Main extends Application implements Serializable {
         arc1.setType(ArcType.OPEN);
 
         Arc arc2 = new Arc();
-        arc2.setCenterX(266);
-        arc2.setCenterY(310);
+        arc2.setCenterX(273);
+        arc2.setCenterY(316);
         arc2.setLength(90);
         arc2.setRadiusX(90);
         arc2.setRadiusY(90);
@@ -89,8 +137,8 @@ public class Main extends Application implements Serializable {
         arc2.setType(ArcType.OPEN);
 
         Arc arc3 = new Arc();
-        arc3.setCenterX(268.0);
-        arc3.setCenterY(324);
+        arc3.setCenterX(273);
+        arc3.setCenterY(316);
         arc3.setLength(90);
         arc3.setRadiusX(90);
         arc3.setRadiusY(90);
@@ -101,8 +149,8 @@ public class Main extends Application implements Serializable {
         arc3.setType(ArcType.OPEN);
 
         Arc arc4 = new Arc();
-        arc4.setCenterX(261);
-        arc4.setCenterY(317);
+        arc4.setCenterX(273);
+        arc4.setCenterY(316);
         arc4.setLength(90);
         arc4.setRadiusX(90);
         arc4.setRadiusY(90);
@@ -112,79 +160,91 @@ public class Main extends Application implements Serializable {
         arc4.setStrokeWidth(15);
         arc4.setType(ArcType.OPEN);
 
+        Arc arc111 = new Arc();
+        arc111.setCenterX(273);
+        arc111.setCenterY(316.0);
+        arc111.setLength(90.0);
+        arc111.setRadiusX(57);
+        arc111.setRadiusY(57);
+        arc111.setStartAngle(-50.1);
+        arc111.setFill(Color.TRANSPARENT);
+        arc111.setStroke(Color.GREEN);
+        arc111.setStrokeWidth(9);
+        arc111.setType(ArcType.OPEN);
+
+        Arc arc222 = new Arc();
+        arc222.setCenterX(273);
+        arc222.setCenterY(316);
+        arc222.setLength(90);
+        arc222.setRadiusX(57);
+        arc222.setRadiusY(57);
+        arc222.setStartAngle(39);
+        arc222.setFill(javafx.scene.paint.Color.TRANSPARENT);
+        arc222.setStroke(Color.RED);
+        arc222.setStrokeWidth(9);
+        arc222.setType(ArcType.OPEN);
+
+        Arc arc333 = new Arc();
+        arc333.setCenterX(273);
+        arc333.setCenterY(316);
+        arc333.setLength(90);
+        arc333.setRadiusX(57);
+        arc333.setRadiusY(57);
+        arc333.setStartAngle(-140.4);
+        arc333.setFill(Color.TRANSPARENT);
+        arc333.setStroke(Color.BLUE);
+        arc333.setStrokeWidth(9);
+        arc333.setType(ArcType.OPEN);
+
+        Arc arc444 = new Arc();
+        arc444.setCenterX(273);
+        arc444.setCenterY(316);
+        arc444.setLength(90);
+        arc444.setRadiusX(57);
+        arc444.setRadiusY(57);
+        arc444.setStartAngle(129.8);
+        arc444.setFill(Color.TRANSPARENT);
+        arc444.setStroke(Color.YELLOW);
+        arc444.setStrokeWidth(9);
+        arc444.setType(ArcType.OPEN);
+
         initialize(arc1);
         initialize(arc2);
         initialize(arc3);
         initialize(arc4);
-        Group group = new Group();
-        group.getChildren().add(arc1); group.getChildren().add(arc2);
-        group.getChildren().add(arc3); group.getChildren().add(arc4);
-        RotateTransition rotate = new RotateTransition();
-        rotate.setAxis(Rotate.Z_AXIS);
-        rotate.setByAngle(360);
-        rotate.setCycleCount(Animation.INDEFINITE);
-        rotate.setDuration(Duration.millis(0));
-        rotate.setNode(group);
 
-        rotate.play();
-        pane.getChildren().add(group);
-        Line l1 = new Line();
-        l1.setLayoutX(200);
-        l1.setLayoutY(106);
-        l1.setStartX(-100);
-        l1.setStartY(0);
-        l1.setEndX(42.399);
-        l1.setEndY(7.62);
+        initialize1(arc11);
+        initialize1(arc22);
+        initialize1(arc33);
+        initialize1(arc44);
 
-        Line l2 = new Line();
-        l2.setLayoutX(281);
-        l2.setLayoutY(134);
-        l2.setStartX(-36.3);
-        l2.setStartY(-25.20);
-        l2.setEndX(-36.3);
-        l2.setEndY(103);
+        initialize(arc111);
+        initialize(arc222);
+        initialize(arc333);
+        initialize(arc444);
 
-        Line l3 = new Line();
-        l3.setLayoutX(198);
-        l3.setLayoutY(237);
-        l3.setStartX(-100);
-        l3.setStartY(-0);
-        l3.setEndX(46.199);
-        l3.setEndY(0);
-
-        Line l4 = new Line();
-        l4.setLayoutX(199);
-        l4.setLayoutY(106);
-        l4.setStartX(-100);
-        l4.setStartY(0);
-        l4.setEndX(-99.99);
-        l4.setEndY(130.799);
-
-        Group group2 = new Group();
-        group2.getChildren().add(l1); group2.getChildren().add(l2); group2.getChildren().add(l3); group2.getChildren().add(l4);
-        Rotate rotation = new Rotate();
-        ObservableValue<Integer> obsInt1 = new ReadOnlyObjectWrapper<>(180);
-        ObservableValue<Integer> obsInt2 = new ReadOnlyObjectWrapper<>(180);
-        rotation.pivotXProperty().bind(obsInt1);
-        rotation.pivotYProperty().bind(obsInt2);
-        group2.getTransforms().add(rotation);
-
-        Timeline timeline = new Timeline(
-                new KeyFrame(Duration.ZERO, new KeyValue(rotation.angleProperty(), 0)),
-                new KeyFrame(Duration.millis(1000), new KeyValue(rotation.angleProperty(), 360)));
-        timeline.setCycleCount(Animation.INDEFINITE);
-         timeline.play();
-        pane.getChildren().add(group2);
         Button btnloadSavedGame = new Button("Load saved Game. ");setBtnLoadSavedGame(btnloadSavedGame);
         Button btnExitApp = new Button("Exit Game. ");setBtnExitGame(btnExitApp, primaryStage);
         pane.getChildren().add(btnNewGame);
         pane.getChildren().add(btnloadSavedGame);
         pane.getChildren().add(btnExitApp);
-
+        pane.getChildren().add(arc1);
+        pane.getChildren().add(arc2);
+        pane.getChildren().add(arc3);
+        pane.getChildren().add(arc4);
+        pane.getChildren().add(arc11);
+        pane.getChildren().add(arc22);
+        pane.getChildren().add(arc33);
+        pane.getChildren().add(arc44);
+        pane.getChildren().add(arc111);
+        pane.getChildren().add(arc222);
+        pane.getChildren().add(arc333);
+        pane.getChildren().add(arc444);
         Scene scene = new Scene(pane, 540, 620);
-        pane.setStyle("-fx-background-color: #393f38;");
         pane.prefHeight(600.0);
         pane.prefHeight(645.0);
+        pane.setStyle("-fx-background-color: #393f38;");
+        //scene.setFill(Color.GREEN);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
@@ -197,8 +257,13 @@ public class Main extends Application implements Serializable {
             @Override
             public void handle(ActionEvent actionEvent) {
                 System.out.println("New Game Started");
-                System.out.println("Hello");
-                //      Game game = new Game(app);
+                try {
+                    Game game = new Game(app);
+                    primaryStage.close();
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
 
         });
@@ -208,13 +273,22 @@ public class Main extends Application implements Serializable {
         btnLoadSavedGame.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
+                ori.close();
                 Stage stage = new Stage();
                 Pane pane = new Pane();
                 System.out.println("Load saved Game. ");
                 pane.getChildren().add(listView);
                 Scene scene = new Scene(pane, 100, 100);
                 stage.setScene(scene);
-                stage.show();
+                Button btnReturn = new Button("Return");
+                btnReturn.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent actionEvent) {
+                        stage.close();ori.show();
+                    }
+                });
+                pane.getChildren().add(btnReturn);
+            stage.show();
             }
         });
         btnLoadSavedGame.setTranslateY(120);
@@ -238,5 +312,13 @@ public class Main extends Application implements Serializable {
         animation.play();
     }
 
+    public void initialize1(Arc arc) {
+        Timeline animation = new Timeline(
+                new KeyFrame(Duration.ZERO, new KeyValue(arc.startAngleProperty(), arc.getStartAngle(), Interpolator.LINEAR)),
+                new KeyFrame(Duration.seconds(2), new KeyValue(arc.startAngleProperty(), arc.getStartAngle() + 360, Interpolator.LINEAR))
+        );
+        animation.setCycleCount(Animation.INDEFINITE);
+        animation.play();
+    }
 
 }

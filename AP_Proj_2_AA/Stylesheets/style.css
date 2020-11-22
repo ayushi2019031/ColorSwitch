@@ -1,0 +1,4 @@
+.list-cell {
+    -fx-control-inner-background: blue ;
+    -fx-control-inner-background-alt: derive(-fx-control-inner-background, 50%);
+}

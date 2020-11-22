@@ -6,7 +6,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Orientation;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ListView;
@@ -15,10 +14,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Arc;
 import javafx.scene.shape.ArcType;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontPosture;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -44,9 +39,8 @@ public class Main extends Application implements Serializable {
     public ArrayList<Game> savedGamesList = new ArrayList<>();
     ObservableList<Game> observableListSavedGames = FXCollections.observableArrayList(savedGamesList);
     ListView<Game> listView = new ListView<Game>(observableListSavedGames);
-
     Stage ori;
-
+    Stage primaryStage;
     @Override
     public void start(Stage primaryStage) throws Exception{
         //Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
@@ -54,7 +48,8 @@ public class Main extends Application implements Serializable {
         showGameMenu(primaryStage);
     }
     public void showGameMenu(Stage primaryStage) throws IOException{
-       ori = primaryStage;
+        ori = primaryStage;
+        this.primaryStage= primaryStage;
         primaryStage.setTitle("Hello World");
         primaryStage.show();
         primaryStage.setResizable(false);
@@ -64,13 +59,10 @@ public class Main extends Application implements Serializable {
         Button btnNewGame = new Button();
         btnNewGame.setLayoutX(213);
         btnNewGame.setLayoutY(220);
-
-   //  Image infinity = new Image(getClass().getResourceAsStream("Inf.png"), 100, 100, false, false);
-
         Image imageDecline = new Image(getClass().getResourceAsStream("Untitled.png"), 100, 100, false, false);
         setBtnNewGame(btnNewGame, this);
-       btnNewGame.setGraphic(new ImageView(imageDecline));
-       btnNewGame.setStyle("-fx-background-color: #393f38;");
+        btnNewGame.setGraphic(new ImageView(imageDecline));
+        btnNewGame.setStyle("-fx-border-color: #393f38;");
 
         Arc arc11 = new Arc();
         arc11.setCenterX(273);
@@ -216,102 +208,6 @@ public class Main extends Application implements Serializable {
         arc444.setStrokeWidth(9);
         arc444.setType(ArcType.OPEN);
 
-        Arc arc120 = new Arc();
-        arc120.setCenterX(240);
-        arc120.setCenterY(52);
-        arc120.setLength(90.0);
-        arc120.setRadiusX(20);
-        arc120.setRadiusY(20);
-        arc120.setStartAngle(-50);
-        arc120.setFill(Color.TRANSPARENT);
-        arc120.setStroke(Color.YELLOW);
-        arc120.setStrokeWidth(5);
-        arc120.setType(ArcType.OPEN);
-
-        Arc arc121 = new Arc();
-        arc121.setCenterX(240);
-        arc121.setCenterY(52);
-        arc121.setLength(90.0);
-        arc121.setRadiusX(20);
-        arc121.setRadiusY(20);
-        arc121.setStartAngle(39);
-        arc121.setFill(Color.TRANSPARENT);
-        arc121.setStroke(Color.GREEN);
-        arc121.setStrokeWidth(5);
-        arc121.setType(ArcType.OPEN);
-
-        Arc arc122 = new Arc();
-        arc122.setCenterX(240);
-        arc122.setCenterY(52);
-        arc122.setLength(90.0);
-        arc122.setRadiusX(20);
-        arc122.setRadiusY(20);
-        arc122.setStartAngle(-140.4);
-        arc122.setFill(Color.TRANSPARENT);
-        arc122.setStroke(Color.BLUE);
-        arc122.setStrokeWidth(5);
-        arc122.setType(ArcType.OPEN);
-
-        Arc arc123 = new Arc();
-        arc123.setCenterX(240);
-        arc123.setCenterY(52);
-        arc123.setLength(90.0);
-        arc123.setRadiusX(20);
-        arc123.setRadiusY(20);
-        arc123.setStartAngle(129.8);
-        arc123.setFill(Color.TRANSPARENT);
-        arc123.setStroke(Color.RED);
-        arc123.setStrokeWidth(5);
-        arc123.setType(ArcType.OPEN);
-
-        Arc arc220 = new Arc();
-        arc220.setCenterX(320);
-        arc220.setCenterY(52);
-        arc220.setLength(90.0);
-        arc220.setRadiusX(20);
-        arc220.setRadiusY(20);
-        arc220.setStartAngle(-50);
-        arc220.setFill(Color.TRANSPARENT);
-        arc220.setStroke(Color.YELLOW);
-        arc220.setStrokeWidth(5);
-        arc220.setType(ArcType.OPEN);
-
-        Arc arc221 = new Arc();
-        arc221.setCenterX(320);
-        arc221.setCenterY(52);
-        arc221.setLength(90.0);
-        arc221.setRadiusX(20);
-        arc221.setRadiusY(20);
-        arc221.setStartAngle(39);
-        arc221.setFill(Color.TRANSPARENT);
-        arc221.setStroke(Color.GREEN);
-        arc221.setStrokeWidth(5);
-        arc221.setType(ArcType.OPEN);
-
-        Arc arc1122 = new Arc();
-        arc1122.setCenterX(320);
-        arc1122.setCenterY(52);
-        arc1122.setLength(90.0);
-        arc1122.setRadiusX(20);
-        arc1122.setRadiusY(20);
-        arc1122.setStartAngle(-140.4);
-        arc1122.setFill(Color.TRANSPARENT);
-        arc1122.setStroke(Color.BLUE);
-        arc1122.setStrokeWidth(5);
-        arc1122.setType(ArcType.OPEN);
-
-        Arc arc223 = new Arc();
-        arc223.setCenterX(320);
-        arc223.setCenterY(52);
-        arc223.setLength(90.0);
-        arc223.setRadiusX(20);
-        arc223.setRadiusY(20);
-        arc223.setStartAngle(129.8);
-        arc223.setFill(Color.TRANSPARENT);
-        arc223.setStroke(Color.RED);
-        arc223.setStrokeWidth(5);
-        arc223.setType(ArcType.OPEN);
-
         initialize(arc1);
         initialize(arc2);
         initialize(arc3);
@@ -327,79 +223,8 @@ public class Main extends Application implements Serializable {
         initialize(arc333);
         initialize(arc444);
 
-        initialize(arc120);
-        initialize(arc121);
-        initialize(arc122);
-        initialize(arc123);
-
-        initialize1(arc220);
-        initialize1(arc221);
-        initialize1(arc1122);
-        initialize1(arc223);
-
-
-        Text text = new Text();
-        text.setText("C");
-        text.setFont((Font.font("cambria", FontWeight.BOLD, FontPosture.REGULAR, 50)));
-        text.setFill(Color.WHITE);
-        text.setStrokeWidth(10);
-
-        text.setX(185);
-        text.setY(69);
-
-        Text text1 = new Text();
-        text1.setText("L");
-        text1.setFont((Font.font("cambria", FontWeight.BOLD, FontPosture.REGULAR, 50)));
-        text1.setFill(Color.WHITE);
-        text1.setStrokeWidth(10);
-
-        text1.setX(265);
-        text1.setY(69);
-
-        Text text2 = new Text();
-        text2.setText("R");
-        text2.setFont((Font.font("cambria", FontWeight.BOLD, FontPosture.REGULAR, 50)));
-        text2.setFill(Color.WHITE);
-        text2.setStrokeWidth(10);
-
-        text2.setX(345);
-        text2.setY(69);
-
-        Text text3 = new Text();
-        text3.setText("SWITCH");
-        text3.setFont((Font.font("cambria", FontWeight.BOLD, FontPosture.REGULAR, 50)));
-        text3.setFill(Color.WHITE);
-        text3.setStrokeWidth(10);
-
-        text3.setX(190);
-        text3.setY(115);
-
-        Button btnloadSavedGame = new Button("Resume Game");setBtnLoadSavedGame(btnloadSavedGame);
-        btnloadSavedGame.setLayoutX(190);
-        btnloadSavedGame.setLayoutY(380);
-        btnloadSavedGame.setStyle("-fx-background-color: #7d827d;"+
-                                    "-fx-text-fill: #ffffff;"+"-fx-font-size: 2em"
-                );
-
-        Button btnExitApp = new Button("Exit Game");setBtnExitGame(btnExitApp, primaryStage);
-        btnExitApp.setLayoutX(215);
-        btnExitApp.setLayoutY(360);
-        btnExitApp.setStyle("-fx-background-color: #7d827d;"+
-             "-fx-text-fill: #ffffff;"+"-fx-font-size: 2em"
-           );
-
-        pane.getChildren().add(text2);
-        pane.getChildren().add(text3);
-        pane.getChildren().add(arc1122);
-        pane.getChildren().add(arc221);
-        pane.getChildren().add(arc223);
-        pane.getChildren().add(arc220);
-        pane.getChildren().add(text1);
-        pane.getChildren().add(arc120);
-        pane.getChildren().add(arc121);
-        pane.getChildren().add(arc122);
-        pane.getChildren().add(arc123);
-        pane.getChildren().add(text);
+        Button btnloadSavedGame = new Button("Load saved Game. ");setBtnLoadSavedGame(btnloadSavedGame);
+        Button btnExitApp = new Button("Exit Game. ");setBtnExitGame(btnExitApp, primaryStage);
         pane.getChildren().add(btnNewGame);
         pane.getChildren().add(btnloadSavedGame);
         pane.getChildren().add(btnExitApp);
@@ -415,7 +240,7 @@ public class Main extends Application implements Serializable {
         pane.getChildren().add(arc222);
         pane.getChildren().add(arc333);
         pane.getChildren().add(arc444);
-        Scene scene = new Scene(pane, 540, 650);
+        Scene scene = new Scene(pane, 540, 620);
         pane.prefHeight(600.0);
         pane.prefHeight(645.0);
         pane.setStyle("-fx-background-color: #393f38;");
@@ -434,6 +259,8 @@ public class Main extends Application implements Serializable {
                 System.out.println("New Game Started");
                 try {
                     Game game = new Game(app);
+                    primaryStage.close();
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -443,61 +270,28 @@ public class Main extends Application implements Serializable {
         btnNewGame.setTranslateY(40);
     }
     public  void setBtnLoadSavedGame(Button btnLoadSavedGame){
-     btnLoadSavedGame.setOnAction(new EventHandler<ActionEvent>() {
-      @Override
-      public void handle(ActionEvent actionEvent) {
-       ori.close();
-       Stage stage = new Stage();
-       Pane pane = new Pane();
-       System.out.println("Load saved Game. ");
-       Text text3 = new Text();
-       text3.setText("SAVED");
-       text3.setFont((Font.font("cambria", FontWeight.BOLD, FontPosture.REGULAR, 50)));
-       text3.setFill(Color.WHITE);
-       text3.setStrokeWidth(10);
-
-       text3.setX(195);
-       text3.setY(60);
-
-       Text text4 = new Text();
-       text4.setText("GAMES");
-       text4.setFont((Font.font("cambria", FontWeight.BOLD, FontPosture.REGULAR, 50)));
-       text4.setFill(Color.WHITE);
-       text4.setStrokeWidth(10);
-
-       text4.setX(190);
-       text4.setY(105);
-       Image imageDecline = new Image(getClass().getResourceAsStream("Home.png"), 50, 50, false, false);
-       listView.setPrefSize(500, 500);
-       listView.setOrientation(Orientation.VERTICAL);
-       listView.setStyle("-fx-background-color: #393f38;");
-       listView.setLayoutY(120);
-       listView.setLayoutX(20);
-       
-       pane.getChildren().add(listView);
-       Scene scene = new Scene(pane, 540, 650);
-       pane.prefHeight(600.0);
-       pane.prefHeight(645.0);
-       pane.setStyle("-fx-background-color: #393f38;");
-       stage.setScene(scene);
-       stage.setResizable(false);
-       Button btnReturn = new Button();
-       btnReturn.setGraphic(new ImageView(imageDecline));
-       btnReturn.setStyle("-fx-background-color: #393f38;");
-       btnReturn.setOnAction(new EventHandler<ActionEvent>() {
-        @Override
-        public void handle(ActionEvent actionEvent) {
-         stage.close();ori.show();
-        }
-       });
-       pane.getChildren().add(btnReturn);
-       pane.getChildren().add(text3);
-       pane.getChildren().add(text4);
-       stage.show();
-      }
-     });
-     btnLoadSavedGame.setTranslateY(120);
-
+        btnLoadSavedGame.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                ori.close();
+                Stage stage = new Stage();
+                Pane pane = new Pane();
+                System.out.println("Load saved Game. ");
+                pane.getChildren().add(listView);
+                Scene scene = new Scene(pane, 100, 100);
+                stage.setScene(scene);
+                Button btnReturn = new Button("Return");
+                btnReturn.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent actionEvent) {
+                        stage.close();ori.show();
+                    }
+                });
+                pane.getChildren().add(btnReturn);
+            stage.show();
+            }
+        });
+        btnLoadSavedGame.setTranslateY(120);
     }
     public  void setBtnExitGame(Button btnExitApp, Stage stage){
         btnExitApp.setOnAction(new EventHandler<ActionEvent>() {
@@ -512,7 +306,7 @@ public class Main extends Application implements Serializable {
     public void initialize(Arc arc) {
         Timeline animation = new Timeline(
                 new KeyFrame(Duration.ZERO, new KeyValue(arc.startAngleProperty(), arc.getStartAngle(), Interpolator.LINEAR)),
-                new KeyFrame(Duration.seconds(3), new KeyValue(arc.startAngleProperty(), arc.getStartAngle() - 360, Interpolator.LINEAR))
+                new KeyFrame(Duration.seconds(2), new KeyValue(arc.startAngleProperty(), arc.getStartAngle() - 360, Interpolator.LINEAR))
         );
         animation.setCycleCount(Animation.INDEFINITE);
         animation.play();
@@ -521,7 +315,7 @@ public class Main extends Application implements Serializable {
     public void initialize1(Arc arc) {
         Timeline animation = new Timeline(
                 new KeyFrame(Duration.ZERO, new KeyValue(arc.startAngleProperty(), arc.getStartAngle(), Interpolator.LINEAR)),
-                new KeyFrame(Duration.seconds(3), new KeyValue(arc.startAngleProperty(), arc.getStartAngle() + 360, Interpolator.LINEAR))
+                new KeyFrame(Duration.seconds(2), new KeyValue(arc.startAngleProperty(), arc.getStartAngle() + 360, Interpolator.LINEAR))
         );
         animation.setCycleCount(Animation.INDEFINITE);
         animation.play();

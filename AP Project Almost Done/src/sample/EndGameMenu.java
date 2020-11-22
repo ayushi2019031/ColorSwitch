@@ -252,6 +252,15 @@ public class EndGameMenu extends GameElements implements Serializable {
             ImageView stars1 = new ImageView(stars);
             stars1.setX(20);
             stars1.setY(450);
+            stars1.setRotate(stars1.getRotate() + 330);
+
+            Text text6 = new Text();
+            text6.setText("125");
+            text6.setFont((Font.font("cambria", FontWeight.BOLD, FontPosture.REGULAR, 30)));
+            text6.setFill(Color.WHITE);
+            text6.setStrokeWidth(10);
+            text6.setX(60);
+            text6.setY(520);
 
             Image reload = new Image(getClass().getResourceAsStream("reload.png"), 70, 70, false, false);
             ImageView reload1 = new ImageView(reload);
@@ -259,6 +268,7 @@ public class EndGameMenu extends GameElements implements Serializable {
             reloadWithStars.setLayoutX(240);
             reloadWithStars.setLayoutY(450);
 
+            pane.getChildren().add(text6);
             pane.getChildren().add(stars1);
             pane.getChildren().add(text5);
             pane.getChildren().add(label1);

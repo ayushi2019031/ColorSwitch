@@ -48,6 +48,8 @@ public class Main extends Application implements Serializable {
     Stage primaryStage;
 
 
+
+
     @Override
     public void start(Stage primaryStage) throws Exception{
         //Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
@@ -74,6 +76,33 @@ public class Main extends Application implements Serializable {
         btnNewGame.setGraphic(new ImageView(imageDecline));
         btnNewGame.setStyle("-fx-background-color: #393f38;");
 
+        Image aboutScreen  = new Image(getClass().getResourceAsStream("mark.png"), 90, 90, false, false);
+        Button about = new Button();
+        Image mark = new Image(getClass().getResourceAsStream("mark.png"), 50, 50, false, false);
+
+        ImageView mark1 = new ImageView(mark);
+        mark1.setStyle("-fx-background-color: #393f38;");
+        about.setStyle("-fx-background-color: #393f38;");
+        about.setLayoutX(480);
+        about.setLayoutY(10);
+        about.setGraphic(mark1);
+        about.setStyle("-fx-background-color: #393f38;");
+        about.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                Stage aboutS = new Stage();
+                Pane pane = new Pane();
+                Label l1 = new Label("Kesar Srivastava (2019051)");
+                Label l2 = new Label("Ayushi Jain(2019031)");
+                pane.getChildren().add(l1);
+                pane.getChildren().add(l2);
+                Scene scene = new Scene(pane, 540, 650);
+                scene.getStylesheets().add("./sample/style.css");
+                aboutS.setScene(scene);
+                aboutS.show();
+            }
+        });
+        pane.getChildren().add(about);
         Arc arc11 = new Arc();
         arc11.setCenterX(273);
         arc11.setCenterY(336);
@@ -400,14 +429,11 @@ public class Main extends Application implements Serializable {
         gear1.setY(10);
         gear1.setX(10);
 
-        Image mark = new Image(getClass().getResourceAsStream("mark.png"), 50, 50, false, false);
-        ImageView mark1 = new ImageView(mark);
-        mark1.setX(480);
-        mark1.setY(10);
+
 
         pane.getChildren().add(infi);
         pane.getChildren().add(gear1);
-        pane.getChildren().add(mark1);
+     //   pane.getChildren().add(mark1);
         pane.getChildren().add(text2);
         pane.getChildren().add(text3);
         pane.getChildren().add(arc1122);

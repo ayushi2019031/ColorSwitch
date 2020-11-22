@@ -73,11 +73,13 @@ public class Game implements Serializable {
     boolean ifTouched;
     Main app;
     Circle_ circle_= new Circle_();
+    LayeredCircles lCirci  = new LayeredCircles();
     Octa octagon = new Octa();
     static int num_of_restoration_points;
     ExitMenu exitMenu;
     EndGameMenu endGameMenu;
     ImageView starD;
+    IntersectingCircle cirCirI = new IntersectingCircle();
 
     public Game(Main app) throws IOException {
 
@@ -131,11 +133,13 @@ public class Game implements Serializable {
             switcher.setScene(scene, pane, stage);
 
             System.out.println("Hi");
-                 square.display( pane);
+           //      square.display( pane);
             //octagon.display(pane);
             displayStar(pane);
+            lCirci.display(pane);
            //   circle_.display(pane);
-            stage.setScene(scene);
+         //   cirCirI.display(pane);
+        stage.setScene(scene);
             stage.setResizable(false);
             stage.show();
             endGameMenu.initializeGame(stage);

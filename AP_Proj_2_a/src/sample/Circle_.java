@@ -8,9 +8,16 @@ import javafx.scene.shape.ArcType;
 import javafx.util.Duration;
 
 public class Circle_ {
+
+    Arc arc1; Arc arc2; Arc arc3; Arc arc4;
+    public  Circle_(){
+        arc1 = new Arc(); arc2 = new Arc(); arc3 = new Arc(); arc4 = new Arc();
+        System.out.println("Initialised");
+    }
+
     public void display(AnchorPane root){
-        Arc arc1 = new Arc();
-        arc1.setCenterX(290.0);
+
+        arc1.setCenterX(290);
         arc1.setCenterY(370.0);
         arc1.setLength(100.0);
         arc1.setRadiusX(90);
@@ -21,7 +28,7 @@ public class Circle_ {
         arc1.setStrokeWidth(10);
         arc1.setType(ArcType.OPEN);
 
-        Arc arc2 = new Arc();
+
         arc2.setCenterX(290.0);
         arc2.setCenterY(370.0);
         arc2.setLength(100);
@@ -33,7 +40,6 @@ public class Circle_ {
         arc2.setStrokeWidth(10);
         arc2.setType(ArcType.OPEN);
 
-        Arc arc3 = new Arc();
         arc3.setCenterX(290.0);
         arc3.setCenterY(370.0);
         arc3.setLength(100);
@@ -45,8 +51,7 @@ public class Circle_ {
         arc3.setStrokeWidth(10);
         arc3.setType(ArcType.OPEN);
 
-        Arc arc4 = new Arc();
-        arc4.setCenterX(290.0);
+                arc4.setCenterX(290.0);
         arc4.setCenterY(370.0);
         arc4.setLength(90);
         arc4.setRadiusX(90);
@@ -85,6 +90,7 @@ public class Circle_ {
 //                );
           root.getChildren().add(arc1);root.getChildren().add(arc2);root.getChildren().add(arc3);root.getChildren().add(arc4);
     }
+    
     public void initialize(Arc arc) {
         Timeline animation = new Timeline(
                 new KeyFrame(Duration.ZERO, new KeyValue(arc.startAngleProperty(), arc.getStartAngle(), Interpolator.LINEAR)),

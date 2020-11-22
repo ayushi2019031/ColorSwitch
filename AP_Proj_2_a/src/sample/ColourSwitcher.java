@@ -41,14 +41,14 @@ public class ColourSwitcher extends GameElements implements Serializable {
         cir3.setRadius(15);
         cir3.setFill(Color.LIGHTCORAL);
         cir3.setCenterX(290);
-        cir3.setCenterY(210);
+        cir3.setCenterY(150);
 
         cir2.setRadius(10);
         cir2.setFill(Color.LEMONCHIFFON);
         cir1.setCenterX(290);
-        cir1.setCenterY(210);
+        cir1.setCenterY(150);
         cir2.setCenterX(290);
-        cir2.setCenterY(210);
+        cir2.setCenterY(150);
 
         pane.getChildren().add(cir1);
         pane.getChildren().add(cir3);

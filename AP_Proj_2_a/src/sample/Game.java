@@ -74,6 +74,7 @@ public class Game implements Serializable {
     Main app;
     Circle_ circle_= new Circle_();
     LayeredCircles lCirci  = new LayeredCircles();
+    LayeredSquares lsquare = new LayeredSquares();
     Octa octagon = new Octa();
     static int num_of_restoration_points;
     ExitMenu exitMenu;
@@ -138,7 +139,8 @@ public class Game implements Serializable {
             displayStar(pane);
         //    lCirci.display(pane);
            // circle_.display(pane);
-            cirCirI.display(pane);
+          //  cirCirI.display(pane);
+            lsquare.display(pane);
         stage.setScene(scene);
             stage.setResizable(false);
             stage.show();

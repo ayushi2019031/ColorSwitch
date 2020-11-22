@@ -100,6 +100,7 @@ public class Main extends Application implements Serializable {
                 scene.getStylesheets().add("./sample/style.css");
                 aboutS.setScene(scene);
                 aboutS.show();
+              //  primaryStage.close();
             }
         });
         pane.getChildren().add(about);

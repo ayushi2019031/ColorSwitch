@@ -16,7 +16,6 @@ import java.io.Serializable;
 
 public class ExitMenu extends GameElements implements Serializable {
     Game game;
-
     public ExitMenu() throws IOException {
 
     }
@@ -57,7 +56,6 @@ public class ExitMenu extends GameElements implements Serializable {
             public void handle(ActionEvent actionEvent) {
                 s1.close();
                 stage.close();
-                game.app.primaryStage.show();
             }
         });
     }
@@ -82,7 +80,6 @@ public class ExitMenu extends GameElements implements Serializable {
                 }
                 s1.close();
                 stage.close();
-                game.app.primaryStage.show();
             }
         });
     }

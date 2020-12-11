@@ -1,5 +1,7 @@
 package sample;
 
+import javafx.animation.AnimationTimer;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -9,6 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -17,16 +20,18 @@ import java.io.Serializable;
 
 public class ExitMenu extends GameElements implements Serializable {
     Game game;
-
+    Stage stage;
     public ExitMenu() throws IOException {
 
     }
-    public void initializeGame(Stage s){
+    public void initializeGame(Stage s, AnimationTimer animationTimer){
         try{
       //      s.close();
+            game.pause[0] = true;
+            animationTimer.stop();
             Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
 
-            Stage stage = new Stage();
+             stage = new Stage();
             // stage.
             //    Button btnExitGameMenu  = new Button("Exit Game");
 
@@ -50,6 +55,14 @@ public class ExitMenu extends GameElements implements Serializable {
             stage.setResizable(false);
          //   Scene scene = new Scene(pane, 200, 200);
            // stage.setScene(scene);
+            game.listOFOpenStages.add(stage);
+            stage.setOnHiding(new EventHandler<WindowEvent>() {
+                @Override
+                public void handle(WindowEvent windowEvent) {
+                    game.listOFOpenStages.remove(stage);
+                    game.animationTimer.start();
+                }
+            });
             stage.show();}
         catch (Exception e){
             System.out.println("PRINT");
@@ -62,6 +75,7 @@ public class ExitMenu extends GameElements implements Serializable {
     public void setBtnResumeGame(Button btnResumeGame, Stage stage, Stage s1){
         btnResumeGame.setLayoutY(190);
         btnResumeGame.setLayoutX(50);
+        game.pause[0] = true;
         btnResumeGame.setStyle("-fx-background-color: #7d827d;"+
                 "-fx-text-fill: #ffffff;"+"-fx-font-size: 2em"
         );

@@ -92,7 +92,11 @@ public class Main extends Application implements Serializable {
         about.setLayoutX(475);
         about.setLayoutY(7);
         about.setGraphic(mark1);
-
+        RotateTransition rt = new RotateTransition(Duration.millis(2000), mark1);
+        rt.setByAngle(360);
+        rt.setCycleCount(Animation.INDEFINITE);
+        rt.setInterpolator(Interpolator.LINEAR);
+        rt.play();
         about.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {

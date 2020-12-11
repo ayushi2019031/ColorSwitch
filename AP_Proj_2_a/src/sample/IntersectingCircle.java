@@ -8,9 +8,10 @@ import javafx.scene.shape.ArcType;
 import javafx.scene.shape.Circle;
 import javafx.util.Duration;
 
-public class IntersectingCircle {
+public class IntersectingCircle implements Obstacles{
     Circle_ c1;
     Circle_ c2;
+    public Timeline animationT;
     public IntersectingCircle() {
         c1 = new Circle_();
         c2 = new Circle_();
@@ -165,12 +166,13 @@ public class IntersectingCircle {
 
     }
     public void initialize(Arc arc) {
-        Timeline animation = new Timeline(
+        animationT = new Timeline(
                 new KeyFrame(Duration.ZERO, new KeyValue(arc.startAngleProperty(), arc.getStartAngle(), Interpolator.LINEAR)),
                 new KeyFrame(Duration.seconds(2), new KeyValue(arc.startAngleProperty(), arc.getStartAngle() - 360, Interpolator.LINEAR))
         );
-        animation.setCycleCount(Animation.INDEFINITE);
-        animation.play();
+        animationT.setCycleCount(Animation.INDEFINITE);
+        animationT.play();
 
     }
+
 }

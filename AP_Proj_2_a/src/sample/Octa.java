@@ -15,6 +15,7 @@ import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
 
 public class Octa {
+    public Timeline animationT;
     public void display(AnchorPane Pane){
         System.out.println("Hello duniya");
         Line l0 = new Line();
@@ -118,12 +119,19 @@ public class Octa {
         rotation.pivotXProperty().bind(obsInt1);
         rotation.pivotYProperty().bind(obsInt2);
         g3.getTransforms().add(rotation);
-
-        Timeline timeline = new Timeline(
+        initialize(rotation);
+//        animationT = new Timeline(
+//                new KeyFrame(Duration.ZERO, new KeyValue(rotation.angleProperty(), 0)),
+//                new KeyFrame(Duration.millis(5000), new KeyValue(rotation.angleProperty(), 360)));
+//        animationT.setCycleCount(Animation.INDEFINITE);
+//        animationT.play();
+        Pane.getChildren().add(g3);
+    }
+    public void initialize(Rotate rotation){
+        animationT = new Timeline(
                 new KeyFrame(Duration.ZERO, new KeyValue(rotation.angleProperty(), 0)),
                 new KeyFrame(Duration.millis(5000), new KeyValue(rotation.angleProperty(), 360)));
-        timeline.setCycleCount(Animation.INDEFINITE);
-        timeline.play();
-        Pane.getChildren().add(g3);
+        animationT.setCycleCount(Animation.INDEFINITE);
+        animationT.play();
     }
 }

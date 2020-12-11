@@ -62,14 +62,17 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 
 //import static javafx.scene.web.WebEngine.PulseTimer.animation;
 
 public class Game implements Serializable {
     Ball ball;
+    boolean[] pause = new boolean[1];
     String date;
     Square square = new Square();
     ArrayList<Obstacles> listOfObstacles;
+    ArrayList<Stage> listOFOpenStages = new ArrayList<>();
     int numOfStars;
     ColourSwitcher switcher;
     boolean ifTouched;
@@ -82,8 +85,9 @@ public class Game implements Serializable {
     ExitMenu exitMenu;
     EndGameMenu endGameMenu;
     ImageView starD;
-    IntersectingCircle cirCirI = new IntersectingCircle();
 
+    IntersectingCircle cirCirI = new IntersectingCircle();
+    AnimationTimer animationTimer;
     public Game(Main app) throws IOException {
 
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
@@ -112,8 +116,7 @@ public class Game implements Serializable {
             //    Button btnExitGameMenu  = new Button("Exit Game");
 
             stage.setTitle("Game started");
-            stage.setScene(new Scene(root, 300, 275));
-            stage.show();
+
             Rectangle2D bounds = Screen.getPrimary().getVisualBounds();
 
             stage.setX(bounds.getMinX());
@@ -145,13 +148,84 @@ public class Game implements Serializable {
             displayStar(pane);
            // lCirci.display(pane);
 
-          // cirCirI.display(pane);
-            lsquare.display(pane);
+           cirCirI.display(pane);
+         //   lsquare.display(pane);
+            final long[] lastNanoTime = {System.nanoTime()};
         stage.setScene(scene);
-            stage.setResizable(false);
-         //   circle_.display(pane);
-            stage.show();
+            HashSet<String> setInputs = new HashSet<>();
+        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent keyEvent) {
+                String e = keyEvent.getCode().toString();
+                setInputs.add(e);
+            //    System.out.println("Registering the input UP");
+           //     System.out.println(setInputs.toString());
+            }
+        });
+        scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent keyEvent) {
+                String e = keyEvent.getCode().toString();
+                setInputs.remove(e);
+        //        System.out.println("REGISTERING THE INPUT DOWN ");
+         //       System.out.println(setInputs.toString());
+            }
+        });
 
+        animationTimer  =     new AnimationTimer() {
+
+
+            @Override
+            public void handle(long l) {
+                if (pause[0]){
+
+                    lastNanoTime[0] = l; pause[0] = false;
+                    System.out.println("Yo");
+                }
+                double elapsedTime = (double) (l - lastNanoTime[0]) / (double) 10e9;
+//                    System.out.println("LASTNANO: " + lastNanoTime[0]);
+                lastNanoTime[0] = l;
+                ball.setVelocity(0, 0);
+                if (setInputs.contains("UP")) {
+                    // System.out.println("Oo jaane jaana");
+                    ball.addVelocity(0, -1000);
+                    ball.update(elapsedTime);
+                    pane.getChildren().remove(ball.circle);
+                    //     System.out.println("Hello");
+                    ball.render(pane);
+                    System.out.println(ball.circle.getLayoutY() + ball.circle.getTranslateY() + " " + starD.getY());
+                } else {
+                    ball.addVelocity(0, 500);
+                    ball.update(elapsedTime);
+                    pane.getChildren().remove(ball.circle);
+                    //    System.out.println("Hello2");
+                    ball.render(pane);
+
+                }
+                double aj = ball.circle.getLayoutY() + ball.circle.getTranslateY();
+                if (Math.abs(aj - starD.getY()) <= 20) {
+                    System.out.println("AYUSHI IS THE BEST AND SO ARE YOU");
+                    pane.getChildren().remove(starD);
+                }
+//                    System.out.println("dhoonde tujhe deewana");
+//                        ball.update(elapsedTime);
+//                        pane.getChildren().remove(ball.circle);
+//                        ball.render(pane);
+            }
+
+        };
+        animationTimer.start();
+            stage.setResizable(false);
+            stage.setScene(scene);
+            while (listOFOpenStages.contains(exitMenu.stage)){
+                pause[0] = true;
+                animationTimer.stop();
+            }
+            stage.show();
+         //   circle_.display(pane);
+//            stage.show();
+//            ball.circle.requestFocus();
+//            ball.circle.setFocusTraversable(true);
         //    endGameMenu.initializeGame(stage);
         }
         catch (Exception e){
@@ -168,7 +242,15 @@ public class Game implements Serializable {
         starD.setY(350);
         starD.setFitHeight(25);
         starD.setFitWidth(25);
+        System.out.println(starD.getX() + " " + starD.getY());
+        System.out.println(ball.circle.getLayoutX() + " " + ball.circle.getLayoutY());
+        RotateTransition rt = new RotateTransition(Duration.millis(3000), starD);
+        rt.setByAngle(-360);
+        rt.setCycleCount(Animation.INDEFINITE);
+        rt.setInterpolator(Interpolator.LINEAR);
+        rt.play();
         pane.getChildren().add(starD);
+
     }
     private void moveBall(Scene scene){
         scene.addEventFilter(KeyEvent.KEY_PRESSED, (KeyEvent event) -> {
@@ -204,8 +286,13 @@ public class Game implements Serializable {
         btnExitGame.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                exitMenu.initializeGame(stage);
-                //stage.close();
+//                animationTimer.stop();
+                exitMenu.initializeGame(stage, animationTimer);
+
+//                for (Obstacles obstacles: listOfObstacles){
+//
+//                }
+                    //stage.close();
             }
         });
     }

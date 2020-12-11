@@ -14,6 +14,7 @@ import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
 
 public class LayeredSquares {
+    public Timeline animationT;
     public void display(AnchorPane pane){
 
         Line l1 = new Line();
@@ -66,11 +67,11 @@ public class LayeredSquares {
         group2.getTransforms().add(rotation);
         group2.setLayoutX(0);group2.setLayoutY(0);
         group2.setTranslateX(0);
-        Timeline timeline = new Timeline(
-                new KeyFrame(Duration.ZERO, new KeyValue(rotation.angleProperty(), 0)),
-                new KeyFrame(Duration.millis(3000), new KeyValue(rotation.angleProperty(), 360)));
-        timeline.setCycleCount(Animation.INDEFINITE);
-        timeline.play();
+//       animationT = new Timeline(
+//                new KeyFrame(Duration.ZERO, new KeyValue(rotation.angleProperty(), 0)),
+//                new KeyFrame(Duration.millis(3000), new KeyValue(rotation.angleProperty(), 360)));
+//        animationT.setCycleCount(Animation.INDEFINITE);
+//        animationT.play();
         pane.getChildren().add(group2);
 
 
@@ -131,5 +132,8 @@ public class LayeredSquares {
         timeline2.setCycleCount(Animation.INDEFINITE);
         timeline2.play();
         pane.getChildren().add(group);
+    }
+    public void initialise(){
+
     }
 }

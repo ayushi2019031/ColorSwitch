@@ -6,11 +6,13 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Arc;
 import javafx.scene.shape.ArcType;
 import javafx.scene.shape.Circle;
+import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
 
 public class LayeredCircles {
     Circle_ c1;
     Circle_ c2;
+    public Timeline animationT;
     public LayeredCircles() {
         c1 = new Circle_();
         c2 = new Circle_();
@@ -133,15 +135,8 @@ public class LayeredCircles {
 //        root.prefHeight(400.0);
 //        root.prefWidth(600.0);
 
+initialize(new Rotate());
 
-        initialize(c1.arc1);
-        initialize(c1.arc2);
-        initialize(c1.arc3);
-        initialize(c1.arc4);
-        initialize(c2.arc1);
-        initialize(c2.arc2);
-        initialize(c2.arc3);
-        initialize(c2.arc4);
 
 //
 //        root.setStyle
@@ -158,13 +153,23 @@ public class LayeredCircles {
 
     }
     public void initialize(Arc arc) {
-        Timeline animation = new Timeline(
+         animationT = new Timeline(
                 new KeyFrame(Duration.ZERO, new KeyValue(arc.startAngleProperty(), arc.getStartAngle(), Interpolator.LINEAR)),
                 new KeyFrame(Duration.seconds(2), new KeyValue(arc.startAngleProperty(), arc.getStartAngle() - 360, Interpolator.LINEAR))
         );
-        animation.setCycleCount(Animation.INDEFINITE);
-        animation.play();
+        animationT.setCycleCount(Animation.INDEFINITE);
+        animationT.play();
 
+    }
+    public void initialize(Rotate rotate){
+        initialize(c1.arc1);
+        initialize(c1.arc2);
+        initialize(c1.arc3);
+        initialize(c1.arc4);
+        initialize(c2.arc1);
+        initialize(c2.arc2);
+        initialize(c2.arc3);
+        initialize(c2.arc4);
     }
 }
 

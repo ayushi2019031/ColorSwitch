@@ -15,6 +15,7 @@ import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
 
 public class Square {
+    public Timeline animationT;
     public void display(AnchorPane pane){
 
         Line l1 = new Line();
@@ -67,11 +68,14 @@ public class Square {
         group2.getTransforms().add(rotation);
         group2.setLayoutX(0);group2.setLayoutY(0);
         group2.setTranslateX(0);
-        Timeline timeline = new Timeline(
+        initialise(rotation);
+        pane.getChildren().add(group2);
+    }
+    public void initialise(Rotate rotation){
+        this.animationT = new Timeline(
                 new KeyFrame(Duration.ZERO, new KeyValue(rotation.angleProperty(), 0)),
                 new KeyFrame(Duration.millis(3000), new KeyValue(rotation.angleProperty(), 360)));
-        timeline.setCycleCount(Animation.INDEFINITE);
-        timeline.play();
-        pane.getChildren().add(group2);
+        animationT.setCycleCount(Animation.INDEFINITE);
+        animationT.play();
     }
 }

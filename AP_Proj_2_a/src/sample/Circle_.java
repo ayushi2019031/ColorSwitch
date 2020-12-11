@@ -7,7 +7,7 @@ import javafx.scene.shape.Arc;
 import javafx.scene.shape.ArcType;
 import javafx.util.Duration;
 
-public class Circle_ {
+public class Circle_ implements Obstacles {
 
     Arc arc1; Arc arc2; Arc arc3; Arc arc4;
     public  Circle_(){

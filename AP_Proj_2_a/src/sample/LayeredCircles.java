@@ -9,7 +9,7 @@ import javafx.scene.shape.Circle;
 import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
 
-public class LayeredCircles {
+public class LayeredCircles implements Obstacles{
     Circle_ c1;
     Circle_ c2;
     public Timeline animationT;

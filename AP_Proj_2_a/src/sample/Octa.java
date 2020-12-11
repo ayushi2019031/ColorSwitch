@@ -14,7 +14,7 @@ import javafx.scene.shape.Line;
 import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
 
-public class Octa {
+public class Octa implements Obstacles {
     public Timeline animationT;
     public void display(AnchorPane Pane){
         System.out.println("Hello duniya");

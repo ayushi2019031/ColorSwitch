@@ -4,8 +4,7 @@ import javafx.animation.*;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+import javafx.scene.*;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -63,11 +62,13 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Random;
 
 //import static javafx.scene.web.WebEngine.PulseTimer.animation;
 
 public class Game implements Serializable {
     Ball ball;
+    Random random = new Random();
     boolean[] pause = new boolean[1];
     String date;
     Square square = new Square();
@@ -124,7 +125,7 @@ public class Game implements Serializable {
             AnchorPane pane = new AnchorPane();
             Button btnExitGame = new Button();
             Image imageDecline = new Image(getClass().getResourceAsStream("pause.png"), 45, 45, false, false);
-
+            AnchorPane Obstaclespane = new AnchorPane();
             btnExitGame.setGraphic(new ImageView(imageDecline));
             setBtnExitGame(btnExitGame, stage);pane.getChildren().add(btnExitGame);
             Text text4 = new Text();
@@ -143,13 +144,13 @@ public class Game implements Serializable {
             switcher.setScene(scene, pane, stage);
 
             System.out.println("Hi");
-               //square.display( pane);
-           // octagon.display(pane);
+             //  square.display(Obstaclespane);
+//            octagon.display(Obstaclespane);
             displayStar(pane);
-           // lCirci.display(pane);
+           //lCirci.display(Obstaclespane);
 
-           cirCirI.display(pane);
-         //   lsquare.display(pane);
+           //cirCirI.display(Obstaclespane);
+          //lsquare.display(Obstaclespane);
             final long[] lastNanoTime = {System.nanoTime()};
         stage.setScene(scene);
             HashSet<String> setInputs = new HashSet<>();
@@ -171,15 +172,23 @@ public class Game implements Serializable {
          //       System.out.println(setInputs.toString());
             }
         });
-
+        Obstaclespane.setStyle("-fx-background-color:#393f38 ;");
         animationTimer  =     new AnimationTimer() {
 
-
+            Obstacles activeObstacle = null;
             @Override
             public void handle(long l) {
-                if (pause[0]){
 
-                    lastNanoTime[0] = l; pause[0] = false;
+//                if (activeObstacle == null){}
+                if (activeObstacle == null){
+                    activeObstacle = displayObstacle(Obstaclespane);
+                    activeObstacle.display(Obstaclespane);
+                    System.out.println("Hullo");
+                }
+                if (pause[0]) {
+
+                    lastNanoTime[0] = l;
+                    pause[0] = false;
                     System.out.println("Yo");
                 }
                 double elapsedTime = (double) (l - lastNanoTime[0]) / (double) 10e9;
@@ -202,18 +211,38 @@ public class Game implements Serializable {
                     ball.render(pane);
 
                 }
+           //     displayObstacle(Obstaclespane);
                 double aj = ball.circle.getLayoutY() + ball.circle.getTranslateY();
                 if (Math.abs(aj - starD.getY()) <= 20) {
                     System.out.println("AYUSHI IS THE BEST AND SO ARE YOU");
                     pane.getChildren().remove(starD);
                 }
+
+                Obstaclespane.setLayoutY(Obstaclespane.getLayoutY() + 1);
+                if (Obstaclespane.getLayoutY() >= 500) {
+                    int i = 0;
+                    HashSet<Integer> set = new HashSet<>();
+                    //Obstaclespane.getChildren().remove(activeObstacle);
+                    for (Object obj: Obstaclespane.getChildren()){
+                        if (obj instanceof Node){
+                            System.out.println("YAYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY");
+                            set.add(i);
+                        }
+                        i += 1;
+                    }
+                    for (int o: set){
+                        System.out.println("Yoohoooooooooooooooooooooooooooooooooooooooo");
+                    Obstaclespane.getChildren().remove(o);}
+                    activeObstacle = null;
+                    Obstaclespane.setLayoutY(0);}
 //                    System.out.println("dhoonde tujhe deewana");
 //                        ball.update(elapsedTime);
 //                        pane.getChildren().remove(ball.circle);
 //                        ball.render(pane);
-            }
+                };
 
-        };
+                //pane.getChildren().add(Obstaclespane);
+            };
         animationTimer.start();
             stage.setResizable(false);
             stage.setScene(scene);
@@ -221,6 +250,9 @@ public class Game implements Serializable {
                 pause[0] = true;
                 animationTimer.stop();
             }
+            Obstaclespane.getChildren().add(new Text("It was all a dream"));
+            pane.getChildren().add(Obstaclespane);
+            Obstaclespane.setStyle("-fx-background-color: #393f38;");
             stage.show();
          //   circle_.display(pane);
 //            stage.show();
@@ -321,12 +353,42 @@ public class Game implements Serializable {
                 );
         //
     }
-    public void initialize(Arc arc) {
-        Timeline animation = new Timeline(
-                new KeyFrame(Duration.ZERO, new KeyValue(arc.startAngleProperty(), arc.getStartAngle(), Interpolator.LINEAR)),
-                new KeyFrame(Duration.seconds(2), new KeyValue(arc.startAngleProperty(), arc.getStartAngle() - 360, Interpolator.LINEAR))
-        );
-        animation.setCycleCount(Animation.INDEFINITE);
-        animation.play();
+//    public void initialize(Arc arc) {
+//        Timeline animation = new Timeline(
+//                new KeyFrame(Duration.ZERO, new KeyValue(arc.startAngleProperty(), arc.getStartAngle(), Interpolator.LINEAR)),
+//                new KeyFrame(Duration.seconds(2), new KeyValue(arc.startAngleProperty(), arc.getStartAngle() - 360, Interpolator.LINEAR))
+//        );
+//        animation.setCycleCount(Animation.INDEFINITE);
+//        animation.play();
+//    }
+
+    public Obstacles displayObstacle(AnchorPane pane){
+
+        int obstacleNumber = random.nextInt(6);
+
+        if(obstacleNumber==0){
+            Circle_ circle_ = new Circle_();
+            return circle_;
+        }
+        else if(obstacleNumber==1){
+            IntersectingCircle circle = new IntersectingCircle();
+            return circle;
+        }
+        else if(obstacleNumber==2){
+            LayeredCircles circles = new LayeredCircles();
+            return  circles;
+        }
+        else if(obstacleNumber==3){
+            LayeredSquares squares = new LayeredSquares();
+            return squares;
+        }
+        else if(obstacleNumber==4){
+            Octa octa = new Octa();
+            return octa;
+        }
+        else{
+            Square square = new Square();
+            return square;
+        }
     }
 }

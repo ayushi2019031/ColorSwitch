@@ -13,7 +13,7 @@ import javafx.scene.shape.Line;
 import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
 
-public class LayeredSquares {
+public class LayeredSquares implements Obstacles{
     public Timeline animationT;
     public void display(AnchorPane pane){
 

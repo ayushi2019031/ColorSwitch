@@ -153,14 +153,17 @@ public class Game implements Serializable {
           //lsquare.display(Obstaclespane);
             final long[] lastNanoTime = {System.nanoTime()};
         stage.setScene(scene);
-            HashSet<String> setInputs = new HashSet<>();
+            int[] boo = {0};
+            ArrayList<String> setInputs = new ArrayList<>();
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent keyEvent) {
                 String e = keyEvent.getCode().toString();
-                setInputs.add(e);
-            //    System.out.println("Registering the input UP");
-           //     System.out.println(setInputs.toString());
+                if (!setInputs.contains("UP") && boo[0] != 1) {
+                    setInputs.add(e); boo[0] = 1;
+                    //    System.out.println("Registering the input UP");
+                    //     System.out.println(setInputs.toString());
+                }
             }
         });
         scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
@@ -168,14 +171,19 @@ public class Game implements Serializable {
             public void handle(KeyEvent keyEvent) {
                 String e = keyEvent.getCode().toString();
                 setInputs.remove(e);
+                setInputs.remove("UP");
+                boo[0] = 0;
         //        System.out.println("REGISTERING THE INPUT DOWN ");
          //       System.out.println(setInputs.toString());
             }
         });
-        Obstaclespane.setStyle("-fx-background-color:#393f38 ;");
+
+//   //     Obstaclespane.setStyle("-fx-background-color:#393f38 ;");
         animationTimer  =     new AnimationTimer() {
 
             Obstacles activeObstacle = null;
+            Obstacles activeObstacle2 = null;
+
             @Override
             public void handle(long l) {
 
@@ -183,6 +191,7 @@ public class Game implements Serializable {
                 if (activeObstacle == null){
                     activeObstacle = displayObstacle(Obstaclespane);
                     activeObstacle.display(Obstaclespane);
+
                     System.out.println("Hullo");
                 }
                 if (pause[0]) {
@@ -195,19 +204,25 @@ public class Game implements Serializable {
 //                    System.out.println("LASTNANO: " + lastNanoTime[0]);
                 lastNanoTime[0] = l;
                 ball.setVelocity(0, 0);
-                if (setInputs.contains("UP")) {
+                if (setInputs.contains("UP") && boo[0] == 1) {
                     // System.out.println("Oo jaane jaana");
-                    ball.addVelocity(0, -1000);
+                    ball.addVelocity(0, -4000);
+//                    setInputs.remove("UP");
+//                    setInputs.remove("DOWN");
+                    ball.update(elapsedTime);
+                    ball.addVelocity(0, 200);
                     ball.update(elapsedTime);
                     pane.getChildren().remove(ball.circle);
                     //     System.out.println("Hello");
                     ball.render(pane);
+                   boo[0] = 0;
                     System.out.println(ball.circle.getLayoutY() + ball.circle.getTranslateY() + " " + starD.getY());
                 } else {
                     ball.addVelocity(0, 500);
                     ball.update(elapsedTime);
                     pane.getChildren().remove(ball.circle);
                     //    System.out.println("Hello2");
+
                     ball.render(pane);
 
                 }
@@ -218,8 +233,8 @@ public class Game implements Serializable {
                     pane.getChildren().remove(starD);
                 }
 
-                Obstaclespane.setLayoutY(Obstaclespane.getLayoutY() + 1);
-                if (Obstaclespane.getLayoutY() >= 500) {
+                Obstaclespane.setLayoutY(Obstaclespane.getLayoutY() + 5);
+                if (Obstaclespane.getLayoutY() >= 600) {
                     int i = 0;
                     HashSet<Integer> set = new HashSet<>();
                     //Obstaclespane.getChildren().remove(activeObstacle);
@@ -234,6 +249,7 @@ public class Game implements Serializable {
                         System.out.println("Yoohoooooooooooooooooooooooooooooooooooooooo");
                     Obstaclespane.getChildren().remove(o);}
                     activeObstacle = null;
+
                     Obstaclespane.setLayoutY(0);}
 //                    System.out.println("dhoonde tujhe deewana");
 //                        ball.update(elapsedTime);

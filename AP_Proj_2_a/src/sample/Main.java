@@ -483,6 +483,11 @@ public class Main extends Application implements Serializable {
 
         Image gear = new Image(getClass().getResourceAsStream("gear.png"), 50, 50, false, false);
         ImageView gear1 = new ImageView(gear);
+        RotateTransition rt1 = new RotateTransition(Duration.millis(2500), gear1);
+        rt1.setByAngle(-360);
+        rt1.setCycleCount(Animation.INDEFINITE);
+        rt1.setInterpolator(Interpolator.LINEAR);
+        rt1.play();
         gear1.setY(10);
         gear1.setX(10);
 

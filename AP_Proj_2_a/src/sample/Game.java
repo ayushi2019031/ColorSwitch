@@ -146,7 +146,7 @@ public class Game implements Serializable {
             System.out.println("Hi");
              //  square.display(Obstaclespane);
 //            octagon.display(Obstaclespane);
-            displayStar(pane);
+            displayStar(Obstaclespane);
            //lCirci.display(Obstaclespane);
 
            //cirCirI.display(Obstaclespane);
@@ -206,7 +206,7 @@ public class Game implements Serializable {
                 ball.setVelocity(0, 0);
                 if (setInputs.contains("UP") && boo[0] == 1) {
                     // System.out.println("Oo jaane jaana");
-                    ball.addVelocity(0, -4000);
+                    ball.addVelocity(0, -10000);
 //                    setInputs.remove("UP");
 //                    setInputs.remove("DOWN");
                     ball.update(elapsedTime);
@@ -228,12 +228,12 @@ public class Game implements Serializable {
                 }
            //     displayObstacle(Obstaclespane);
                 double aj = ball.circle.getLayoutY() + ball.circle.getTranslateY();
-                if (Math.abs(aj - starD.getY()) <= 20) {
+                if (Math.abs(aj - Obstaclespane.getLayoutY()) <= 300) {
                     System.out.println("AYUSHI IS THE BEST AND SO ARE YOU");
                     pane.getChildren().remove(starD);
                 }
 
-                Obstaclespane.setLayoutY(Obstaclespane.getLayoutY() + 5);
+                Obstaclespane.setLayoutY(Obstaclespane.getLayoutY() + 2);
                 if (Obstaclespane.getLayoutY() >= 600) {
                     int i = 0;
                     HashSet<Integer> set = new HashSet<>();

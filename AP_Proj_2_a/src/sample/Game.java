@@ -67,6 +67,8 @@ import java.util.Random;
 //import static javafx.scene.web.WebEngine.PulseTimer.animation;
 
 public class Game implements Serializable {
+    AnchorPane Obstaclespane = new AnchorPane();
+    static int score;
     Ball ball;
     Random random = new Random();
     boolean[] pause = new boolean[1];
@@ -86,6 +88,7 @@ public class Game implements Serializable {
     ExitMenu exitMenu;
     EndGameMenu endGameMenu;
     ImageView starD;
+    Random randomForColor;
 
     IntersectingCircle cirCirI = new IntersectingCircle();
     AnimationTimer animationTimer;
@@ -94,6 +97,8 @@ public class Game implements Serializable {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
         LocalDateTime now = LocalDateTime.now();
         this.date = dtf.format(now);
+        score = 0;
+        this.randomForColor = new Random();
         this.ball = new Ball();
         this.listOfObstacles = new ArrayList<>();
         this.numOfStars = 0;
@@ -101,7 +106,7 @@ public class Game implements Serializable {
         this.app = app;
         this.endGameMenu = new EndGameMenu();
         this.exitMenu = new ExitMenu();
-
+        Obstaclespane.setLayoutY(20);
         exitMenu.setGame(this);
         endGameMenu.setGame(this);
         initializeGame();
@@ -125,7 +130,7 @@ public class Game implements Serializable {
             AnchorPane pane = new AnchorPane();
             Button btnExitGame = new Button();
             Image imageDecline = new Image(getClass().getResourceAsStream("pause.png"), 45, 45, false, false);
-            AnchorPane Obstaclespane = new AnchorPane();
+
             btnExitGame.setGraphic(new ImageView(imageDecline));
             setBtnExitGame(btnExitGame, stage);pane.getChildren().add(btnExitGame);
             Text text4 = new Text();
@@ -141,140 +146,127 @@ public class Game implements Serializable {
             pane.prefHeight(645.0);
             pane.setStyle("-fx-background-color: #393f38;");
             ball.setPane(pane, scene, stage);
-            switcher.setScene(scene, pane, stage);
 
             System.out.println("Hi");
-             //  square.display(Obstaclespane);
-//            octagon.display(Obstaclespane);
-            displayStar(Obstaclespane);
-           //lCirci.display(Obstaclespane);
-
-           //cirCirI.display(Obstaclespane);
-          //lsquare.display(Obstaclespane);
+//            Obstaclespane.setPrefSize(100,10);
             final long[] lastNanoTime = {System.nanoTime()};
-        stage.setScene(scene);
+            stage.setScene(scene);
             int[] boo = {0};
             ArrayList<String> setInputs = new ArrayList<>();
-        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent keyEvent) {
-                String e = keyEvent.getCode().toString();
-                if (!setInputs.contains("UP") && boo[0] != 1) {
-                    setInputs.add(e); boo[0] = 1;
-                    //    System.out.println("Registering the input UP");
-                    //     System.out.println(setInputs.toString());
+            scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+                @Override
+                public void handle(KeyEvent keyEvent) {
+                    String e = keyEvent.getCode().toString();
+                    if (!setInputs.contains("UP") && boo[0] != 1) {
+                        setInputs.add(e); boo[0] = 1;
+                        //    System.out.println("Registering the input UP");
+                        //     System.out.println(setInputs.toString());
+                    }
                 }
-            }
-        });
-        scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent keyEvent) {
-                String e = keyEvent.getCode().toString();
-                setInputs.remove(e);
-                setInputs.remove("UP");
-                boo[0] = 0;
-        //        System.out.println("REGISTERING THE INPUT DOWN ");
-         //       System.out.println(setInputs.toString());
-            }
-        });
+            });
+            scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
+                @Override
+                public void handle(KeyEvent keyEvent) {
+                    String e = keyEvent.getCode().toString();
+                    setInputs.remove(e);
+                    setInputs.remove("UP");
+                    boo[0] = 0;
+                    //        System.out.println("REGISTERING THE INPUT DOWN ");
+                    //       System.out.println(setInputs.toString());
+                }
+            });
 
-//   //     Obstaclespane.setStyle("-fx-background-color:#393f38 ;");
-        animationTimer  =     new AnimationTimer() {
 
-            Obstacles activeObstacle = null;
-            Obstacles activeObstacle2 = null;
+            animationTimer  =     new AnimationTimer() {
 
-            @Override
-            public void handle(long l) {
+                Obstacles activeObstacle = null;
+                Obstacles activeObstacle2 = null;
+
+                @Override
+                public void handle(long l) {
 
 //                if (activeObstacle == null){}
-                if (activeObstacle == null){
-                    activeObstacle = displayObstacle(Obstaclespane);
-                    activeObstacle.display(Obstaclespane);
-
-                    System.out.println("Hullo");
-                }
-                if (pause[0]) {
-
-                    lastNanoTime[0] = l;
-                    pause[0] = false;
-                    System.out.println("Yo");
-                }
-                double elapsedTime = (double) (l - lastNanoTime[0]) / (double) 10e9;
-//                    System.out.println("LASTNANO: " + lastNanoTime[0]);
-                lastNanoTime[0] = l;
-                ball.setVelocity(0, 0);
-                if (setInputs.contains("UP") && boo[0] == 1) {
-                    // System.out.println("Oo jaane jaana");
-                    ball.addVelocity(0, -10000);
-//                    setInputs.remove("UP");
-//                    setInputs.remove("DOWN");
-                    ball.update(elapsedTime);
-                    ball.addVelocity(0, 200);
-                    ball.update(elapsedTime);
-                    pane.getChildren().remove(ball.circle);
-                    //     System.out.println("Hello");
-                    ball.render(pane);
-                   boo[0] = 0;
-                    System.out.println(ball.circle.getLayoutY() + ball.circle.getTranslateY() + " " + starD.getY());
-                } else {
-                    ball.addVelocity(0, 500);
-                    ball.update(elapsedTime);
-                    pane.getChildren().remove(ball.circle);
-                    //    System.out.println("Hello2");
-
-                    ball.render(pane);
-
-                }
-           //     displayObstacle(Obstaclespane);
-                double aj = ball.circle.getLayoutY() + ball.circle.getTranslateY();
-                if (Math.abs(aj - Obstaclespane.getLayoutY()) <= 300) {
-                    System.out.println("AYUSHI IS THE BEST AND SO ARE YOU");
-                    pane.getChildren().remove(starD);
-                }
-
-                Obstaclespane.setLayoutY(Obstaclespane.getLayoutY() + 2);
-                if (Obstaclespane.getLayoutY() >= 600) {
-                    int i = 0;
-                    HashSet<Integer> set = new HashSet<>();
-                    //Obstaclespane.getChildren().remove(activeObstacle);
-                    for (Object obj: Obstaclespane.getChildren()){
-                        if (obj instanceof Node){
-                            System.out.println("YAYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY");
-                            set.add(i);
+                    if (activeObstacle == null){
+                        activeObstacle = displayObstacle();
+                        activeObstacle.display(Obstaclespane);
+                        try {
+                            displayStar(Obstaclespane);
+                            switcher.setScene(scene, Obstaclespane, stage);
+                        } catch (IOException e) {
+                            e.printStackTrace();
                         }
-                        i += 1;
                     }
-                    for (int o: set){
-                        System.out.println("Yoohoooooooooooooooooooooooooooooooooooooooo");
-                    Obstaclespane.getChildren().remove(o);}
-                    activeObstacle = null;
+                    if (pause[0]) {
 
-                    Obstaclespane.setLayoutY(0);}
-//                    System.out.println("dhoonde tujhe deewana");
-//                        ball.update(elapsedTime);
-//                        pane.getChildren().remove(ball.circle);
-//                        ball.render(pane);
+                        lastNanoTime[0] = l;
+                        pause[0] = false;
+                    }
+                    double elapsedTime = (double) (l - lastNanoTime[0]) / (double) 10e9;
+                    double aj = ball.circle.getLayoutY() + ball.circle.getTranslateY();
+
+//                    System.out.println("LASTNANO: " + lastNanoTime[0]);
+                    lastNanoTime[0] = l;
+                    ball.setVelocity(0, 0);
+                    if (setInputs.contains("UP") && boo[0] == 1) {
+                        Obstaclespane.setLayoutY(Obstaclespane.getLayoutY() + 3);
+                        if (Math.abs(aj - (Obstaclespane.getLayoutY()+350+20)) <= 10) {
+                            Obstaclespane.getChildren().remove(starD);
+                            score++;
+                            text4.setText(score+"");
+                        }
+
+                        if (Math.abs(aj - (Obstaclespane.getLayoutY()+168+20)) <= 20) {
+                            Obstaclespane.getChildren().remove(switcher.cir1);
+                            Obstaclespane.getChildren().remove(switcher.cir2);
+                            Obstaclespane.getChildren().remove(switcher.cir3);
+                            int color = randomForColor.nextInt(4);
+                            ball.setBallColor(color);
+                        }
+
+                        ball.addVelocity(0, -10000);
+                        ball.update(elapsedTime);
+                        ball.addVelocity(0, 200);
+                        ball.update(elapsedTime);
+                        pane.getChildren().remove(ball.circle);
+                        ball.render(pane);
+                        boo[0] = 0;
+                    }
+                    else {
+                        ball.addVelocity(0, 800);
+                        ball.update(elapsedTime);
+                        pane.getChildren().remove(ball.circle);
+                        ball.render(pane);
+                    }
+
+                    if (Obstaclespane.getLayoutY() >= 600) {
+                        int i = 0;
+                        HashSet<Integer> set = new HashSet<>();
+                        for (Object obj: Obstaclespane.getChildren()){
+                            if (obj instanceof Node){
+                                set.add(i);
+                            }
+                            i += 1;
+                        }
+                        for (int o: set){
+                            Obstaclespane.getChildren().remove(o);}
+                        activeObstacle = null;
+
+                        Obstaclespane.setLayoutY(0);}
                 };
 
                 //pane.getChildren().add(Obstaclespane);
             };
-        animationTimer.start();
+            animationTimer.start();
             stage.setResizable(false);
             stage.setScene(scene);
             while (listOFOpenStages.contains(exitMenu.stage)){
                 pause[0] = true;
                 animationTimer.stop();
             }
-            Obstaclespane.getChildren().add(new Text("It was all a dream"));
+//            Obstaclespane.setPrefSize(100,100);
             pane.getChildren().add(Obstaclespane);
             Obstaclespane.setStyle("-fx-background-color: #393f38;");
             stage.show();
-         //   circle_.display(pane);
-//            stage.show();
-//            ball.circle.requestFocus();
-//            ball.circle.setFocusTraversable(true);
-        //    endGameMenu.initializeGame(stage);
         }
         catch (Exception e){
             System.out.println(e);
@@ -290,8 +282,6 @@ public class Game implements Serializable {
         starD.setY(350);
         starD.setFitHeight(25);
         starD.setFitWidth(25);
-        System.out.println(starD.getX() + " " + starD.getY());
-        System.out.println(ball.circle.getLayoutX() + " " + ball.circle.getLayoutY());
         RotateTransition rt = new RotateTransition(Duration.millis(3000), starD);
         rt.setByAngle(-360);
         rt.setCycleCount(Animation.INDEFINITE);
@@ -300,19 +290,7 @@ public class Game implements Serializable {
         pane.getChildren().add(starD);
 
     }
-    private void moveBall(Scene scene){
-        scene.addEventFilter(KeyEvent.KEY_PRESSED, (KeyEvent event) -> {
-            System.out.println("Key pressed");
-            if (event.getCode() == KeyCode.UP) {
-                TranslateTransition transition = createTranslateTransition(ball.circle);
-                System.out.println("F1 pressed");
-                ball.circle.setCenterY(ball.circle.getCenterY() + 1000);
-                //ball.circle.setRadius(0);
 
-            }
-            event.consume();
-        });
-    }
     private TranslateTransition createTranslateTransition(Circle circle) {
         final TranslateTransition transition = new TranslateTransition(Duration.seconds(0.25), circle);
         transition.setOnFinished(new EventHandler<ActionEvent>() {
@@ -340,7 +318,7 @@ public class Game implements Serializable {
 //                for (Obstacles obstacles: listOfObstacles){
 //
 //                }
-                    //stage.close();
+                //stage.close();
             }
         });
     }
@@ -348,11 +326,7 @@ public class Game implements Serializable {
         return date;
     }
     public void AddToPane(AnchorPane pane){
-//        AnchorPane root = new AnchorPane();
-//        root.setMaxHeight(Double.MIN_VALUE);
-//        root.setMaxWidth(Double.MIN_VALUE);
-//        root.setMinHeight(Double.MAX_VALUE);
-//        root.setMinWidth(Double.MAX_VALUE);
+
         pane.prefHeight(600.0);
         pane.prefWidth(645.0);
         square.display(pane);
@@ -369,16 +343,8 @@ public class Game implements Serializable {
                 );
         //
     }
-//    public void initialize(Arc arc) {
-//        Timeline animation = new Timeline(
-//                new KeyFrame(Duration.ZERO, new KeyValue(arc.startAngleProperty(), arc.getStartAngle(), Interpolator.LINEAR)),
-//                new KeyFrame(Duration.seconds(2), new KeyValue(arc.startAngleProperty(), arc.getStartAngle() - 360, Interpolator.LINEAR))
-//        );
-//        animation.setCycleCount(Animation.INDEFINITE);
-//        animation.play();
-//    }
 
-    public Obstacles displayObstacle(AnchorPane pane){
+    public Obstacles displayObstacle(){
 
         int obstacleNumber = random.nextInt(6);
 

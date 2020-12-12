@@ -27,6 +27,7 @@ public class Ball extends GameElements implements Serializable {
         circle.setLayoutY(600.0);
         circle.setLayoutX(290.0);
         circle.setRadius(10);
+        color = 0;
     }
     public void setPane(Pane pane, Scene scene, Stage stage){
         this.pane = pane;
@@ -60,18 +61,27 @@ public class Ball extends GameElements implements Serializable {
     public void changeBallPosition(boolean ifTouched){
 
     }
-    public void changeBallColour(ColourSwitcher switcher){
 
-    }
     public int getColor(){
         return color;
     }
     public void setBallColor(int color){
-
+        if(color == 0){
+            circle.setFill(Color.RED);
+        }
+        else if(color == 1){
+            circle.setFill(Color.BLUE);
+        }
+        else if(color==2){
+            circle.setFill(Color.YELLOW);
+        }
+        else{
+            circle.setFill(Color.GREEN);
+        }
     }
     public void setPosition(double x, double y)
     {
-       x_pos = x;
+        x_pos = x;
         y_pos = y;
     }
 

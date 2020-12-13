@@ -122,7 +122,7 @@ public class Game implements Serializable {
             //    Button btnExitGameMenu  = new Button("Exit Game");
 
             stage.setTitle("Game started");
-
+            boolean[] started = {false};
             Rectangle2D bounds = Screen.getPrimary().getVisualBounds();
 
             stage.setX(bounds.getMinX());
@@ -153,15 +153,20 @@ public class Game implements Serializable {
             stage.setScene(scene);
             int[] boo = {0};
             ArrayList<String> setInputs = new ArrayList<>();
+            boolean[] finalStarted = started;
             scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
                 @Override
                 public void handle(KeyEvent keyEvent) {
                     String e = keyEvent.getCode().toString();
                     if (!setInputs.contains("UP") && boo[0] != 1) {
+                        if (!finalStarted[0]){
+                            animationTimer.start(); finalStarted[0] = true;
+                        }
                         setInputs.add(e); boo[0] = 1;
                         //    System.out.println("Registering the input UP");
                         //     System.out.println(setInputs.toString());
                     }
+
                 }
             });
             scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
@@ -176,7 +181,7 @@ public class Game implements Serializable {
                 }
             });
 
-
+        ArrayList<AnchorPane> listOfObstaclesObject = new ArrayList<>();
             animationTimer  =     new AnimationTimer() {
 
                 Obstacles activeObstacle = null;
@@ -187,12 +192,19 @@ public class Game implements Serializable {
 
 //                if (activeObstacle == null){}
                     if (activeObstacle == null){
-                        activeObstacle = displayObstacle();
-                        activeObstacle.display(Obstaclespane);
+
+//                        displayStar(Obstaclespane);
                         try {
-                            displayStar(Obstaclespane);
+                            listOfObstaclesObject.add(new AnchorPane());
+                            Obstaclespane = listOfObstaclesObject.get(listOfObstaclesObject.size() - 1);
                             switcher.setScene(scene, Obstaclespane, stage);
-                        } catch (IOException e) {
+                            activeObstacle = displayObstacle();
+
+                            displayStar(Obstaclespane);
+                            activeObstacle.display(Obstaclespane);
+                            pane.getChildren().add(Obstaclespane);
+
+                                                    } catch (IOException e) {
                             e.printStackTrace();
                         }
                     }
@@ -225,7 +237,7 @@ public class Game implements Serializable {
 
                         ball.addVelocity(0, -10000);
                         ball.update(elapsedTime);
-                        ball.addVelocity(0, 200);
+                        ball.addVelocity(0, 800);
                         ball.update(elapsedTime);
                         pane.getChildren().remove(ball.circle);
                         ball.render(pane);
@@ -238,8 +250,9 @@ public class Game implements Serializable {
                         ball.render(pane);
                     }
 
-                    if (Obstaclespane.getLayoutY() >= 600) {
+                    if (Obstaclespane.getLayoutY() >= 200) {
                         int i = 0;
+                        System.out.println("Ok so new pane ");
                         HashSet<Integer> set = new HashSet<>();
                         for (Object obj: Obstaclespane.getChildren()){
                             if (obj instanceof Node){
@@ -251,12 +264,13 @@ public class Game implements Serializable {
                             Obstaclespane.getChildren().remove(o);}
                         activeObstacle = null;
 
-                        Obstaclespane.setLayoutY(0);}
+                      //  Obstaclespane.setLayoutY(0);
+                         }
                 };
 
                 //pane.getChildren().add(Obstaclespane);
             };
-            animationTimer.start();
+            animationTimer.start();  finalStarted[0] = true;
             stage.setResizable(false);
             stage.setScene(scene);
             while (listOFOpenStages.contains(exitMenu.stage)){

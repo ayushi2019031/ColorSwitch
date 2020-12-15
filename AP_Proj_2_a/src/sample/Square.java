@@ -4,65 +4,72 @@ import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.animation.Timeline;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.Group;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Line;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.StrokeLineCap;
 import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
 
 public class Square implements Obstacles {
+    Rectangle l1; Rectangle l2; Rectangle l3; Rectangle l4;
     public Timeline animationT;
+
+    public Square(){
+        l1 = new Rectangle();
+        l2 = new Rectangle();
+        l3 = new Rectangle();
+        l4 = new Rectangle();
+    }
     public void display(AnchorPane pane){
 
-        Line l1 = new Line();
-        l1.setLayoutX(311);
-        l1.setLayoutY(288);
-        l1.setStartX(-100);
-        l1.setStartY(0);
-        l1.setEndX(86.199);
-        l1.setEndY(0.7);
+        l1.setWidth(147);
+        l1.setHeight(16);
+        l1.setLayoutX(206);
+        l1.setLayoutY(280);
         l1.setStroke(Color.RED);
-        l1.setStrokeWidth(10);
+        l1.setFill(Color.RED);
+        l1.setStrokeWidth(5);
 
-        Line l2 = new Line();
-        l2.setLayoutX(211);
-        l2.setLayoutY(377);
-        l2.setStartX(0.499);
-        l2.setStartY(-87.5);
-        l2.setEndX(0.4999);
-        l2.setEndY(73.200);
+        l2.setWidth(16);
+        l2.setHeight(131);
+        l2.setLayoutX(203);
+        l2.setLayoutY(281);
         l2.setStroke(Color.BLUE);
-        l2.setStrokeWidth(10);
+        l2.setFill(Color.BLUE);
+        l2.setStrokeWidth(5);
 
-        Line l3 = new Line();
-        l3.setLayoutX(431);
-        l3.setLayoutY(335);
-        l3.setStartX(-33.3);
-        l3.setStartY(-45.799);
-        l3.setEndX(-33.3);
-        l3.setEndY(115.5);
+        l3.setWidth(16);
+        l3.setHeight(119);
+        l3.setLayoutX(337);
+        l3.setLayoutY(280);
         l3.setStroke(Color.YELLOW);
-        l3.setStrokeWidth(10);
+        l3.setFill(Color.YELLOW);
+        l3.setStrokeWidth(5);
 
-        Line l4 = new Line();
-        l4.setLayoutX(311);
-        l4.setLayoutY(451);
-        l4.setStartX(-100);
-        l4.setStartY(0);
-        l4.setEndX(85.199);
-        l4.setEndY(0);
+        l4.setWidth(147);
+        l4.setHeight(16);
+        l4.setLayoutX(206);
+        l4.setLayoutY(397);
         l4.setStroke(Color.GREEN);
-        l4.setStrokeWidth(10);
+        l4.setFill(Color.GREEN);
+        l4.setStrokeWidth(5);
+
+//        l1.setStrokeRectangleCap(StrokeRectangleCap.ROUND);
+//        l2.setStrokeRectangleCap(StrokeRectangleCap.ROUND);
+//        l3.setStrokeRectangleCap(StrokeRectangleCap.ROUND);
+//        l4.setStrokeRectangleCap(StrokeRectangleCap.ROUND);
 
         Group group2 = new Group();
         group2.getChildren().add(l1); group2.getChildren().add(l2); group2.getChildren().add(l3); group2.getChildren().add(l4);
         Rotate rotation = new Rotate();
         ObservableValue<Integer> obsInt1 = new ReadOnlyObjectWrapper<>(280);
-        ObservableValue<Integer> obsInt2 = new ReadOnlyObjectWrapper<>(380);
+        ObservableValue<Integer> obsInt2 = new ReadOnlyObjectWrapper<>(360);
         rotation.pivotXProperty().bind(obsInt1);
         rotation.pivotYProperty().bind(obsInt2);
         group2.getTransforms().add(rotation);

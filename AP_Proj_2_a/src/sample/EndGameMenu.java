@@ -26,7 +26,7 @@ import java.io.Serializable;
 
 public class EndGameMenu extends GameElements implements Serializable {
     Game game;
-    AnchorPane pane;
+    transient AnchorPane pane;
     public EndGameMenu() throws IOException {
         pane  = new AnchorPane();
     }
@@ -35,6 +35,7 @@ public class EndGameMenu extends GameElements implements Serializable {
         try{
             //      s.close();
             //      Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
+
             System.out.println("Hello Ayushi ");
             Stage stage = new Stage();
             // stage.

@@ -7,9 +7,13 @@ import javafx.scene.shape.Arc;
 import javafx.scene.shape.ArcType;
 import javafx.scene.shape.Circle;
 import javafx.scene.transform.Rotate;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
-public class LayeredCircles implements Obstacles{
+import java.io.IOException;
+import java.io.Serializable;
+
+public class LayeredCircles implements Obstacles, Serializable {
     Circle_ c1;
     Circle_ c2;
     public Timeline animationT;
@@ -170,6 +174,41 @@ initialize(new Rotate());
         initialize(c2.arc2);
         initialize(c2.arc3);
         initialize(c2.arc4);
+    }
+    public boolean isObstacleCrossed(Game game, Ball ball, AnchorPane Obstaclespane, Obstacles activeObstacle, Stage stage, boolean[] breking_bad, int a1, int a2, int a3){
+        //    System.out.println("AJ: " + aj + "ObstaclesPane LayoutY: " + Obstaclespane.getLayoutY());
+        double aj =ball.circle.getLayoutY() + ball.circle.getTranslateY();
+        if (ball.circle.getFill().equals(((LayeredCircles) activeObstacle).c1.arc2.getStroke())) {
+            aj = ball.circle.getLayoutY() + ball.circle.getTranslateY();
+            if (Math.abs(aj - (Obstaclespane.getLayoutY() + a1)) <= a2 && !breking_bad[0]) {
+                System.out.println("helo peeps ayushi " + ball.circle.getBoundsInParent().getMinY()  + " " + ((LayeredCircles) activeObstacle).c1.arc2.getBoundsInParent().getMinY());
+                if (!breking_bad[0] &&  Math.abs(ball.circle.getBoundsInParent().getMinY() - ((LayeredCircles) activeObstacle).c1.arc2.getBoundsInParent().getMinY())  <= a3) {
+                    Circle circle = new Circle(10, Color.WHITE);
+                    circle.setCenterX(280);
+                    circle.setCenterY(350);
+                    Obstaclespane.getChildren().add(circle);
+                    System.out.println("hello peeps kesar");
+                    breking_bad[0] = true;
+                    return true;
+                } else if (Math.abs(aj - (Obstaclespane.getLayoutY() + a1)) <= a2){
+                    if (!breking_bad[0]){
+                        try {
+                            game.endGameMenu = new EndGameMenu();
+                            game.endGameMenu.initializeGame(stage);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }}
+                    return false;
+                }
+            } else if (ball.circle.getFill().equals(((LayeredCircles) activeObstacle).c1.arc2.getStroke())) {
+
+            } else if (ball.circle.getFill().equals(((LayeredCircles) activeObstacle).c1.arc3.getStroke())) {
+
+            } else {
+
+            }
+        }
+        return false;
     }
 }
 

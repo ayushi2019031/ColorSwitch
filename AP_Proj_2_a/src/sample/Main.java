@@ -1,5 +1,15 @@
 package sample;
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
+import javafx.application.Application;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.stage.Stage;
+import java.net.URL;
 
+import javafx.application.Application;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.stage.Stage;
 import javafx.animation.*;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -13,6 +23,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Arc;
 import javafx.scene.shape.ArcType;
@@ -32,12 +43,14 @@ import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import java.awt.*;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.Serializable;
+
+
+import java.io.*;
+import java.net.URL;
+import java.nio.file.DirectoryStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 public class Main extends Application implements Serializable {
@@ -62,6 +75,12 @@ public class Main extends Application implements Serializable {
 
         primaryStage.setX(bounds.getMinX());
         primaryStage.setY(bounds.getMinY());
+        String url = System.getProperty("user.dir") + "\\src\\sample\\parapara.mp3";
+        File fi = new File(url);
+        String tmp = fi.getCanonicalPath();
+        tmp = tmp.replaceAll("\\\\", "/");
+//        final Media media = new Media("file:///" + System.getProperty("user.dir").replace('\\', '/') + "/" + "parapara.mp3");
+//        final MediaPlayer mediaPlayer = new MediaPlayer(media);
 
     }
     public void showGameMenu(Stage primaryStage) throws IOException{
@@ -490,9 +509,16 @@ public class Main extends Application implements Serializable {
         rt1.play();
         gear1.setY(10);
         gear1.setX(10);
-
-
-
+//        InputStream resource = getClass().getResourceAsStream();
+        //System.out.println(resource);
+//        String url = System.getProperty("user.dir") + "\\src\\sample\\parapara.mp3";
+//        System.out.println(url);
+//        File f = new File(url);
+//        String documentBase = getHostServices().getDocumentBase();
+//        String trying =documentBase + "/" + "parapara.mp3";
+//        final Media media = new Media(f.toURI().toASCIIString());
+//        final MediaPlayer mediaPlayer = new MediaPlayer(media);
+//     //   mediaPlayer.play();
         pane.getChildren().add(infi);
         pane.getChildren().add(gear1);
      //   pane.getChildren().add(mark1);
@@ -638,5 +664,30 @@ public class Main extends Application implements Serializable {
         animation.setCycleCount(Animation.INDEFINITE);
         animation.play();
     }
+    public void deserialise(String filename) throws IOException, ClassNotFoundException {
+        FileInputStream file = new FileInputStream(filename);
+        ObjectInputStream in = new ObjectInputStream(file);
 
+        // Method for deserialization of object
+        Game object1 = (Game) in.readObject();
+
+        in.close();
+        file.close();
+
+        System.out.println("Object has been deserialized ");
+        object1.initializeGame();
+    }
+    public void update() throws IOException, ClassNotFoundException {
+        File u = new File(System.getProperty("user.dir"));
+        File[] files = u.listFiles();
+        for (int i = 0; i < files.length; i++){
+            System.out.println(files[i].toString());
+            String g = files[i].toString().substring(files[i].toString().lastIndexOf(".") + 1, files[i].toString().length());
+            System.out.println(g);
+            if (g.equals("txt")) {
+                System.out.println(files[i].toString());
+                deserialise(files[i].toString());
+            }
+        }
+    }
 }

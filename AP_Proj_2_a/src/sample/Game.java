@@ -3,6 +3,7 @@ import com.sun.javafx.scene.shape.CircleHelper;
 import javafx.animation.*;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Bounds;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.*;
 import javafx.scene.control.Label;
@@ -80,9 +81,9 @@ public class Game implements Serializable {
     ColourSwitcher switcher;
     boolean ifTouched;
     Main app;
-    Circle_ circle_= new Circle_();
-    LayeredCircles lCirci  = new LayeredCircles();
-    LayeredSquares lsquare = new LayeredSquares();
+    //     circle_= new Square();
+    Octa circle_  = new Octa();
+    //    IntersectingCircle circle_ = new IntersectingCircle();
     Octa octagon = new Octa();
     static int num_of_restoration_points;
     ExitMenu exitMenu;
@@ -181,12 +182,17 @@ public class Game implements Serializable {
                 }
             });
 
-        ArrayList<AnchorPane> listOfObstaclesObject = new ArrayList<>();
+            ArrayList<AnchorPane> listOfObstaclesObject = new ArrayList<>();
             animationTimer  =     new AnimationTimer() {
 
                 Obstacles activeObstacle = null;
+                boolean activeObstacleColorSwitcher = false;
+                boolean activeObstacleScore = false;
                 Obstacles activeObstacle2 = null;
-
+                boolean activeObstacle2ColorSwitcher = false;
+                boolean activeObstacle2Score = false;
+                boolean[] breking_bad = {false};
+                boolean[] breking_bad2 = {false};
                 @Override
                 public void handle(long l) {
 
@@ -198,13 +204,17 @@ public class Game implements Serializable {
                             listOfObstaclesObject.add(new AnchorPane());
                             Obstaclespane = listOfObstaclesObject.get(listOfObstaclesObject.size() - 1);
                             switcher.setScene(scene, Obstaclespane, stage);
-                            activeObstacle = displayObstacle();
-
-                            displayStar(Obstaclespane);
+//                            activeObstacle = displayObstacle();
+                            activeObstacle = new LayeredSquares();
                             activeObstacle.display(Obstaclespane);
+                            activeObstacleScore = false;
+                            activeObstacleColorSwitcher = false;
+                            displayStar(Obstaclespane);
                             pane.getChildren().add(Obstaclespane);
+                                breking_bad[0] = false;
+//                            circle_.display(Obstaclespane);
 
-                                                    } catch (IOException e) {
+                        } catch (IOException e) {
                             e.printStackTrace();
                         }
                     }
@@ -221,27 +231,85 @@ public class Game implements Serializable {
                     ball.setVelocity(0, 0);
                     if (setInputs.contains("UP") && boo[0] == 1) {
                         Obstaclespane.setLayoutY(Obstaclespane.getLayoutY() + 3);
-                        if (Math.abs(aj - (Obstaclespane.getLayoutY()+350+20)) <= 10) {
-                            Obstaclespane.getChildren().remove(starD);
-                            score++;
-                            text4.setText(score+"");
-                        }
-
-                        if (Math.abs(aj - (Obstaclespane.getLayoutY()+168+20)) <= 20) {
-                            Obstaclespane.getChildren().remove(switcher.cir1);
-                            Obstaclespane.getChildren().remove(switcher.cir2);
-                            Obstaclespane.getChildren().remove(switcher.cir3);
-                            int color = randomForColor.nextInt(4);
-                            ball.setBallColor(color);
-                        }
 
                         ball.addVelocity(0, -10000);
                         ball.update(elapsedTime);
-                        ball.addVelocity(0, 800);
+                        ball.addVelocity(0, 200);
                         ball.update(elapsedTime);
                         pane.getChildren().remove(ball.circle);
                         ball.render(pane);
                         boo[0] = 0;
+
+    //Star
+                        if(activeObstacle instanceof Circle_) {
+                            boolean k = ((Circle_) activeObstacle).isObstacleCrossed(Game.this, ball,  Obstaclespane, activeObstacle,  stage, breking_bad, 400, 40, 100);
+                        //    boolean k2 = ((Circle_) activeObstacle).isObstacleCrossed(Game.this, ball, Obstaclespane, activeObstacle, stage, breking_bad2, 400, 40, 100);
+                        }
+                        else if (activeObstacle instanceof LayeredCircles){
+                            boolean k = ((LayeredCircles) activeObstacle).isObstacleCrossed(Game.this, ball,  Obstaclespane, activeObstacle,  stage, breking_bad, 400, 40, 100);
+                      //      boolean k2 = ((Circle_) activeObstacle).isObstacleCrossed(Game.this, ball, Obstaclespane, activeObstacle, stage, breking_bad2, 400, 40, 100);
+
+                        }
+                        else if (activeObstacle instanceof  Square){
+////                            System.out.println(ball.circle.getBoundsInParent().intersects(((Square) activeObstacle).l1.getBoundsInParent()));
+//                            boolean k = ball.circle.getBoundsInParent().intersects( ((Square) activeObstacle).l1.getBoundsInParent());
+                            Bounds b1 = ball.circle.localToScene(ball.circle.getBoundsInLocal());
+                            Bounds sq = ((Square)activeObstacle).l1.localToScene(((Square) activeObstacle).l1.getBoundsInLocal());
+                            System.out.println(b1 + " " + sq);
+                            boolean k  = b1.intersects(sq);
+                            if (k){
+                                text4.setText("Yayyy");
+                            }
+                            else {
+                                text4.setText("Ohh");
+                            }
+
+                        }
+                        else if (activeObstacle instanceof IntersectingCircle){
+                            boolean k = ((IntersectingCircle) activeObstacle).isObstacleCrossed(Game.this, ball,  Obstaclespane, activeObstacle,  stage, breking_bad, 400, 40, 100);
+//                                if(ball.circle.getFill().equals(((IntersectingCircle)activeObstacle).c2.arc4.getStroke())){
+//                                    System.out.println(ball.circle.getBoundsInParent() + " " +((IntersectingCircle) activeObstacle).c1.arc2.getBoundsInParent());
+//                                    if(ball.circle.getBoundsInParent().intersects(((IntersectingCircle) activeObstacle).c1.arc2.getBoundsInParent()) && ball.circle.getBoundsInParent().intersects(((IntersectingCircle) activeObstacle).c2.arc4.getBoundsInParent())){
+//                                        text4.setText("intersected");
+//                                        System.out.println("Bodyguard");
+//                                    }
+//                                    else {
+//                                        text4.setText("0");                                    }
+//                                }
+
+                        }
+                        else if (activeObstacle instanceof  LayeredSquares){
+                            Bounds b1 = ball.circle.localToScene(ball.circle.getBoundsInLocal());
+                            Bounds sq1 = ((LayeredSquares)activeObstacle).l1.localToScene(((LayeredSquares) activeObstacle).l1.getBoundsInLocal());
+                            Bounds sq2 = ((LayeredSquares)activeObstacle).line1.localToScene(((LayeredSquares) activeObstacle).line1.getBoundsInLocal());
+                            System.out.println(b1 + " " + sq1);
+                            boolean k  = b1.intersects(sq1) && b1.intersects(sq2);
+                            if (k){
+                                text4.setText("Yayyy");
+                            }
+                            else {
+                                text4.setText("Ohh");
+                            }
+                        }
+                        if (Math.abs(aj - (Obstaclespane.getLayoutY()+350+20)) <= 20) {
+                            Obstaclespane.getChildren().remove(starD);
+                            if(!activeObstacleScore) {
+                                score++;
+                                text4.setText(score + "");
+                                activeObstacleScore = true;
+                            }
+                        }
+//Swither
+                        if (Math.abs(aj - (Obstaclespane.getLayoutY()+168+20)) <= 20) {
+                            Obstaclespane.getChildren().remove(switcher.cir1);
+                            Obstaclespane.getChildren().remove(switcher.cir2);
+                            Obstaclespane.getChildren().remove(switcher.cir3);
+                            if(!activeObstacleColorSwitcher){
+                                int color = randomForColor.nextInt(4);
+                                ball.setBallColor(color);
+                                activeObstacleColorSwitcher = true;
+                            }
+                        }
                     }
                     else {
                         ball.addVelocity(0, 800);
@@ -250,7 +318,7 @@ public class Game implements Serializable {
                         ball.render(pane);
                     }
 
-                    if (Obstaclespane.getLayoutY() >= 200) {
+                    if (Obstaclespane.getLayoutY() >= 300) {
                         int i = 0;
                         System.out.println("Ok so new pane ");
                         HashSet<Integer> set = new HashSet<>();
@@ -264,8 +332,8 @@ public class Game implements Serializable {
                             Obstaclespane.getChildren().remove(o);}
                         activeObstacle = null;
 
-                      //  Obstaclespane.setLayoutY(0);
-                         }
+                        //  Obstaclespane.setLayoutY(0);
+                    }
                 };
 
                 //pane.getChildren().add(Obstaclespane);

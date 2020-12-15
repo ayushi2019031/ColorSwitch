@@ -20,7 +20,7 @@ import java.io.Serializable;
 
 public class ExitMenu extends GameElements implements Serializable {
     Game game;
-    Stage stage;
+    transient Stage stage;
     public ExitMenu() throws IOException {
 
     }
@@ -112,18 +112,20 @@ public class ExitMenu extends GameElements implements Serializable {
         btnSaveAndExit.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                try {
-                    FileOutputStream fileOut =
-                            new FileOutputStream("game.txt");
-                    ObjectOutputStream out = new ObjectOutputStream(fileOut);
-                    game.app.observableListSavedGames.add(game);
-                    out.writeObject(game.app.savedGamesList);
-                    out.close();
-                    fileOut.close();
-                    System.out.printf("Serialized data is saved in game.txt");
 
-                } catch (IOException i) {
-                    i.printStackTrace();
+//                    FileOutputStream fileOut =
+//                            new FileOutputStream("game.txt");
+//                    ObjectOutputStream out = new ObjectOutputStream(fileOut);
+//                    game.app.observableListSavedGames.add(game);
+//                    out.writeObject(game.app.savedGamesList);
+//                    out.close();
+//                    fileOut.close();
+                try {
+                 //   game.serialise();
+               //     System.out.printf("Serialized data is saved in game.txt");
+                }
+                catch (Exception e){
+                    System.out.println("Sorry peepe");
                 }
                 s1.close();
                 stage.close();

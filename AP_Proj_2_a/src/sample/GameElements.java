@@ -9,7 +9,7 @@ import java.io.Serializable;
 public class GameElements implements Serializable {
     double y_pos;
     double  x_pos;
-    Timeline animationTimer;
+    transient Timeline animationTimer;
     public GameElements() throws IOException {
 
     }

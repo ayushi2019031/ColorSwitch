@@ -13,13 +13,20 @@ import java.io.IOException;
 
 public class Circle_ implements Obstacles {
 
-    Arc arc1; Arc arc2; Arc arc3; Arc arc4;
-    public  Circle_(){
-        arc1 = new Arc(); arc2 = new Arc(); arc3 = new Arc(); arc4 = new Arc();
+    Arc arc1;
+    Arc arc2;
+    Arc arc3;
+    Arc arc4;
+
+    public Circle_() {
+        arc1 = new Arc();
+        arc2 = new Arc();
+        arc3 = new Arc();
+        arc4 = new Arc();
         System.out.println("Initialised");
     }
 
-    public void display(AnchorPane root){
+    public void display(AnchorPane root) {
 
         arc1.setCenterX(290);
         arc1.setCenterY(370.0);
@@ -95,14 +102,17 @@ public class Circle_ implements Obstacles {
         animation.play();
 
     }
-    public boolean isObstacleCrossed(Game game,Ball ball, AnchorPane Obstaclespane, Obstacles activeObstacle, Stage stage, boolean[] breking_bad, int a1, int a2, int a3){
-    //    System.out.println("AJ: " + aj + "ObstaclesPane LayoutY: " + Obstaclespane.getLayoutY());
-        double aj =ball.circle.getLayoutY() + ball.circle.getTranslateY();
+
+    public boolean isObstacleCrossed(Game game, Ball ball, AnchorPane Obstaclespane, Obstacles activeObstacle, Stage stage, boolean[] breking_bad, int a1, int a2, int a3) {
+        //    System.out.println("AJ: " + aj + "ObstaclesPane LayoutY: " + Obstaclespane.getLayoutY());
+        // double kk  = ((Circle_) activeObstacle).arc2.getBoundsInLocal();
+        //     System.out.println(kk);
+        double aj = ball.circle.getLayoutY() + ball.circle.getTranslateY();
         if (ball.circle.getFill().equals(((Circle_) activeObstacle).arc2.getStroke())) {
-                  aj = ball.circle.getLayoutY() + ball.circle.getTranslateY();
+            aj = ball.circle.getLayoutY() + ball.circle.getTranslateY();
             if (Math.abs(aj - (Obstaclespane.getLayoutY() + a1)) <= a2 && !breking_bad[0]) {
-                System.out.println("helo peeps ayushi " + ball.circle.getBoundsInParent().getMinY()  + " " + ((Circle_) activeObstacle).arc2.getBoundsInParent().getMinY());
-                if (!breking_bad[0] &&  Math.abs(ball.circle.getBoundsInParent().getMinY() - ((Circle_) activeObstacle).arc2.getBoundsInParent().getMinY())  <= a3) {
+                System.out.println("helo peeps ayushi " + ball.circle.getBoundsInParent().getMinY() + " " + ((Circle_) activeObstacle).arc2.getBoundsInParent().getMinY());
+                if (!breking_bad[0] && Math.abs(ball.circle.getBoundsInParent().getMinY() - ((Circle_) activeObstacle).arc2.getBoundsInParent().getMinY()) <= a3) {
                     Circle circle = new Circle(10, Color.WHITE);
                     circle.setCenterX(280);
                     circle.setCenterY(350);
@@ -110,24 +120,94 @@ public class Circle_ implements Obstacles {
                     System.out.println("hello peeps kesar");
                     breking_bad[0] = true;
                     return true;
-                } else if (Math.abs(aj - (Obstaclespane.getLayoutY() + a1)) <= a2){
-                    if (!breking_bad[0]){
+                } else if (Math.abs(aj - (Obstaclespane.getLayoutY() + a1)) <= a2) {
+                    if (!breking_bad[0]) {
                         try {
                             game.endGameMenu = new EndGameMenu();
                             game.endGameMenu.initializeGame(stage);
                         } catch (IOException e) {
                             e.printStackTrace();
-                        }}
+                        }
+                    }
                     return false;
                 }
-            } else if (ball.circle.getFill().equals(((Circle_) activeObstacle).arc2.getStroke())) {
-
-            } else if (ball.circle.getFill().equals(((Circle_) activeObstacle).arc3.getStroke())) {
-
-            } else {
+            }
+        } else if (ball.circle.getFill().equals(((Circle_) activeObstacle).arc3.getStroke())) {
+            aj = ball.circle.getLayoutY() + ball.circle.getTranslateY();
+            if (Math.abs(aj - (Obstaclespane.getLayoutY() + a1)) <= a2 && !breking_bad[0]) {
+                System.out.println("helo peeps ayushi " + ball.circle.getBoundsInParent().getMinY() + " " + ((Circle_) activeObstacle).arc3.getBoundsInParent().getMinY());
+                if (!breking_bad[0] && Math.abs(ball.circle.getBoundsInParent().getMinY() - ((Circle_) activeObstacle).arc3.getBoundsInParent().getMinY()) <= a3) {
+                    Circle circle = new Circle(10, Color.WHITE);
+                    circle.setCenterX(280);
+                    circle.setCenterY(350);
+                    Obstaclespane.getChildren().add(circle);
+                    System.out.println("hello peeps kesar");
+                    breking_bad[0] = true;
+                    return true;
+                } else if (Math.abs(aj - (Obstaclespane.getLayoutY() + a1)) <= a2) {
+                    if (!breking_bad[0]) {
+                        try {
+                            game.endGameMenu = new EndGameMenu();
+                            game.endGameMenu.initializeGame(stage);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    return false;
+                }
+            } else if (ball.circle.getFill().equals(((Circle_) activeObstacle).arc4.getStroke())) {
+                aj = ball.circle.getLayoutY() + ball.circle.getTranslateY();
+                if (Math.abs(aj - (Obstaclespane.getLayoutY() + a1)) <= a2 && !breking_bad[0]) {
+                    System.out.println("helo peeps ayushi " + ball.circle.getBoundsInParent().getMinY() + " " + ((Circle_) activeObstacle).arc4.getBoundsInParent().getMinY());
+                    if (!breking_bad[0] && Math.abs(ball.circle.getBoundsInParent().getMinY() - ((Circle_) activeObstacle).arc4.getBoundsInParent().getMinY()) <= a3) {
+                        Circle circle = new Circle(10, Color.WHITE);
+                        circle.setCenterX(280);
+                        circle.setCenterY(350);
+                        Obstaclespane.getChildren().add(circle);
+                        System.out.println("hello peeps kesar");
+                        breking_bad[0] = true;
+                        return true;
+                    } else if (Math.abs(aj - (Obstaclespane.getLayoutY() + a1)) <= a2) {
+                        if (!breking_bad[0]) {
+                            try {
+                                game.endGameMenu = new EndGameMenu();
+                                game.endGameMenu.initializeGame(stage);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        return false;
+                    }
+                } else {
+                    aj = ball.circle.getLayoutY() + ball.circle.getTranslateY();
+                    if (Math.abs(aj - (Obstaclespane.getLayoutY() + a1)) <= a2 && !breking_bad[0]) {
+                        System.out.println("helo peeps ayushi " + ball.circle.getBoundsInParent().getMinY() + " " + ((Circle_) activeObstacle).arc1.getBoundsInParent().getMinY());
+                        if (!breking_bad[0] && Math.abs(ball.circle.getBoundsInParent().getMinY() - ((Circle_) activeObstacle).arc1.getBoundsInParent().getMinY()) <= a3) {
+                            Circle circle = new Circle(10, Color.WHITE);
+                            circle.setCenterX(280);
+                            circle.setCenterY(350);
+                            Obstaclespane.getChildren().add(circle);
+                            System.out.println("hello peeps kesar");
+                            breking_bad[0] = true;
+                            return true;
+                        } else if (Math.abs(aj - (Obstaclespane.getLayoutY() + a1)) <= a2) {
+                            if (!breking_bad[0]) {
+                                try {
+                                    game.endGameMenu = new EndGameMenu();
+                                    game.endGameMenu.initializeGame(stage);
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                            return false;
+                        }
+                    }
+                }
 
             }
+
         }
         return false;
     }
 }
+

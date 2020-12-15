@@ -205,7 +205,7 @@ public class Game implements Serializable {
                             Obstaclespane = listOfObstaclesObject.get(listOfObstaclesObject.size() - 1);
                             switcher.setScene(scene, Obstaclespane, stage);
 //                            activeObstacle = displayObstacle();
-                            activeObstacle = new LayeredSquares();
+                            activeObstacle = new Circle_();
                             activeObstacle.display(Obstaclespane);
                             activeObstacleScore = false;
                             activeObstacleColorSwitcher = false;

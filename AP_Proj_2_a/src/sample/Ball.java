@@ -28,6 +28,7 @@ public class Ball extends GameElements implements Serializable {
         circle.setLayoutX(290.0);
         circle.setRadius(10);
         color = 0;
+        setBallColor(color);
     }
     public void setPane(Pane pane, Scene scene, Stage stage){
         this.pane = pane;

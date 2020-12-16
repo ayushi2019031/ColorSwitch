@@ -57,6 +57,7 @@ import java.io.*;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.Serializable;
+import java.nio.charset.IllegalCharsetNameException;
 import java.sql.Time;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -205,13 +206,15 @@ public class Game implements Serializable {
                             Obstaclespane = listOfObstaclesObject.get(listOfObstaclesObject.size() - 1);
                             switcher.setScene(scene, Obstaclespane, stage);
 //                            activeObstacle = displayObstacle();
-                            activeObstacle = new Circle_();
+                            activeObstacle = new Square();
+                            ball.color = 1;
+                            ball.setBallColor(1);
                             activeObstacle.display(Obstaclespane);
                             activeObstacleScore = false;
                             activeObstacleColorSwitcher = false;
                             displayStar(Obstaclespane);
                             pane.getChildren().add(Obstaclespane);
-                                breking_bad[0] = false;
+                            breking_bad[0] = false;
 //                            circle_.display(Obstaclespane);
 
                         } catch (IOException e) {
@@ -240,57 +243,20 @@ public class Game implements Serializable {
                         ball.render(pane);
                         boo[0] = 0;
 
-    //Star
-                        if(activeObstacle instanceof Circle_) {
-                            boolean k = ((Circle_) activeObstacle).isObstacleCrossed(Game.this, ball,  Obstaclespane, activeObstacle,  stage, breking_bad, 400, 40, 100);
-                        //    boolean k2 = ((Circle_) activeObstacle).isObstacleCrossed(Game.this, ball, Obstaclespane, activeObstacle, stage, breking_bad2, 400, 40, 100);
+                        //Star
+                        if (activeObstacle instanceof Circle_) {((Circle_) activeObstacle).isObstacleCrossed(Game.this,ball, Obstaclespane, activeObstacle, stage, breking_bad, text4); }
+                        if (activeObstacle instanceof LayeredCircles) {
+                            ((LayeredCircles) activeObstacle).isObstacleCrossed(Game.this,ball, Obstaclespane, activeObstacle, stage, breking_bad, text4);
+                        } else if (activeObstacle instanceof Square) {
+                            ((Square) activeObstacle).isObstacleCrossed(Game.this, (Square) activeObstacle, ball, Obstaclespane, stage, breking_bad, text4);
                         }
-                        else if (activeObstacle instanceof LayeredCircles){
-                            boolean k = ((LayeredCircles) activeObstacle).isObstacleCrossed(Game.this, ball,  Obstaclespane, activeObstacle,  stage, breking_bad, 400, 40, 100);
-                      //      boolean k2 = ((Circle_) activeObstacle).isObstacleCrossed(Game.this, ball, Obstaclespane, activeObstacle, stage, breking_bad2, 400, 40, 100);
+                    else if (activeObstacle instanceof IntersectingCircle) { boolean Inside = false;((IntersectingCircle) activeObstacle).isObstacleCrossed(Game.this, (IntersectingCircle) activeObstacle, ball, Obstaclespane, stage, breking_bad, text4); }
 
-                        }
-                        else if (activeObstacle instanceof  Square){
-////                            System.out.println(ball.circle.getBoundsInParent().intersects(((Square) activeObstacle).l1.getBoundsInParent()));
-//                            boolean k = ball.circle.getBoundsInParent().intersects( ((Square) activeObstacle).l1.getBoundsInParent());
-                            Bounds b1 = ball.circle.localToScene(ball.circle.getBoundsInLocal());
-                            Bounds sq = ((Square)activeObstacle).l1.localToScene(((Square) activeObstacle).l1.getBoundsInLocal());
-                            System.out.println(b1 + " " + sq);
-                            boolean k  = b1.intersects(sq);
-                            if (k){
-                                text4.setText("Yayyy");
-                            }
-                            else {
-                                text4.setText("Ohh");
-                            }
+                    else if (activeObstacle instanceof LayeredSquares) { ((LayeredSquares) activeObstacle).isObstacleCrossed(Game.this, ball, Obstaclespane,activeObstacle, stage, breking_bad, text4); }
+                    else if (activeObstacle instanceof Octa) { ((Octa) activeObstacle).isObstacleCrossed(Game.this, ball, Obstaclespane,activeObstacle, stage, breking_bad, text4); }
+                    else if (activeObstacle instanceof LayeredOcta) { ((LayeredOcta) activeObstacle).isObstacleCrossed(Game.this, ball, Obstaclespane,activeObstacle, stage, breking_bad, text4); }
 
-                        }
-                        else if (activeObstacle instanceof IntersectingCircle){
-                            boolean k = ((IntersectingCircle) activeObstacle).isObstacleCrossed(Game.this, ball,  Obstaclespane, activeObstacle,  stage, breking_bad, 400, 40, 100);
-//                                if(ball.circle.getFill().equals(((IntersectingCircle)activeObstacle).c2.arc4.getStroke())){
-//                                    System.out.println(ball.circle.getBoundsInParent() + " " +((IntersectingCircle) activeObstacle).c1.arc2.getBoundsInParent());
-//                                    if(ball.circle.getBoundsInParent().intersects(((IntersectingCircle) activeObstacle).c1.arc2.getBoundsInParent()) && ball.circle.getBoundsInParent().intersects(((IntersectingCircle) activeObstacle).c2.arc4.getBoundsInParent())){
-//                                        text4.setText("intersected");
-//                                        System.out.println("Bodyguard");
-//                                    }
-//                                    else {
-//                                        text4.setText("0");                                    }
-//                                }
 
-                        }
-                        else if (activeObstacle instanceof  LayeredSquares){
-                            Bounds b1 = ball.circle.localToScene(ball.circle.getBoundsInLocal());
-                            Bounds sq1 = ((LayeredSquares)activeObstacle).l1.localToScene(((LayeredSquares) activeObstacle).l1.getBoundsInLocal());
-                            Bounds sq2 = ((LayeredSquares)activeObstacle).line1.localToScene(((LayeredSquares) activeObstacle).line1.getBoundsInLocal());
-                            System.out.println(b1 + " " + sq1);
-                            boolean k  = b1.intersects(sq1) && b1.intersects(sq2);
-                            if (k){
-                                text4.setText("Yayyy");
-                            }
-                            else {
-                                text4.setText("Ohh");
-                            }
-                        }
                         if (Math.abs(aj - (Obstaclespane.getLayoutY()+350+20)) <= 20) {
                             Obstaclespane.getChildren().remove(starD);
                             if(!activeObstacleScore) {
@@ -301,11 +267,15 @@ public class Game implements Serializable {
                         }
 //Swither
                         if (Math.abs(aj - (Obstaclespane.getLayoutY()+168+20)) <= 20) {
+                            int color;
                             Obstaclespane.getChildren().remove(switcher.cir1);
                             Obstaclespane.getChildren().remove(switcher.cir2);
                             Obstaclespane.getChildren().remove(switcher.cir3);
                             if(!activeObstacleColorSwitcher){
-                                int color = randomForColor.nextInt(4);
+                                do{
+                                    color = randomForColor.nextInt(4);
+                                }
+                                while(color==ball.getColor());
                                 ball.setBallColor(color);
                                 activeObstacleColorSwitcher = true;
                             }

@@ -6,6 +6,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Arc;
 import javafx.scene.shape.ArcType;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.Text;
 import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -175,40 +176,99 @@ initialize(new Rotate());
         initialize(c2.arc3);
         initialize(c2.arc4);
     }
-    public boolean isObstacleCrossed(Game game, Ball ball, AnchorPane Obstaclespane, Obstacles activeObstacle, Stage stage, boolean[] breking_bad, int a1, int a2, int a3){
-        //    System.out.println("AJ: " + aj + "ObstaclesPane LayoutY: " + Obstaclespane.getLayoutY());
-        double aj =ball.circle.getLayoutY() + ball.circle.getTranslateY();
-        if (ball.circle.getFill().equals(((LayeredCircles) activeObstacle).c1.arc2.getStroke())) {
-            aj = ball.circle.getLayoutY() + ball.circle.getTranslateY();
-            if (Math.abs(aj - (Obstaclespane.getLayoutY() + a1)) <= a2 && !breking_bad[0]) {
-                System.out.println("helo peeps ayushi " + ball.circle.getBoundsInParent().getMinY()  + " " + ((LayeredCircles) activeObstacle).c1.arc2.getBoundsInParent().getMinY());
-                if (!breking_bad[0] &&  Math.abs(ball.circle.getBoundsInParent().getMinY() - ((LayeredCircles) activeObstacle).c1.arc2.getBoundsInParent().getMinY())  <= a3) {
-                    Circle circle = new Circle(10, Color.WHITE);
-                    circle.setCenterX(280);
-                    circle.setCenterY(350);
-                    Obstaclespane.getChildren().add(circle);
-                    System.out.println("hello peeps kesar");
-                    breking_bad[0] = true;
-                    return true;
-                } else if (Math.abs(aj - (Obstaclespane.getLayoutY() + a1)) <= a2){
-                    if (!breking_bad[0]){
-                        try {
-                            game.endGameMenu = new EndGameMenu();
-                            game.endGameMenu.initializeGame(stage);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }}
-                    return false;
-                }
-            } else if (ball.circle.getFill().equals(((LayeredCircles) activeObstacle).c1.arc2.getStroke())) {
+    public boolean isObstacleCrossed(Game game, Ball ball, AnchorPane Obstaclespane, Obstacles activeObstacle, Stage stage, boolean[] breking_bad, Text text4){
+        boolean Inside = false;
+        double aj = ball.circle.getLayoutY() + ball.circle.getTranslateY();
 
-            } else if (ball.circle.getFill().equals(((LayeredCircles) activeObstacle).c1.arc3.getStroke())) {
-
+        if (ball.circle.getFill().equals(((LayeredCircles) activeObstacle).c1.arc1.getStroke())) {
+            if ((Math.abs(aj - (Obstaclespane.getLayoutY() + 350 + 20)) >= 50) && (Math.abs(aj - (Obstaclespane.getLayoutY() + 350 + 20)) <= 180) && ball.circle.getBoundsInParent().intersects(((LayeredCircles) activeObstacle).c1.arc1.getBoundsInParent())) {
+                Inside = true;
+                Circle circle = new Circle(10, Color.WHITE);
+                circle.setCenterX(280);
+                circle.setCenterY(350);
+                Obstaclespane.getChildren().add(circle);
+                System.out.println("hello");
             } else {
-
+//                                    try {
+//                                        endGameMenu = new EndGameMenu();
+//                                        endGameMenu.initializeGame(stage);
+//                                    } catch (IOException e) {
+//                                        e.printStackTrace();
+//                                    }
+            }
+        } else if (ball.circle.getFill().equals(((LayeredCircles) activeObstacle).c1.arc2.getStroke())) {
+            if ((Math.abs(aj - (Obstaclespane.getLayoutY() + 350 + 20)) >= 50) && (Math.abs(aj - (Obstaclespane.getLayoutY() + 350 + 20)) <= 180) && ball.circle.getBoundsInParent().intersects(((LayeredCircles) activeObstacle).c1.arc2.getBoundsInParent())) {
+                Inside = true;
+                Circle circle = new Circle(10, Color.WHITE);
+                circle.setCenterX(280);
+                circle.setCenterY(350);
+                Obstaclespane.getChildren().add(circle);
+                System.out.println("hello");
+            } else {
+//                                    try {
+//                                        endGameMenu = new EndGameMenu();
+//                                        endGameMenu.initializeGame(stage);
+//                                    } catch (IOException e) {
+//                                        e.printStackTrace();
+//                                    }
+            }
+        } else if (ball.circle.getFill().equals(((LayeredCircles) activeObstacle).c1.arc3.getStroke())) {
+            if ((Math.abs(aj - (Obstaclespane.getLayoutY() + 350 + 20)) >= 50) && (Math.abs(aj - (Obstaclespane.getLayoutY() + 350 + 20)) <= 180) && ball.circle.getBoundsInParent().intersects(((LayeredCircles) activeObstacle).c1.arc3.getBoundsInParent())) {
+                Inside = true;
+                Circle circle = new Circle(10, Color.WHITE);
+                circle.setCenterX(280);
+                circle.setCenterY(350);
+                Obstaclespane.getChildren().add(circle);
+                System.out.println("hello");
+            } else {
+//                                    try {
+//                                        endGameMenu = new EndGameMenu();
+//                                        endGameMenu.initializeGame(stage);
+//                                    } catch (IOException e) {
+//                                        e.printStackTrace();
+//                                    }
+            }
+        } else {
+            if ((Math.abs(aj - (Obstaclespane.getLayoutY() + 350 + 20)) >= 50) && (Math.abs(aj - (Obstaclespane.getLayoutY() + 350 + 20)) <= 180) && ball.circle.getBoundsInParent().intersects(((LayeredCircles) activeObstacle).c1.arc4.getBoundsInParent())) {
+                Inside = true;
+                Circle circle = new Circle(10, Color.WHITE);
+                circle.setCenterX(280);
+                circle.setCenterY(350);
+                Obstaclespane.getChildren().add(circle);
+                System.out.println("hello");
+            } else {
+//                                    try {
+//                                        endGameMenu = new EndGameMenu();
+//                                        endGameMenu.initializeGame(stage);
+//                                    } catch (IOException e) {
+//                                        e.printStackTrace();
+//                                    }
             }
         }
-        return false;
+        System.out.println(Inside);
+        if (Inside && ball.circle.getCenterX() < 350) {
+            if (ball.circle.getFill().equals(((LayeredCircles) activeObstacle).c1.arc1.getStroke())) {
+                if (ball.circle.getBoundsInParent().intersects(((LayeredCircles) activeObstacle).c1.arc1.getBoundsInParent())) {
+                    System.out.println("green");
+                    text4.setText("Passed");
+                }
+            } else if (ball.circle.getFill().equals(((LayeredCircles) activeObstacle).c1.arc2.getStroke())) {
+                if (ball.circle.getBoundsInParent().intersects(((LayeredCircles) activeObstacle).c1.arc2.getBoundsInParent())) {
+                    System.out.println("....");
+                    text4.setText("Passed");
+                }
+            } else if (ball.circle.getFill().equals(((LayeredCircles) activeObstacle).c1.arc3.getStroke())) {
+                if (ball.circle.getBoundsInParent().intersects(((LayeredCircles) activeObstacle).c1.arc3.getBoundsInParent())) {
+                    text4.setText("Passed");
+                }
+            } else {
+                if (ball.circle.getBoundsInParent().intersects(((LayeredCircles) activeObstacle).c1.arc4.getBoundsInParent())) {
+                    text4.setText("Passed");
+                }
+            }
+
+        }
+        return true;
     }
 }
 

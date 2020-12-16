@@ -265,7 +265,7 @@ public class LayeredOcta implements Obstacles {
         System.out.println(b1 + " " + sq1);
         boolean k = (b1.intersects(sq1) && b1.intersects(sq_2)) || (b1.intersects(sq2) && b1.intersects(sq_1));
         if (k) {
-            text4.setText("Yayyy");
+            text4.setText("Yayyy"); return true;
         } else {
             text4.setText("Ohh");
         }
@@ -283,7 +283,7 @@ public class LayeredOcta implements Obstacles {
         System.out.println(b1 + " " + sq1);
         boolean k = (b1.intersects(sq1) && b1.intersects(sq_2)) || (b1.intersects(sq2) && b1.intersects(sq_1));
         if (k) {
-            text4.setText("Yayyy");
+            text4.setText("Yayyy"); return true;
         } else {
             text4.setText("Ohh");
         }
@@ -301,7 +301,7 @@ public class LayeredOcta implements Obstacles {
         System.out.println(b1 + " " + sq1);
         boolean k = (b1.intersects(sq1) && b1.intersects(sq_2)) || (b1.intersects(sq2) && b1.intersects(sq_1));
         if (k) {
-            text4.setText("Yayyy");
+            text4.setText("Yayyy"); return true;
         } else {
             text4.setText("Ohh");
         }
@@ -319,7 +319,7 @@ public class LayeredOcta implements Obstacles {
         System.out.println(b1 + " " + sq1);
         boolean k = (b1.intersects(sq1) && b1.intersects(sq_2)) || (b1.intersects(sq2) && b1.intersects(sq_1));
         if (k) {
-            text4.setText("Yayyy");
+            text4.setText("Yayyy"); return true;
         } else {
             text4.setText("Ohh");
         }

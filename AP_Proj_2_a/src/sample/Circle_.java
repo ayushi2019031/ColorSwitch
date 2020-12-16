@@ -191,19 +191,34 @@ public class Circle_ implements Obstacles {
             if (ball.circle.getBoundsInParent().intersects(((Circle_) activeObstacle).arc1.getBoundsInParent())) {
                 System.out.println("green");
                 text4.setText("Passed");
+                return true;
+            }
+            else {
+                return false;
             }
         } else if (ball.circle.getFill().equals(((Circle_) activeObstacle).arc2.getStroke())) {
             if (ball.circle.getBoundsInParent().intersects(((Circle_) activeObstacle).arc2.getBoundsInParent())) {
                 System.out.println("....");
                 text4.setText("Passed");
+                return true;
             }
+            else {return false;}
         } else if (ball.circle.getFill().equals(((Circle_) activeObstacle).arc3.getStroke())) {
             if (ball.circle.getBoundsInParent().intersects(((Circle_) activeObstacle).arc3.getBoundsInParent())) {
                 text4.setText("Passed");
+                return true;
+            }
+            else {
+                return false;
             }
         } else {
             if (ball.circle.getBoundsInParent().intersects(((Circle_) activeObstacle).arc4.getBoundsInParent())) {
                 text4.setText("Passed");
+                return true;
+            }
+            else {
+                text4.setText("Ohh");
+                return false;
             }
         }
     }

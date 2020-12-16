@@ -24,7 +24,7 @@ public class Ball extends GameElements implements Serializable {
     double velocityY = 0;
     public Ball() throws IOException {
         circle = new Circle(10, Color.RED);
-        circle.setLayoutY(600.0);
+        circle.setLayoutY(610.0);
         circle.setLayoutX(290.0);
         circle.setRadius(10);
         color = 0;
@@ -102,10 +102,10 @@ public class Ball extends GameElements implements Serializable {
     {
         x_pos += velocityX * time;
         y_pos += velocityY * time;
+
     }
-    public void render(Pane pane){
-        this.circle.setTranslateX(x_pos);
-        this.circle.setTranslateY(y_pos);
-        pane.getChildren().add(this.circle);
+    public void render(Pane pane) {
+        circle.setTranslateY(y_pos);
+        pane.getChildren().add(circle);
     }
 }

@@ -220,6 +220,7 @@ initialize(new Rotate());
                 circle.setCenterY(350);
                 Obstaclespane.getChildren().add(circle);
                 System.out.println("hello");
+                return true;
             } else {
 //                                    try {
 //                                        endGameMenu = new EndGameMenu();
@@ -236,6 +237,7 @@ initialize(new Rotate());
                 circle.setCenterY(350);
                 Obstaclespane.getChildren().add(circle);
                 System.out.println("hello");
+                return true;
             } else {
 //                                    try {
 //                                        endGameMenu = new EndGameMenu();
@@ -251,19 +253,35 @@ initialize(new Rotate());
                 if (ball.circle.getBoundsInParent().intersects(((LayeredCircles) activeObstacle).c1.arc1.getBoundsInParent())) {
                     System.out.println("green");
                     text4.setText("Passed");
+                    return true;
+                }
+                else {
+                    text4.setText("Ohh");
                 }
             } else if (ball.circle.getFill().equals(((LayeredCircles) activeObstacle).c1.arc2.getStroke())) {
                 if (ball.circle.getBoundsInParent().intersects(((LayeredCircles) activeObstacle).c1.arc2.getBoundsInParent())) {
                     System.out.println("....");
-                    text4.setText("Passed");
+                    return true;
+                }
+                else {
+                    text4.setText("Ohh");
+
                 }
             } else if (ball.circle.getFill().equals(((LayeredCircles) activeObstacle).c1.arc3.getStroke())) {
                 if (ball.circle.getBoundsInParent().intersects(((LayeredCircles) activeObstacle).c1.arc3.getBoundsInParent())) {
-                    text4.setText("Passed");
+                    return true;
+                }
+                else {
+                    text4.setText("Ohh");
+
                 }
             } else {
                 if (ball.circle.getBoundsInParent().intersects(((LayeredCircles) activeObstacle).c1.arc4.getBoundsInParent())) {
-                    text4.setText("Passed");
+                    return true;
+                }
+                else {
+                    text4.setText("Ohh");
+
                 }
             }
 

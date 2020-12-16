@@ -128,57 +128,73 @@ public class Octa implements Obstacles {
     public void initialize(Rotate rotation){
         animationT = new Timeline(
                 new KeyFrame(Duration.ZERO, new KeyValue(rotation.angleProperty(), 0)),
-                new KeyFrame(Duration.millis(5000), new KeyValue(rotation.angleProperty(), 360)));
+                new KeyFrame(Duration.millis(10000), new KeyValue(rotation.angleProperty(), 360)));
         animationT.setCycleCount(Animation.INDEFINITE);
         animationT.play();
     }
     public boolean isObstacleCrossed(Game game, Ball ball, AnchorPane Obstaclespane, Obstacles activeObstacle, Stage stage, boolean[] breking_bad, Text text4){
+        Bounds b1 = ball.circle.localToScene(ball.circle.getBoundsInLocal());
+        Bounds sq1 = ((Octa) activeObstacle).l0.localToScene(((Octa) activeObstacle).l0.getBoundsInLocal());
+        Bounds sq2 = ((Octa) activeObstacle).l5.localToScene(((Octa) activeObstacle).l5.getBoundsInLocal());
+        Bounds sq3 = ((Octa) activeObstacle).l2.localToScene(((Octa) activeObstacle).l2.getBoundsInLocal());
+        Bounds sq4 = ((Octa) activeObstacle).l6.localToScene(((Octa) activeObstacle).l6.getBoundsInLocal());
+        Bounds sq5 = ((Octa) activeObstacle).l3.localToScene(((Octa) activeObstacle).l3.getBoundsInLocal());
+        Bounds sq6 = ((Octa) activeObstacle).l4.localToScene(((Octa) activeObstacle).l4.getBoundsInLocal());
+        Bounds sq7 = ((Octa) activeObstacle).l1.localToScene(((Octa) activeObstacle).l1.getBoundsInLocal());
+        Bounds sq8 = ((Octa) activeObstacle).l7.localToScene(((Octa) activeObstacle).l7.getBoundsInLocal());
         if (ball.color == 0) {
-            Bounds b1 = ball.circle.localToScene(ball.circle.getBoundsInLocal());
-            Bounds sq1 = ((Octa) activeObstacle).l0.localToScene(((Octa) activeObstacle).l0.getBoundsInLocal());
-            Bounds sq2 = ((Octa) activeObstacle).l5.localToScene(((Octa) activeObstacle).l5.getBoundsInLocal());
+
             System.out.println(b1 + " " + sq1);
-            boolean k = b1.intersects(sq1) || b1.intersects(sq2);
-            if (k) {
+            boolean k1 = b1.intersects(sq1) || b1.intersects(sq2);
+            boolean k2 = b1.intersects(sq3) || b1.intersects(sq4) || b1.intersects(sq5) ||b1.intersects(sq6) || b1.intersects(sq7)|| b1.intersects(sq8);
+            if (k1) {
                 text4.setText("Yayyy");
-            } else {
+            } else if (k2) {
                 text4.setText("Ohh");
+                return false;
+            }
+            else {
+                text4.setText("NA");
             }
         }
         if (ball.color == 1) {
-            Bounds b1 = ball.circle.localToScene(ball.circle.getBoundsInLocal());
-            Bounds sq1 = ((Octa) activeObstacle).l2.localToScene(((Octa) activeObstacle).l2.getBoundsInLocal());
-            Bounds sq2 = ((Octa) activeObstacle).l6.localToScene(((Octa) activeObstacle).l6.getBoundsInLocal());
-            System.out.println(b1 + " " + sq1);
-            boolean k = b1.intersects(sq1) || b1.intersects(sq2);
-            if (k) {
+
+            boolean k1 = b1.intersects(sq3) || b1.intersects(sq4);
+            boolean k2 = b1.intersects(sq1) || b1.intersects(sq2) || b1.intersects(sq5) ||b1.intersects(sq6) || b1.intersects(sq7)|| b1.intersects(sq8);
+            if (k1) {
                 text4.setText("Yayyy");
-            } else {
+            } else if (k2) {
                 text4.setText("Ohh");
+                return false;
+            }
+            else {
+                text4.setText("NA");
             }
         }
         if (ball.color == 2) {
-            Bounds b1 = ball.circle.localToScene(ball.circle.getBoundsInLocal());
-            Bounds sq1 = ((Octa) activeObstacle).l3.localToScene(((Octa) activeObstacle).l3.getBoundsInLocal());
-            Bounds sq2 = ((Octa) activeObstacle).l4.localToScene(((Octa) activeObstacle).l4.getBoundsInLocal());
-            System.out.println(b1 + " " + sq1);
-            boolean k = b1.intersects(sq1) || b1.intersects(sq2);
-            if (k) {
+            boolean k1 = b1.intersects(sq5) || b1.intersects(sq6);
+            boolean k2 = b1.intersects(sq1) || b1.intersects(sq2) || b1.intersects(sq3) ||b1.intersects(sq4) || b1.intersects(sq7)|| b1.intersects(sq8);
+            if (k1) {
                 text4.setText("Yayyy");
-            } else {
+            } else if (k2) {
                 text4.setText("Ohh");
+                return false;
+            }
+            else {
+                text4.setText("NA");
             }
         }
         if (ball.color == 3) {
-            Bounds b1 = ball.circle.localToScene(ball.circle.getBoundsInLocal());
-            Bounds sq1 = ((Octa) activeObstacle).l1.localToScene(((Octa) activeObstacle).l1.getBoundsInLocal());
-            Bounds sq2 = ((Octa) activeObstacle).l7.localToScene(((Octa) activeObstacle).l7.getBoundsInLocal());
-            System.out.println(b1 + " " + sq1);
-            boolean k = b1.intersects(sq1) || b1.intersects(sq2);
-            if (k) {
+            boolean k1 = b1.intersects(sq7) || b1.intersects(sq8);
+            boolean k2 = b1.intersects(sq1) || b1.intersects(sq2) || b1.intersects(sq3) ||b1.intersects(sq4) || b1.intersects(sq5)|| b1.intersects(sq6);
+            if (k1) {
                 text4.setText("Yayyy");
-            } else {
+            } else if (k2) {
                 text4.setText("Ohh");
+                return false;
+            }
+            else {
+                text4.setText("NA");
             }
         }
         return true;

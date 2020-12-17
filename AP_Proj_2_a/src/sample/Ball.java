@@ -16,21 +16,24 @@ import java.io.Serializable;
 
 public class Ball extends GameElements implements Serializable {
     int color;
-    Pane pane;
-    Stage stage;
-    Scene scene;
-    Circle circle;
+    transient Pane pane;
+    transient Stage stage;
+    transient Scene scene;
+    transient Circle circle;
     double velocityX = 0;
     double velocityY = 0;
-    public Ball() throws IOException {
-        circle = new Circle(10, Color.RED);
-        circle.setLayoutY(610.0);
+
+    public Ball() throws IOException{
+
+    }
+
+
+    public void setPane(Pane pane, Scene scene, Stage stage){
+        circle = new Circle(10, Color.GREEN);
+        circle.setLayoutY(600.0);
         circle.setLayoutX(290.0);
         circle.setRadius(10);
-        color = 0;
-        setBallColor(color);
-    }
-    public void setPane(Pane pane, Scene scene, Stage stage){
+//        color = 3;
         this.pane = pane;
         this.scene = scene;
         this.stage = stage;
@@ -41,8 +44,10 @@ public class Ball extends GameElements implements Serializable {
             @Override
             public void handle(KeyEvent keyEvent) {
                 KeyCode t = keyEvent.getCode();
+                System.out.println("Ooho");
                 if (t == KeyCode.UP){
                     circle.setLayoutY(circle.getLayoutY() - 50);
+                    System.out.println("O o o O ");
                 }
             }
         });
@@ -54,7 +59,7 @@ public class Ball extends GameElements implements Serializable {
         });
         pane.getChildren().add(this.circle);
         stage.setScene(scene);
-
+        circle.requestFocus();
     }
     public void jump(){
         circle.setLayoutY(circle.getLayoutY() -10);
@@ -67,23 +72,23 @@ public class Ball extends GameElements implements Serializable {
         return color;
     }
     public void setBallColor(int color){
+        this.color = color;
         if(color == 0){
             circle.setFill(Color.RED);
+            this.color = 0;
         }
         else if(color == 1){
             circle.setFill(Color.BLUE);
+            this.color = 1;
         }
         else if(color==2){
             circle.setFill(Color.YELLOW);
+            this.color = 2;
         }
         else{
             circle.setFill(Color.GREEN);
+            this.color = 3;
         }
-    }
-    public void setPosition(double x, double y)
-    {
-        x_pos = x;
-        y_pos = y;
     }
 
     public void setVelocity(double x, double y)
@@ -102,10 +107,11 @@ public class Ball extends GameElements implements Serializable {
     {
         x_pos += velocityX * time;
         y_pos += velocityY * time;
-
     }
-    public void render(Pane pane) {
-        circle.setTranslateY(y_pos);
-        pane.getChildren().add(circle);
+    public void render(Pane pane){
+        this.circle.setTranslateX(x_pos);
+        this.circle.setTranslateY(y_pos);
+        pane.getChildren().add(this.circle);
+        //System.out.println("Lets see ab : " + y_pos);
     }
 }

@@ -1,37 +1,37 @@
 package sample;
 
 import javafx.animation.*;
+import javafx.geometry.Bounds;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Arc;
 import javafx.scene.shape.ArcType;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Shape;
 import javafx.scene.text.Text;
+import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-public class Circle_ implements Obstacles {
+import java.io.Serializable;
 
-    Arc arc1;
-    Arc arc2;
-    Arc arc3;
-    Arc arc4;
+public class Circle_ implements Obstacles , Serializable {
+    static int id = 0;
+    transient Arc arc1;transient  Arc arc2;transient  Arc arc3;transient  Arc arc4;
+    transient Timeline animation1,  animation2, animation3,  animation4;
 
-    public Circle_() {
-        arc1 = new Arc();
-        arc2 = new Arc();
-        arc3 = new Arc();
-        arc4 = new Arc();
+    public  Circle_(){
+        arc1 = new Arc(); arc2 = new Arc(); arc3 = new Arc(); arc4 = new Arc();
         System.out.println("Initialised");
-    }
+    }  public int getId(){return id;};
 
-    public void display(AnchorPane root) {
-
+    public void display(AnchorPane root, Game game){
+        arc1 = new Arc(); arc2 = new Arc(); arc3 = new Arc(); arc4 = new Arc();
         arc1.setCenterX(290);
         arc1.setCenterY(370.0);
         arc1.setLength(100.0);
-        arc1.setRadiusX(150);
-        arc1.setRadiusY(150);
+        arc1.setRadiusX(90);
+        arc1.setRadiusY(90);
         arc1.setStartAngle(40);
         arc1.setFill(Color.TRANSPARENT);
         arc1.setStroke(Color.GREEN);
@@ -41,8 +41,8 @@ public class Circle_ implements Obstacles {
         arc2.setCenterX(290.0);
         arc2.setCenterY(370.0);
         arc2.setLength(100);
-        arc2.setRadiusX(150);
-        arc2.setRadiusY(150);
+        arc2.setRadiusX(90);
+        arc2.setRadiusY(90);
         arc2.setStartAngle(130);
         arc2.setFill(Color.TRANSPARENT);
         arc2.setStroke(Color.RED);
@@ -52,8 +52,8 @@ public class Circle_ implements Obstacles {
         arc3.setCenterX(290.0);
         arc3.setCenterY(370.0);
         arc3.setLength(100);
-        arc3.setRadiusX(150);
-        arc3.setRadiusY(150);
+        arc3.setRadiusX(90);
+        arc3.setRadiusY(90);
         arc3.setStartAngle(-140.4);
         arc3.setFill(Color.TRANSPARENT);
         arc3.setStroke(Color.BLUE);
@@ -63,8 +63,8 @@ public class Circle_ implements Obstacles {
         arc4.setCenterX(290.0);
         arc4.setCenterY(370.0);
         arc4.setLength(90);
-        arc4.setRadiusX(150);
-        arc4.setRadiusY(150);
+        arc4.setRadiusX(90);
+        arc4.setRadiusY(90);
         arc4.setStartAngle(-50);
         arc4.setFill(Color.TRANSPARENT);
         arc4.setStroke(Color.YELLOW);
@@ -76,152 +76,102 @@ public class Circle_ implements Obstacles {
         root.getChildren().add(arc3);
         root.getChildren().add(arc4);
 
-        initialize(arc1);
-        initialize(arc2);
-        initialize(arc3);
-        initialize(arc4);
-//
-//        root.setStyle
-//                (
-//                        "-fx-padding: 10;" +
-//                                "-fx-border-style: solid inside;" +
-//                                "-fx-border-width: 2;" +
-//                                "-fx-border-insets: 5;" +
-//                                "-fx-border-radius: 5;" +
-//                                "-fx-border-color: blue;"
-//                );
+        initialize(animation1, arc1, game);
+        initialize(animation2, arc2, game);
+        initialize(animation3, arc3, game);
+        initialize(animation4, arc4, game);
+
     }
 
-    public void initialize(Arc arc) {
-        Timeline animation = new Timeline(
-                new KeyFrame(Duration.ZERO, new KeyValue(arc.startAngleProperty(), arc.getStartAngle(), Interpolator.LINEAR)),
-                new KeyFrame(Duration.seconds(3), new KeyValue(arc.startAngleProperty(), arc.getStartAngle() - 360, Interpolator.LINEAR))
-        );
+    public void initialize(Timeline animation, Arc arc, Game game) {
+        int x = game.score;
+        x = x%7;
+        if(5-x>1){
+            animation = new Timeline(
+                    new KeyFrame(Duration.ZERO, new KeyValue(arc.startAngleProperty(), arc.getStartAngle(), Interpolator.LINEAR)),
+                    new KeyFrame(Duration.seconds(5 - x), new KeyValue(arc.startAngleProperty(), arc.getStartAngle() - 360, Interpolator.LINEAR))
+            );}
+        else{
+            animation = new Timeline(
+                    new KeyFrame(Duration.ZERO, new KeyValue(arc.startAngleProperty(), arc.getStartAngle(), Interpolator.LINEAR)),
+                    new KeyFrame(Duration.seconds(5), new KeyValue(arc.startAngleProperty(), arc.getStartAngle() - 360, Interpolator.LINEAR))
+            );
+        }
         animation.setCycleCount(Animation.INDEFINITE);
         animation.play();
 
     }
-    public boolean isObstacleCrossed(Game game, Ball ball, AnchorPane Obstaclespane, Obstacles activeObstacle, Stage stage, boolean[] breking_bad, Text text4) {
-    boolean Inside = false;
-        double aj = ball.circle.getLayoutY() + ball.circle.getTranslateY();
-                            if(ball.circle.getFill().equals(((Circle_) activeObstacle).arc1.getStroke()))
 
-    {
-        if ((Math.abs(aj - (Obstaclespane.getLayoutY() + 350 + 20)) >= 50) && (Math.abs(aj - (Obstaclespane.getLayoutY() + 350 + 20)) <= 180) && ball.circle.getBoundsInParent().intersects(((Circle_) activeObstacle).arc1.getBoundsInParent())) {
-            Inside = true;
-            Circle circle = new Circle(10, Color.WHITE);
-            circle.setCenterX(280);
-            circle.setCenterY(350);
-            Obstaclespane.getChildren().add(circle);
-            System.out.println("hello");
-        } else {
-//                                    try {
-//                                        endGameMenu = new EndGameMenu();
-//                                        endGameMenu.initializeGame(stage);
-//                                    } catch (IOException e) {
-//                                        e.printStackTrace();
-//                                    }
+    public boolean isObstacleCrossed(Game game, Circle_ activeObstacle, Ball ball, AnchorPane Obstaclespane, Stage stage, boolean[] breking_bad, Text text4) {
+        Shape s1 = Shape.intersect(ball.circle ,arc2);
+        Shape s2 = Shape.intersect(ball.circle, arc3);
+        Shape s3 = Shape.intersect(ball.circle, arc4);
+        Shape s4 = Shape.intersect(ball.circle, arc1);
+        if (ball.color == 0) {
+            boolean k1 = s1.getBoundsInLocal().getWidth() == -1;
+            boolean k2 = (s2.getBoundsInLocal().getWidth() == -1) && (s3.getBoundsInLocal().getWidth() == -1) && (s4.getBoundsInLocal().getWidth() == -1);
+
+            if (!k1 && k2) {
+//                text4.setText("Yayyy");
+            } else if (k2){
+//                text4.setText("Ohh");
+                return false;
+            }
+            else {
+//                text4.setText("NA");
+            }
+
         }
-    } else if(ball.circle.getFill().
 
-    equals(((Circle_) activeObstacle).arc2.getStroke()))
+        else if(ball.color ==1)
 
-    {
-        if ((Math.abs(aj - (Obstaclespane.getLayoutY() + 350 + 20)) >= 50) && (Math.abs(aj - (Obstaclespane.getLayoutY() + 350 + 20)) <= 180) && ball.circle.getBoundsInParent().intersects(((Circle_) activeObstacle).arc2.getBoundsInParent())) {
-            Inside = true;
-            Circle circle = new Circle(10, Color.WHITE);
-            circle.setCenterX(280);
-            circle.setCenterY(350);
-            Obstaclespane.getChildren().add(circle);
-            System.out.println("hello");
-        } else {
-//                                    try {
-//                                        endGameMenu = new EndGameMenu();
-//                                        endGameMenu.initializeGame(stage);
-//                                    } catch (IOException e) {
-//                                        e.printStackTrace();
-//                                    }
+        {
+            boolean k1 = s2.getBoundsInLocal().getWidth() == -1;
+            boolean k2 = (s1.getBoundsInLocal().getWidth() == -1) && (s3.getBoundsInLocal().getWidth() == -1) && (s4.getBoundsInLocal().getWidth() == -1);
+
+            if (!k1 && k2) {
+//                text4.setText("Yayyy");
+            } else if (k2){
+//                text4.setText("Ohh");
+                return false;
+            }
+            else {
+//                text4.setText("NA");
+            }
         }
-    } else if(ball.circle.getFill().
+        else if(ball.color ==2)
 
-    equals(((Circle_) activeObstacle).arc3.getStroke()))
+        {
+            boolean k1 = s3.getBoundsInLocal().getWidth() == -1;
+            boolean k2 = (s2.getBoundsInLocal().getWidth() == -1) && (s1.getBoundsInLocal().getWidth() == -1) && (s4.getBoundsInLocal().getWidth() == -1);
 
-    {
-        if ((Math.abs(aj - (Obstaclespane.getLayoutY() + 350 + 20)) >= 50) && (Math.abs(aj - (Obstaclespane.getLayoutY() + 350 + 20)) <= 180) && ball.circle.getBoundsInParent().intersects(((Circle_) activeObstacle).arc3.getBoundsInParent())) {
-            Inside = true;
-            Circle circle = new Circle(10, Color.WHITE);
-            circle.setCenterX(280);
-            circle.setCenterY(350);
-            Obstaclespane.getChildren().add(circle);
-            System.out.println("hello");
-        } else {
-//                                    try {
-//                                        endGameMenu = new EndGameMenu();
-//                                        endGameMenu.initializeGame(stage);
-//                                    } catch (IOException e) {
-//                                        e.printStackTrace();
-//                                    }
+            if (!k1 && k2) {
+//                text4.setText("Yayyy");
+            } else if (k2){
+//                text4.setText("Ohh");
+                return false;
+            }
+            else {
+//                text4.setText("NA");
+            }
         }
-    } else
+        else
 
-    {
-        if ((Math.abs(aj - (Obstaclespane.getLayoutY() + 350 + 20)) >= 50) && (Math.abs(aj - (Obstaclespane.getLayoutY() + 350 + 20)) <= 180) && ball.circle.getBoundsInParent().intersects(((Circle_) activeObstacle).arc4.getBoundsInParent())) {
-            Inside = true;
-            Circle circle = new Circle(10, Color.WHITE);
-            circle.setCenterX(280);
-            circle.setCenterY(350);
-            Obstaclespane.getChildren().add(circle);
-            System.out.println("hello");
-        } else {
-//                                    try {
-//                                        endGameMenu = new EndGameMenu();
-//                                        endGameMenu.initializeGame(stage);
-//                                    } catch (IOException e) {
-//                                        e.printStackTrace();
-//                                    }
+        {
+            boolean k1 = s4.getBoundsInLocal().getWidth() == -1;
+            boolean k2 = (s2.getBoundsInLocal().getWidth() == -1) && (s3.getBoundsInLocal().getWidth() == -1) && (s1.getBoundsInLocal().getWidth() == -1);
+
+            if (!k1 && k2) {
+//                text4.setText("Yayyy");
+            } else if (k2){
+//                text4.setText("Ohh");
+                return false;
+            }
+            else {
+//                text4.setText("NA");
+            }
+
         }
+        return true;
     }
-                            System.out.println(Inside);
-                            System.out.println(ball.circle.getLayoutY()+320+" "+Obstaclespane.getLayoutY());
-                            if(Inside &&ball.circle.getLayoutY() < 370&&ball.circle.getLayoutY()>0)
-
-    {
-        System.out.println("Ooooh");
-        if (ball.circle.getFill().equals(((Circle_) activeObstacle).arc1.getStroke())) {
-            if (ball.circle.getBoundsInParent().intersects(((Circle_) activeObstacle).arc1.getBoundsInParent())) {
-                System.out.println("green");
-                text4.setText("Passed");
-                return true;
-            }
-            else {
-                return false;
-            }
-        } else if (ball.circle.getFill().equals(((Circle_) activeObstacle).arc2.getStroke())) {
-            if (ball.circle.getBoundsInParent().intersects(((Circle_) activeObstacle).arc2.getBoundsInParent())) {
-                System.out.println("....");
-                text4.setText("Passed");
-                return true;
-            }
-            else {return false;}
-        } else if (ball.circle.getFill().equals(((Circle_) activeObstacle).arc3.getStroke())) {
-            if (ball.circle.getBoundsInParent().intersects(((Circle_) activeObstacle).arc3.getBoundsInParent())) {
-                text4.setText("Passed");
-                return true;
-            }
-            else {
-                return false;
-            }
-        } else {
-            if (ball.circle.getBoundsInParent().intersects(((Circle_) activeObstacle).arc4.getBoundsInParent())) {
-                text4.setText("Passed");
-                return true;
-            }
-            else {
-                text4.setText("Ohh");
-                return false;
-            }
-        }
-    }
-                            return true;
-}
 }

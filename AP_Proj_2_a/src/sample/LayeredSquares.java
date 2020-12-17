@@ -6,22 +6,24 @@ import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ObservableValue;
-import javafx.geometry.Bounds;
 import javafx.scene.Group;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
 import javafx.scene.shape.StrokeLineCap;
 import javafx.scene.text.Text;
 import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-public class LayeredSquares implements Obstacles{
-    public Timeline animationT;
-    Rectangle l1; Rectangle l2; Rectangle l3; Rectangle l4;
-    Rectangle line1; Rectangle line2; Rectangle line3; Rectangle line4;
+import java.io.Serializable;
 
+public class LayeredSquares implements Obstacles, Serializable {
+    public transient Timeline animationT;static int id = 3;
+    transient Rectangle l1;transient  Rectangle l2;transient  Rectangle l3;transient  Rectangle l4;
+    transient Rectangle line1;transient  Rectangle line2;transient  Rectangle line3;transient  Rectangle line4;
+    public int getId(){return id;};
     public LayeredSquares(){
         l1 = new Rectangle();
         l2 = new Rectangle();
@@ -33,8 +35,15 @@ public class LayeredSquares implements Obstacles{
         line4 = new Rectangle();
     }
 
-    public void display(AnchorPane pane){
-
+    public void display(AnchorPane pane, Game game){
+        l1 = new Rectangle();
+        l2 = new Rectangle();
+        l3 = new Rectangle();
+        l4 = new Rectangle();
+        line1 = new Rectangle();
+        line2 = new Rectangle();
+        line3 = new Rectangle();
+        line4 = new Rectangle();
         l1.setWidth(147);
         l1.setHeight(13);
         l1.setLayoutX(206);
@@ -137,67 +146,107 @@ public class LayeredSquares implements Obstacles{
         group.setLayoutX(0);group.setLayoutY(0);
         group.setTranslateX(0);
 
+        int x = game.score;
+        x = x%7;
+
         Timeline timeRectangle2 = new Timeline(
                 new KeyFrame(Duration.ZERO, new KeyValue(rotation2.angleProperty(), 0)),
-                new KeyFrame(Duration.millis(3000), new KeyValue(rotation2.angleProperty(), 360)));
+                new KeyFrame(Duration.millis(10000-x*1000), new KeyValue(rotation2.angleProperty(), 360)));
         timeRectangle2.setCycleCount(Animation.INDEFINITE);
         timeRectangle2.play();
         pane.getChildren().add(group);
 
         Timeline timeRectangle = new Timeline(
                 new KeyFrame(Duration.ZERO, new KeyValue(rotation.angleProperty(), 0)),
-                new KeyFrame(Duration.millis(3000), new KeyValue(rotation.angleProperty(), 360)));
+                new KeyFrame(Duration.millis(10000-x*1000), new KeyValue(rotation.angleProperty(), 360)));
         timeRectangle.setCycleCount(Animation.INDEFINITE);
         timeRectangle.play();
         pane.getChildren().add(group2);
 
 
     }
-    public boolean isObstacleCrossed(Game game, Ball ball, AnchorPane Obstaclespane, Obstacles activeObstacle, Stage stage, boolean[] breking_bad, Text text4){
-        Bounds b1 = ball.circle.localToScene(ball.circle.getBoundsInLocal());
+    public boolean isObstacleCrossed(Game game, LayeredSquares activeObstacle, Ball ball, AnchorPane Obstaclespane, Stage stage, boolean[] breking_bad, Text text4) {
+
+        Shape s1 = Shape.intersect(ball.circle ,l1);
+        Shape s11 = Shape.intersect(ball.circle, line1);
+        Shape s2 = Shape.intersect(ball.circle, l2);
+        Shape s22 = Shape.intersect(ball.circle, line2);
+        Shape s3 = Shape.intersect(ball.circle, l3);
+        Shape s33 = Shape.intersect(ball.circle, line3);
+        Shape s4 = Shape.intersect(ball.circle, l4);
+        Shape s44 = Shape.intersect(ball.circle, line4);
         if (ball.color == 0) {
-            Bounds sq1 = ((LayeredSquares) activeObstacle).l1.localToScene(((LayeredSquares) activeObstacle).l1.getBoundsInLocal());
-            Bounds sq2 = ((LayeredSquares) activeObstacle).line1.localToScene(((LayeredSquares) activeObstacle).line1.getBoundsInLocal());
-            System.out.println(b1 + " " + sq1);
-            boolean k = b1.intersects(sq1) && b1.intersects(sq2);
-            if (k) {
-                text4.setText("Yayyy");
-            } else {
-                text4.setText("Ohh");
+            boolean k1 = s1.getBoundsInLocal().getWidth() == -1;
+            boolean k11 = s11.getBoundsInLocal().getWidth() == -1;
+            boolean k2 = (s2.getBoundsInLocal().getWidth() == -1) && (s3.getBoundsInLocal().getWidth() == -1) && (s4.getBoundsInLocal().getWidth() == -1)
+                    && (s22.getBoundsInLocal().getWidth() == -1) && (s33.getBoundsInLocal().getWidth() == -1) && (s44.getBoundsInLocal().getWidth() == -1);
+
+            if (!(k1||k11) && k2) {
+//                text4.setText("Yayyyyyyyyyyyyyyyyyyyyyyyyyyyy");
+            } else if (k2){
+//                text4.setText("Ohh");
+                return false;
+            }
+            else {
+//                text4.setText("NA");
+            }
+
+        }
+
+        else if(ball.color ==1)
+
+        {
+            boolean k1 = s2.getBoundsInLocal().getWidth() == -1;
+            boolean k11 = s22.getBoundsInLocal().getWidth() == -1;
+            boolean k2 = (s1.getBoundsInLocal().getWidth() == -1) && (s3.getBoundsInLocal().getWidth() == -1) && (s4.getBoundsInLocal().getWidth() == -1)
+                    && (s11.getBoundsInLocal().getWidth() == -1) && (s33.getBoundsInLocal().getWidth() == -1) && (s44.getBoundsInLocal().getWidth() == -1);
+
+            if (!(k1||k11) && k2) {
+//                text4.setText("Yayyyyyyyyyyyyyyyyyyyyy");
+            } else if (k2){
+//                text4.setText("Ohh");
+                return false;
+            }
+            else {
+//                text4.setText("NA");
             }
         }
-        if (ball.color == 1) {
-            Bounds sq1 = ((LayeredSquares) activeObstacle).l2.localToScene(((LayeredSquares) activeObstacle).l2.getBoundsInLocal());
-            Bounds sq2 = ((LayeredSquares) activeObstacle).line2.localToScene(((LayeredSquares) activeObstacle).line2.getBoundsInLocal());
-            System.out.println(b1 + " " + sq1);
-            boolean k = b1.intersects(sq1) && b1.intersects(sq2);
-            if (k) {
-                text4.setText("Yayyy");
-            } else {
-                text4.setText("Ohh");
+        else if(ball.color ==2)
+
+        {
+            boolean k1 = s3.getBoundsInLocal().getWidth() == -1;
+            boolean k11 = s33.getBoundsInLocal().getWidth() == -1;
+            boolean k2 = (s1.getBoundsInLocal().getWidth() == -1) && (s2.getBoundsInLocal().getWidth() == -1) && (s4.getBoundsInLocal().getWidth() == -1)
+                    && (s11.getBoundsInLocal().getWidth() == -1) && (s22.getBoundsInLocal().getWidth() == -1) && (s44.getBoundsInLocal().getWidth() == -1);
+
+            if (!(k1||k11) && k2)  {
+//                text4.setText("Yayyyyyyyyyyyyyyyyyyyyyy");
+            } else if (k2){
+//                text4.setText("Ohh");
+                return false;
+            }
+            else {
+//                text4.setText("NA");
             }
         }
-        if (ball.color == 2) {
-            Bounds sq1 = ((LayeredSquares) activeObstacle).l3.localToScene(((LayeredSquares) activeObstacle).l3.getBoundsInLocal());
-            Bounds sq2 = ((LayeredSquares) activeObstacle).line3.localToScene(((LayeredSquares) activeObstacle).line3.getBoundsInLocal());
-            System.out.println(b1 + " " + sq1);
-            boolean k = b1.intersects(sq1) && b1.intersects(sq2);
-            if (k) {
-                text4.setText("Yayyy");
-            } else {
-                text4.setText("Ohh");
+        else
+
+        {
+            boolean k1 = s4.getBoundsInLocal().getWidth() == -1;
+            boolean k11 = s44.getBoundsInLocal().getWidth() == -1;
+            boolean k2 = (s1.getBoundsInLocal().getWidth() == -1) && (s3.getBoundsInLocal().getWidth() == -1) && (s2.getBoundsInLocal().getWidth() == -1)
+                    && (s11.getBoundsInLocal().getWidth() == -1) && (s33.getBoundsInLocal().getWidth() == -1) && (s22.getBoundsInLocal().getWidth() == -1);
+
+            if (!(k1||k11) && k2) {
+//                text4.setText("Yayyyyyyyyyyyyyyyyyyyy");
+            } else if (k2){
+//                text4.setText("Ohh");
+                return false;
             }
-        }
-        if (ball.color == 3) {
-            Bounds sq1 = ((LayeredSquares) activeObstacle).l4.localToScene(((LayeredSquares) activeObstacle).l4.getBoundsInLocal());
-            Bounds sq2 = ((LayeredSquares) activeObstacle).line4.localToScene(((LayeredSquares) activeObstacle).line4.getBoundsInLocal());
-            System.out.println(b1 + " " + sq1);
-            boolean k = b1.intersects(sq1) && b1.intersects(sq2);
-            if (k) {
-                text4.setText("Yayyy");
-            } else {
-                text4.setText("Ohh");
+            else {
+//                text4.setText("NA");
             }
+
         }
         return true;
     }

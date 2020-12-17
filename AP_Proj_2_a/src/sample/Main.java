@@ -1,5 +1,5 @@
 package sample;
-import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
+
 import javafx.application.Application;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -48,25 +48,41 @@ import javafx.util.Duration;
 import java.io.*;
 import java.net.URL;
 import java.nio.file.DirectoryStream;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
 public class Main extends Application implements Serializable {
-    public ArrayList<Game> list = new ArrayList<>();
-    public Game activeGame;
-    public ArrayList<Game> savedGamesList = new ArrayList<>();
-    ObservableList<Game> observableListSavedGames = FXCollections.observableArrayList(savedGamesList);
-    ListView<Game> listView = new ListView<Game>(observableListSavedGames);
-    Stage ori;
-    Stage primaryStage;
+    public ArrayList<Game> list ;
+
+    public ArrayList<Game> savedGamesList;
+    transient ObservableList<Game> observableListSavedGames;
+    transient ListView<Game> listView;
+    transient Stage ori;
+    transient Stage primaryStage;
 
 
 
-
+    public void music(){
+        String s = "C:/Users/ayush/IdeaProjects/AP_Proj_2_a/src/sample/music.mp3";
+        Media h = new Media(Paths.get(s).toUri().toString());
+        MediaPlayer mediaPlayer = new MediaPlayer(h);
+        mediaPlayer.setOnEndOfMedia(new Runnable() {
+            public void run() {
+                mediaPlayer.seek(Duration.ZERO);
+            }
+        });
+        mediaPlayer.play();
+    }
     @Override
     public void start(Stage primaryStage) throws Exception{
+        music();
+        list = new ArrayList<>();
+        savedGamesList = new ArrayList<>();
+        observableListSavedGames = FXCollections.observableArrayList(savedGamesList);
+        listView  = new ListView<>(observableListSavedGames);
         //Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
         Button btn = new Button("Aj");
         showGameMenu(primaryStage);
@@ -79,6 +95,7 @@ public class Main extends Application implements Serializable {
         File fi = new File(url);
         String tmp = fi.getCanonicalPath();
         tmp = tmp.replaceAll("\\\\", "/");
+
 //        final Media media = new Media("file:///" + System.getProperty("user.dir").replace('\\', '/') + "/" + "parapara.mp3");
 //        final MediaPlayer mediaPlayer = new MediaPlayer(media);
 
@@ -568,6 +585,8 @@ public class Main extends Application implements Serializable {
                 System.out.println("New Game Started");
                 try {
                     Game game = new Game(app);
+                    game.initializeGame();
+
                     ori.close();
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -664,30 +683,31 @@ public class Main extends Application implements Serializable {
         animation.setCycleCount(Animation.INDEFINITE);
         animation.play();
     }
-    public void deserialise(String filename) throws IOException, ClassNotFoundException {
-        FileInputStream file = new FileInputStream(filename);
-        ObjectInputStream in = new ObjectInputStream(file);
-
-        // Method for deserialization of object
-        Game object1 = (Game) in.readObject();
-
-        in.close();
-        file.close();
-
-        System.out.println("Object has been deserialized ");
-        object1.initializeGame();
-    }
-    public void update() throws IOException, ClassNotFoundException {
-        File u = new File(System.getProperty("user.dir"));
-        File[] files = u.listFiles();
-        for (int i = 0; i < files.length; i++){
-            System.out.println(files[i].toString());
-            String g = files[i].toString().substring(files[i].toString().lastIndexOf(".") + 1, files[i].toString().length());
-            System.out.println(g);
-            if (g.equals("txt")) {
-                System.out.println(files[i].toString());
-                deserialise(files[i].toString());
-            }
-        }
-    }
+//    public void deserialise(String filename) throws IOException, ClassNotFoundException {
+//        String ref  =  System.getProperty("user.dir") + "/" + filename;
+//        FileInputStream file = new FileInputStream(ref);
+//        ObjectInputStream in = new ObjectInputStream(file);
+//
+//        // Method for deserialization of object
+//        Game object1 = (Game) in.readObject();
+//        object1.initializeGame();
+//        in.close();
+//        file.close();
+//
+//        System.out.println("Object has been deserialized ");
+//        object1.initializeGame();
+//    }
+//    public void update() throws IOException, ClassNotFoundException {
+//        File u = new File(System.getProperty("user.dir"));
+//        File[] files = u.listFiles();
+//        for (int i = 0; i < files.length; i++){
+//            System.out.println(files[i].toString());
+//            String g = files[i].toString().substring(files[i].toString().lastIndexOf(".") + 1, files[i].toString().length());
+//            System.out.println(g);
+//            if (g.equals("txt")) {
+//                System.out.println(files[i].toString());
+//                deserialise(files[i].toString());
+//            }
+//        }
+//    }
 }

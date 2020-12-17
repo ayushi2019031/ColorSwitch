@@ -13,17 +13,20 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
 import javafx.scene.shape.StrokeLineCap;
 import javafx.scene.text.Text;
 import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-public class Octa implements Obstacles {
-    Rectangle l0; Rectangle l1; Rectangle l2; Rectangle l3;
-    Rectangle l4; Rectangle l5; Rectangle l6; Rectangle l7;
-    public Timeline animationT;
+import java.io.Serializable;
 
+public class Octa implements Obstacles , Serializable {
+    transient Rectangle l0; transient Rectangle l1;transient  Rectangle l2;transient  Rectangle l3;
+    transient Rectangle l4;transient  Rectangle l5;transient  Rectangle l6;transient  Rectangle l7;
+    public transient Timeline animationT;
+    static int id = 4;  public int getId(){return id;};
     public Octa(){
         l0 = new Rectangle();
         l1 = new Rectangle();
@@ -35,8 +38,15 @@ public class Octa implements Obstacles {
         l7 = new Rectangle();
     }
 
-    public void display(AnchorPane Pane){
-
+    public void display(AnchorPane Pane, Game game){
+        l0 = new Rectangle();
+        l1 = new Rectangle();
+        l2 = new Rectangle();
+        l3 = new Rectangle();
+        l4 = new Rectangle();
+        l5 = new Rectangle();
+        l6 = new Rectangle();
+        l7 = new Rectangle();
         //  Line l1 = new Line();
         l0.setWidth(14);
         l0.setHeight(84);
@@ -122,82 +132,101 @@ public class Octa implements Obstacles {
         rotation.pivotXProperty().bind(obsInt1);
         rotation.pivotYProperty().bind(obsInt2);
         g3.getTransforms().add(rotation);
-        initialize(rotation);
+        initialize(rotation, game);
         Pane.getChildren().add(g3);
     }
-    public void initialize(Rotate rotation){
+    public void initialize(Rotate rotation, Game game){
+        int x = game.score;
+        x = x%7;
         animationT = new Timeline(
                 new KeyFrame(Duration.ZERO, new KeyValue(rotation.angleProperty(), 0)),
-                new KeyFrame(Duration.millis(10000), new KeyValue(rotation.angleProperty(), 360)));
+                new KeyFrame(Duration.millis(10000-x*1000), new KeyValue(rotation.angleProperty(), 360)));
         animationT.setCycleCount(Animation.INDEFINITE);
         animationT.play();
     }
-    public boolean isObstacleCrossed(Game game, Ball ball, AnchorPane Obstaclespane, Obstacles activeObstacle, Stage stage, boolean[] breking_bad, Text text4){
-        Bounds b1 = ball.circle.localToScene(ball.circle.getBoundsInLocal());
-        Bounds sq1 = ((Octa) activeObstacle).l0.localToScene(((Octa) activeObstacle).l0.getBoundsInLocal());
-        Bounds sq2 = ((Octa) activeObstacle).l5.localToScene(((Octa) activeObstacle).l5.getBoundsInLocal());
-        Bounds sq3 = ((Octa) activeObstacle).l2.localToScene(((Octa) activeObstacle).l2.getBoundsInLocal());
-        Bounds sq4 = ((Octa) activeObstacle).l6.localToScene(((Octa) activeObstacle).l6.getBoundsInLocal());
-        Bounds sq5 = ((Octa) activeObstacle).l3.localToScene(((Octa) activeObstacle).l3.getBoundsInLocal());
-        Bounds sq6 = ((Octa) activeObstacle).l4.localToScene(((Octa) activeObstacle).l4.getBoundsInLocal());
-        Bounds sq7 = ((Octa) activeObstacle).l1.localToScene(((Octa) activeObstacle).l1.getBoundsInLocal());
-        Bounds sq8 = ((Octa) activeObstacle).l7.localToScene(((Octa) activeObstacle).l7.getBoundsInLocal());
+    public boolean isObstacleCrossed(Game game, Octa activeObstacle, Ball ball, AnchorPane Obstaclespane, Stage stage, boolean[] breking_bad, Text text4) {
+
+        Shape s0 = Shape.intersect(ball.circle, l0);
+        Shape s1 = Shape.intersect(ball.circle ,l1);
+        Shape s2 = Shape.intersect(ball.circle, l2);
+        Shape s3 = Shape.intersect(ball.circle, l3);
+        Shape s4 = Shape.intersect(ball.circle, l4);
+        Shape s5 = Shape.intersect(ball.circle, l5);
+        Shape s6 = Shape.intersect(ball.circle, l6);
+        Shape s7 = Shape.intersect(ball.circle, l7);
+
+        boolean b1 = (s5.getBoundsInLocal().getWidth() == -1) && (s0.getBoundsInLocal().getWidth()==-1);
+        boolean b2 = (s2.getBoundsInLocal().getWidth() == -1) && (s6.getBoundsInLocal().getWidth()==-1);
+        boolean b3 = (s3.getBoundsInLocal().getWidth() == -1) && (s4.getBoundsInLocal().getWidth()==-1);
+        boolean b4 = (s1.getBoundsInLocal().getWidth() == -1) && (s7.getBoundsInLocal().getWidth()==-1);
+
         if (ball.color == 0) {
+            boolean k1 = b1;
+            boolean k2 = b2 && b3 && b4;
 
-            System.out.println(b1 + " " + sq1);
-            boolean k1 = b1.intersects(sq1) || b1.intersects(sq2);
-            boolean k2 = b1.intersects(sq3) || b1.intersects(sq4) || b1.intersects(sq5) ||b1.intersects(sq6) || b1.intersects(sq7)|| b1.intersects(sq8);
-            if (k1) {
-                text4.setText("Yayyy");
-            } else if (k2) {
-                text4.setText("Ohh");
+            if (!k1 && k2) {
+//                text4.setText("Yayyyyyyyyyyyyyyyyyyyyyyyyyy KESAR");
+            } else if (k2){
+//                text4.setText("Ohh");
                 return false;
             }
             else {
-                text4.setText("NA");
+//                text4.setText("NA");
             }
-        }
-        if (ball.color == 1) {
 
-            boolean k1 = b1.intersects(sq3) || b1.intersects(sq4);
-            boolean k2 = b1.intersects(sq1) || b1.intersects(sq2) || b1.intersects(sq5) ||b1.intersects(sq6) || b1.intersects(sq7)|| b1.intersects(sq8);
-            if (k1) {
-                text4.setText("Yayyy");
-            } else if (k2) {
-                text4.setText("Ohh");
+        }
+
+        else if(ball.color ==1)
+
+        {
+            boolean k1 = b2;
+            boolean k2 = b1 && b3 && b4;
+
+            if (!k1 && k2) {
+//                text4.setText("Yayyyyyyyyyyyyyyyyyyyyyyyyyyyyy");
+            } else if (k2){
+//                text4.setText("Ohh");
                 return false;
             }
             else {
-                text4.setText("NA");
+//                text4.setText("NA");
             }
         }
-        if (ball.color == 2) {
-            boolean k1 = b1.intersects(sq5) || b1.intersects(sq6);
-            boolean k2 = b1.intersects(sq1) || b1.intersects(sq2) || b1.intersects(sq3) ||b1.intersects(sq4) || b1.intersects(sq7)|| b1.intersects(sq8);
-            if (k1) {
-                text4.setText("Yayyy");
-            } else if (k2) {
-                text4.setText("Ohh");
+        else if(ball.color ==2)
+
+        {
+
+            boolean k1 = b3;
+            boolean k2 = b2 && b1 && b4;
+
+            if (!k1 && k2) {
+//                text4.setText("Yayyyyyyyyyyyyyyyyyyyyyy");
+            } else if (k2){
+//                text4.setText("Ohh");
                 return false;
             }
             else {
-                text4.setText("NA");
+//                text4.setText("NA");
             }
         }
-        if (ball.color == 3) {
-            boolean k1 = b1.intersects(sq7) || b1.intersects(sq8);
-            boolean k2 = b1.intersects(sq1) || b1.intersects(sq2) || b1.intersects(sq3) ||b1.intersects(sq4) || b1.intersects(sq5)|| b1.intersects(sq6);
-            if (k1) {
-                text4.setText("Yayyy");
-            } else if (k2) {
-                text4.setText("Ohh");
+        else
+
+        {
+            boolean k1 = b4;
+            boolean k2 = b2 && b3 && b1;
+
+            if (!k1 && k2) {
+//                text4.setText("Yayyyyyyyyyyyyyyyyyyyyyyyyyy");
+            } else if (k2){
+//                text4.setText("Ohh");
                 return false;
             }
             else {
-                text4.setText("NA");
+//                text4.setText("NA");
             }
+
         }
         return true;
-
     }
+
 }

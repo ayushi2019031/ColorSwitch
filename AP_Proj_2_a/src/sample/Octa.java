@@ -144,7 +144,7 @@ public class Octa implements Obstacles , Serializable {
         animationT.setCycleCount(Animation.INDEFINITE);
         animationT.play();
     }
-    public boolean isObstacleCrossed(Game game, Octa activeObstacle, Ball ball, AnchorPane Obstaclespane, Stage stage, boolean[] breking_bad, Text text4) {
+    public int isObstacleCrossed(Game game, Octa activeObstacle, Ball ball, AnchorPane Obstaclespane, Stage stage, boolean[] breking_bad, Text text4) {
 
         Shape s0 = Shape.intersect(ball.circle, l0);
         Shape s1 = Shape.intersect(ball.circle ,l1);
@@ -164,13 +164,13 @@ public class Octa implements Obstacles , Serializable {
             boolean k1 = b1;
             boolean k2 = b2 && b3 && b4;
 
-            if (!k1 && k2) {
+            if (!k1 && k2) {return 2;
 //                text4.setText("Yayyyyyyyyyyyyyyyyyyyyyyyyyy KESAR");
-            } else if (k2){
+            } else if (k2){return -1;
 //                text4.setText("Ohh");
-                return false;
+
             }
-            else {
+            else {return 0;
 //                text4.setText("NA");
             }
 
@@ -182,13 +182,13 @@ public class Octa implements Obstacles , Serializable {
             boolean k1 = b2;
             boolean k2 = b1 && b3 && b4;
 
-            if (!k1 && k2) {
+            if (!k1 && k2) {return 2;
 //                text4.setText("Yayyyyyyyyyyyyyyyyyyyyyyyyyyyyy");
-            } else if (k2){
+            } else if (k2){return -1;
 //                text4.setText("Ohh");
-                return false;
+
             }
-            else {
+            else {return 0;
 //                text4.setText("NA");
             }
         }
@@ -199,13 +199,12 @@ public class Octa implements Obstacles , Serializable {
             boolean k1 = b3;
             boolean k2 = b2 && b1 && b4;
 
-            if (!k1 && k2) {
+            if (!k1 && k2) {return 2;
 //                text4.setText("Yayyyyyyyyyyyyyyyyyyyyyy");
-            } else if (k2){
-//                text4.setText("Ohh");
-                return false;
+            } else if (k2){return -1;
+//
             }
-            else {
+            else {return 0;
 //                text4.setText("NA");
             }
         }
@@ -215,18 +214,18 @@ public class Octa implements Obstacles , Serializable {
             boolean k1 = b4;
             boolean k2 = b2 && b3 && b1;
 
-            if (!k1 && k2) {
+            if (!k1 && k2) {return 2;
 //                text4.setText("Yayyyyyyyyyyyyyyyyyyyyyyyyyy");
-            } else if (k2){
+            } else if (k2){return -1;
 //                text4.setText("Ohh");
-                return false;
+
             }
-            else {
+            else {return 0;
 //                text4.setText("NA");
             }
 
         }
-        return true;
+
     }
 
 }

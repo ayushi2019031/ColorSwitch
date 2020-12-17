@@ -1,6 +1,7 @@
 package sample;
 
 import javafx.application.Application;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
@@ -623,12 +624,19 @@ public class Main extends Application implements Serializable {
                 text4.setY(105);
                 Image imageDecline = new Image(getClass().getResourceAsStream("Home.png"), 50, 50, false, false);
                 listView.setPrefSize(500, 500);
+                listView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent mouseEvent) {
+                        System.out.println(listView.getSelectionModel().getSelectedItem());
+                    }
+                });
                 listView.setOrientation(Orientation.VERTICAL);
                 listView.setBorder(new Border(new BorderStroke(Color.WHITE,
                         BorderStrokeStyle.SOLID, new CornerRadii(2), BorderWidths.DEFAULT)));
                 listView.setStyle("-fx-background-color: #393f38;"+"-fx-font-size: 2em;");
                 listView.setLayoutY(140);
                 listView.setLayoutX(20);
+
 
                 pane.getChildren().add(listView);
                 Scene scene = new Scene(pane, 540, 650);

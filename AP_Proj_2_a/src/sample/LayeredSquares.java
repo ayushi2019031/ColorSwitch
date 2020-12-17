@@ -165,7 +165,7 @@ public class LayeredSquares implements Obstacles, Serializable {
 
 
     }
-    public boolean isObstacleCrossed(Game game, LayeredSquares activeObstacle, Ball ball, AnchorPane Obstaclespane, Stage stage, boolean[] breking_bad, Text text4) {
+    public int isObstacleCrossed(Game game, LayeredSquares activeObstacle, Ball ball, AnchorPane Obstaclespane, Stage stage, boolean[] breking_bad, Text text4) {
 
         Shape s1 = Shape.intersect(ball.circle ,l1);
         Shape s11 = Shape.intersect(ball.circle, line1);
@@ -181,13 +181,12 @@ public class LayeredSquares implements Obstacles, Serializable {
             boolean k2 = (s2.getBoundsInLocal().getWidth() == -1) && (s3.getBoundsInLocal().getWidth() == -1) && (s4.getBoundsInLocal().getWidth() == -1)
                     && (s22.getBoundsInLocal().getWidth() == -1) && (s33.getBoundsInLocal().getWidth() == -1) && (s44.getBoundsInLocal().getWidth() == -1);
 
-            if (!(k1||k11) && k2) {
+            if (!(k1||k11) && k2) {return 2;
 //                text4.setText("Yayyyyyyyyyyyyyyyyyyyyyyyyyyyy");
-            } else if (k2){
-//                text4.setText("Ohh");
-                return false;
+            } else if (k2){return -1;
+
             }
-            else {
+            else {return 0;
 //                text4.setText("NA");
             }
 
@@ -201,13 +200,13 @@ public class LayeredSquares implements Obstacles, Serializable {
             boolean k2 = (s1.getBoundsInLocal().getWidth() == -1) && (s3.getBoundsInLocal().getWidth() == -1) && (s4.getBoundsInLocal().getWidth() == -1)
                     && (s11.getBoundsInLocal().getWidth() == -1) && (s33.getBoundsInLocal().getWidth() == -1) && (s44.getBoundsInLocal().getWidth() == -1);
 
-            if (!(k1||k11) && k2) {
+            if (!(k1||k11) && k2) {return 2;
 //                text4.setText("Yayyyyyyyyyyyyyyyyyyyyy");
-            } else if (k2){
+            } else if (k2){return -1;
 //                text4.setText("Ohh");
-                return false;
+
             }
-            else {
+            else {return 0;
 //                text4.setText("NA");
             }
         }
@@ -219,13 +218,13 @@ public class LayeredSquares implements Obstacles, Serializable {
             boolean k2 = (s1.getBoundsInLocal().getWidth() == -1) && (s2.getBoundsInLocal().getWidth() == -1) && (s4.getBoundsInLocal().getWidth() == -1)
                     && (s11.getBoundsInLocal().getWidth() == -1) && (s22.getBoundsInLocal().getWidth() == -1) && (s44.getBoundsInLocal().getWidth() == -1);
 
-            if (!(k1||k11) && k2)  {
+            if (!(k1||k11) && k2)  {return 2;
 //                text4.setText("Yayyyyyyyyyyyyyyyyyyyyyy");
             } else if (k2){
 //                text4.setText("Ohh");
-                return false;
+                return -1;
             }
-            else {
+            else {return 0;
 //                text4.setText("NA");
             }
         }
@@ -237,17 +236,17 @@ public class LayeredSquares implements Obstacles, Serializable {
             boolean k2 = (s1.getBoundsInLocal().getWidth() == -1) && (s3.getBoundsInLocal().getWidth() == -1) && (s2.getBoundsInLocal().getWidth() == -1)
                     && (s11.getBoundsInLocal().getWidth() == -1) && (s33.getBoundsInLocal().getWidth() == -1) && (s22.getBoundsInLocal().getWidth() == -1);
 
-            if (!(k1||k11) && k2) {
+            if (!(k1||k11) && k2) {return 2;
 //                text4.setText("Yayyyyyyyyyyyyyyyyyyyy");
-            } else if (k2){
+            } else if (k2){return -1;
 //                text4.setText("Ohh");
-                return false;
+
             }
-            else {
+            else {return 0;
 //                text4.setText("NA");
             }
 
         }
-        return true;
+
     }
 }

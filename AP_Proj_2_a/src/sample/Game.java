@@ -362,7 +362,7 @@ public class Game implements Serializable {
                 }
             });
 
-            boolean[] peeps = {true};
+            int[] peeps = {0};
             animationTimer = new AnimationTimer() {
                 boolean m; boolean d = false;
                 Obstacles activeObstacle = null;
@@ -458,7 +458,7 @@ public class Game implements Serializable {
                     } else {
                         // for (AnchorPane panes_Obs: listOfObstaclesObject){panes_Obs.setLayoutY(panes_Obs.getLayoutY() -1);}
                         //    Obstaclespane.setLayoutY(Obstaclespane.getLayoutY() -1);
-                    //   ball.addVelocity(0, 800);
+                       ball.addVelocity(0, 800);
                         ball.update(elapsedTime);
 
                         pane.getChildren().remove(ball.circle);
@@ -481,18 +481,16 @@ public class Game implements Serializable {
                         peeps[0] = ((LayeredSquares) activeObstacle).isObstacleCrossed(Game.this,(LayeredSquares) activeObstacle,ball, Obstaclespane,  stage, breking_bad, text4);
                     } else if (activeObstacle instanceof Octa) {
                         peeps[0] = ((Octa) activeObstacle).isObstacleCrossed(Game.this,(Octa)activeObstacle, ball,  Obstaclespane, stage, breking_bad, text4);
-                    } else if (activeObstacle instanceof LayeredOcta) {
-                        peeps[0] = ((LayeredOcta) activeObstacle).isObstacleCrossed(Game.this,(LayeredOcta)activeObstacle, ball, Obstaclespane,  stage, breking_bad, text4);
                     }
 
-//                    if (!peeps[0]) {
-//                        try{
-//                            endGameMenu.initializeGame(stage);
-//                        }
-//                        catch (Exception e){
-//                            e.printStackTrace();
-//                        }
-//                    }
+                    if (peeps[0] == 2) {
+                        try{
+                            endGameMenu.initializeGame(stage); animationTimer.stop();                            return;
+                        }
+                        catch (Exception e){
+                            e.printStackTrace();
+                        }
+                    }
                     if (Math.abs(aj - (Obstaclespane.getLayoutY() + 350 + 20)) <= 20) {
 
                         Obstaclespane.getChildren().remove(starD);

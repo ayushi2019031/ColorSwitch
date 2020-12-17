@@ -198,7 +198,7 @@ static int id = 1;
 
     }
 
-    public boolean isObstacleCrossed(Game game, IntersectingCircle activeObstacle, Ball ball, AnchorPane Obstaclespane, Stage stage, boolean[] breking_bad, Text text4) {
+    public int isObstacleCrossed(Game game, IntersectingCircle activeObstacle, Ball ball, AnchorPane Obstaclespane, Stage stage, boolean[] breking_bad, Text text4) {
         Shape s1 = Shape.intersect(ball.circle, c1.arc2);
         Shape s2 = Shape.intersect(ball.circle, c1.arc3);
         Shape s3 = Shape.intersect(ball.circle, c1.arc4);
@@ -207,13 +207,13 @@ static int id = 1;
             boolean k1 = s1.getBoundsInLocal().getWidth() == -1;
             boolean k2 = (s2.getBoundsInLocal().getWidth() == -1) && (s3.getBoundsInLocal().getWidth() == -1) && (s4.getBoundsInLocal().getWidth() == -1);
 
-            if (!k1 && k2) {
+            if (!k1) {return 2;
 //                text4.setText("Yayyy");
-            } else if (k2){
+            } else if (k2){return -1;
 //                text4.setText("Ohh");
-                return false;
+
             }
-            else {
+            else {return 0;
 //                text4.setText("NA");
             }
 
@@ -225,13 +225,13 @@ static int id = 1;
             boolean k1 = s2.getBoundsInLocal().getWidth() == -1;
             boolean k2 = (s1.getBoundsInLocal().getWidth() == -1) && (s3.getBoundsInLocal().getWidth() == -1) && (s4.getBoundsInLocal().getWidth() == -1);
 
-            if (!k1 && k2) {
+            if (!k1) {return 2;
 //                text4.setText("Yayyy");
-            } else if (k2){
+            } else if (k2){return -1;
 //                text4.setText("Ohh");
-                return false;
+
             }
-            else {
+            else {return 0;
 //                text4.setText("NA");
             }
         }
@@ -242,13 +242,12 @@ static int id = 1;
             boolean k1 = s3.getBoundsInLocal().getWidth() == -1;
             boolean k2 = (s2.getBoundsInLocal().getWidth() == -1) && (s1.getBoundsInLocal().getWidth() == -1) && (s4.getBoundsInLocal().getWidth() == -1);
 
-            if (!k1 && k2) {
+            if (!k1 ) {return 2;
 //                text4.setText("Yayyy");
-            } else if (k2){
-//                text4.setText("Ohh");
-                return false;
+            } else if (k2){return -1;
+
             }
-            else {
+            else {return 0;
 //                text4.setText("NA");
             }
         }
@@ -258,17 +257,17 @@ static int id = 1;
             boolean k1 = s4.getBoundsInLocal().getWidth() == -1;
             boolean k2 = (s2.getBoundsInLocal().getWidth() == -1) && (s3.getBoundsInLocal().getWidth() == -1) && (s1.getBoundsInLocal().getWidth() == -1);
 
-            if (!k1 && k2) {
+            if (!k1) {return 2;
 //                text4.setText("Yayyy");
-            } else if (k2){
+            } else if (k2){return -1;
 //                text4.setText("Ohh");
-                return false;
+
             }
-            else {
+            else {return 0;
 //                text4.setText("NA");
             }
 
         }
-        return true;
+
     }
 }

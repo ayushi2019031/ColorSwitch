@@ -102,7 +102,7 @@ public class Circle_ implements Obstacles , Serializable {
 
     }
 
-    public boolean isObstacleCrossed(Game game, Circle_ activeObstacle, Ball ball, AnchorPane Obstaclespane, Stage stage, boolean[] breking_bad, Text text4) {
+    public int isObstacleCrossed(Game game, Circle_ activeObstacle, Ball ball, AnchorPane Obstaclespane, Stage stage, boolean[] breking_bad, Text text4) {
         Shape s1 = Shape.intersect(ball.circle ,arc2);
         Shape s2 = Shape.intersect(ball.circle, arc3);
         Shape s3 = Shape.intersect(ball.circle, arc4);
@@ -112,12 +112,14 @@ public class Circle_ implements Obstacles , Serializable {
             boolean k2 = (s2.getBoundsInLocal().getWidth() == -1) && (s3.getBoundsInLocal().getWidth() == -1) && (s4.getBoundsInLocal().getWidth() == -1);
 
             if (!k1 && k2) {
+                return 2;
 //                text4.setText("Yayyy");
             } else if (k2){
+                return -1;
 //                text4.setText("Ohh");
-                return false;
             }
             else {
+                return 0;
 //                text4.setText("NA");
             }
 
@@ -130,12 +132,15 @@ public class Circle_ implements Obstacles , Serializable {
             boolean k2 = (s1.getBoundsInLocal().getWidth() == -1) && (s3.getBoundsInLocal().getWidth() == -1) && (s4.getBoundsInLocal().getWidth() == -1);
 
             if (!k1 && k2) {
+                return 2;
 //                text4.setText("Yayyy");
             } else if (k2){
+                return -1;
 //                text4.setText("Ohh");
-                return false;
+
             }
             else {
+                return 0;
 //                text4.setText("NA");
             }
         }
@@ -146,12 +151,12 @@ public class Circle_ implements Obstacles , Serializable {
             boolean k2 = (s2.getBoundsInLocal().getWidth() == -1) && (s1.getBoundsInLocal().getWidth() == -1) && (s4.getBoundsInLocal().getWidth() == -1);
 
             if (!k1 && k2) {
+                return 2;
 //                text4.setText("Yayyy");
-            } else if (k2){
+            } else if (k2){ return -1;
 //                text4.setText("Ohh");
-                return false;
             }
-            else {
+            else { return 0;
 //                text4.setText("NA");
             }
         }
@@ -161,17 +166,16 @@ public class Circle_ implements Obstacles , Serializable {
             boolean k1 = s4.getBoundsInLocal().getWidth() == -1;
             boolean k2 = (s2.getBoundsInLocal().getWidth() == -1) && (s3.getBoundsInLocal().getWidth() == -1) && (s1.getBoundsInLocal().getWidth() == -1);
 
-            if (!k1 && k2) {
+            if (!k1 && k2) { return 2;
 //                text4.setText("Yayyy");
-            } else if (k2){
+            } else if (k2){ return -1;
 //                text4.setText("Ohh");
-                return false;
+
             }
-            else {
+            else { return 0;
 //                text4.setText("NA");
             }
 
         }
-        return true;
     }
 }

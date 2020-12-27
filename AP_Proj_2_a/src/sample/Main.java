@@ -1,16 +1,5 @@
 package sample;
 
-import javafx.application.Application;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
-import javafx.stage.Stage;
-import java.net.URL;
-
-import javafx.application.Application;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
-import javafx.stage.Stage;
 import javafx.animation.*;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -24,7 +13,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Arc;
 import javafx.scene.shape.ArcType;
@@ -44,46 +32,28 @@ import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-
-
-import java.io.*;
-import java.net.URL;
-import java.nio.file.DirectoryStream;
-import java.nio.file.Paths;
+import java.awt.*;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 
 public class Main extends Application implements Serializable {
-    public ArrayList<Game> list ;
+    public ArrayList<Game> list = new ArrayList<>();
+    public Game activeGame;
+    public ArrayList<Game> savedGamesList = new ArrayList<>();
+    ObservableList<Game> observableListSavedGames = FXCollections.observableArrayList(savedGamesList);
+    ListView<Game> listView = new ListView<Game>(observableListSavedGames);
+    Stage ori;
+    Stage primaryStage;
 
-    public ArrayList<Game> savedGamesList;
-    transient ObservableList<Game> observableListSavedGames;
-    transient ListView<Game> listView;
-    transient Stage ori;
-    transient Stage primaryStage;
 
 
 
-    public void music(){
-        String s = "C:/Users/ayush/IdeaProjects/AP_Proj_2_a/src/sample/music.mp3";
-        Media h = new Media(Paths.get(s).toUri().toString());
-        MediaPlayer mediaPlayer = new MediaPlayer(h);
-        mediaPlayer.setOnEndOfMedia(new Runnable() {
-            public void run() {
-                mediaPlayer.seek(Duration.ZERO);
-            }
-        });
-        mediaPlayer.play();
-    }
     @Override
     public void start(Stage primaryStage) throws Exception{
-        music();
-        list = new ArrayList<>();
-        savedGamesList = new ArrayList<>();
-        observableListSavedGames = FXCollections.observableArrayList(savedGamesList);
-        listView  = new ListView<>(observableListSavedGames);
         //Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
         Button btn = new Button("Aj");
         showGameMenu(primaryStage);
@@ -92,13 +62,6 @@ public class Main extends Application implements Serializable {
 
         primaryStage.setX(bounds.getMinX());
         primaryStage.setY(bounds.getMinY());
-        String url = System.getProperty("user.dir") + "\\src\\sample\\parapara.mp3";
-        File fi = new File(url);
-        String tmp = fi.getCanonicalPath();
-        tmp = tmp.replaceAll("\\\\", "/");
-
-//        final Media media = new Media("file:///" + System.getProperty("user.dir").replace('\\', '/') + "/" + "parapara.mp3");
-//        final MediaPlayer mediaPlayer = new MediaPlayer(media);
 
     }
     public void showGameMenu(Stage primaryStage) throws IOException{
@@ -520,26 +483,18 @@ public class Main extends Application implements Serializable {
 
         Image gear = new Image(getClass().getResourceAsStream("gear.png"), 50, 50, false, false);
         ImageView gear1 = new ImageView(gear);
-        RotateTransition rt1 = new RotateTransition(Duration.millis(2500), gear1);
+        gear1.setY(10);
+        gear1.setX(10);
+        RotateTransition rt1 = new RotateTransition(Duration.millis(3000), gear1);
         rt1.setByAngle(-360);
         rt1.setCycleCount(Animation.INDEFINITE);
         rt1.setInterpolator(Interpolator.LINEAR);
         rt1.play();
-        gear1.setY(10);
-        gear1.setX(10);
-//        InputStream resource = getClass().getResourceAsStream();
-        //System.out.println(resource);
-//        String url = System.getProperty("user.dir") + "\\src\\sample\\parapara.mp3";
-//        System.out.println(url);
-//        File f = new File(url);
-//        String documentBase = getHostServices().getDocumentBase();
-//        String trying =documentBase + "/" + "parapara.mp3";
-//        final Media media = new Media(f.toURI().toASCIIString());
-//        final MediaPlayer mediaPlayer = new MediaPlayer(media);
-//     //   mediaPlayer.play();
+
+
         pane.getChildren().add(infi);
         pane.getChildren().add(gear1);
-     //   pane.getChildren().add(mark1);
+        //   pane.getChildren().add(mark1);
         pane.getChildren().add(text2);
         pane.getChildren().add(text3);
         pane.getChildren().add(arc1122);
@@ -586,8 +541,6 @@ public class Main extends Application implements Serializable {
                 System.out.println("New Game Started");
                 try {
                     Game game = new Game(app);
-                    game.initializeGame();
-
                     ori.close();
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -624,19 +577,12 @@ public class Main extends Application implements Serializable {
                 text4.setY(105);
                 Image imageDecline = new Image(getClass().getResourceAsStream("Home.png"), 50, 50, false, false);
                 listView.setPrefSize(500, 500);
-                listView.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent mouseEvent) {
-                        System.out.println(listView.getSelectionModel().getSelectedItem());
-                    }
-                });
                 listView.setOrientation(Orientation.VERTICAL);
                 listView.setBorder(new Border(new BorderStroke(Color.WHITE,
                         BorderStrokeStyle.SOLID, new CornerRadii(2), BorderWidths.DEFAULT)));
                 listView.setStyle("-fx-background-color: #393f38;"+"-fx-font-size: 2em;");
                 listView.setLayoutY(140);
                 listView.setLayoutX(20);
-
 
                 pane.getChildren().add(listView);
                 Scene scene = new Scene(pane, 540, 650);
@@ -691,31 +637,5 @@ public class Main extends Application implements Serializable {
         animation.setCycleCount(Animation.INDEFINITE);
         animation.play();
     }
-//    public void deserialise(String filename) throws IOException, ClassNotFoundException {
-//        String ref  =  System.getProperty("user.dir") + "/" + filename;
-//        FileInputStream file = new FileInputStream(ref);
-//        ObjectInputStream in = new ObjectInputStream(file);
-//
-//        // Method for deserialization of object
-//        Game object1 = (Game) in.readObject();
-//        object1.initializeGame();
-//        in.close();
-//        file.close();
-//
-//        System.out.println("Object has been deserialized ");
-//        object1.initializeGame();
-//    }
-//    public void update() throws IOException, ClassNotFoundException {
-//        File u = new File(System.getProperty("user.dir"));
-//        File[] files = u.listFiles();
-//        for (int i = 0; i < files.length; i++){
-//            System.out.println(files[i].toString());
-//            String g = files[i].toString().substring(files[i].toString().lastIndexOf(".") + 1, files[i].toString().length());
-//            System.out.println(g);
-//            if (g.equals("txt")) {
-//                System.out.println(files[i].toString());
-//                deserialise(files[i].toString());
-//            }
-//        }
-//    }
+
 }

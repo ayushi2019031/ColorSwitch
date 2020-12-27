@@ -28,10 +28,6 @@ public class ColourSwitcher extends GameElements implements Serializable {
         // addToPane();
     }
     public void setScene(Scene scene, Pane pane, Stage stage){
-        Circle cir1  = new Circle();
-        Circle cir2 = new Circle();
-        Circle cir3= new Circle();
-        Line line = new Line();
         this.scene = scene;
         this.pane = pane;
         this.stage = stage;

@@ -26,16 +26,15 @@ import java.io.Serializable;
 
 public class EndGameMenu extends GameElements implements Serializable {
     Game game;
-
+    AnchorPane pane;
     public EndGameMenu() throws IOException {
+        pane  = new AnchorPane();
     }
 
     public void initializeGame(Stage s){
         try{
-            AnchorPane pane = new AnchorPane();
             //      s.close();
             //      Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
-
             System.out.println("Hello Ayushi ");
             Stage stage = new Stage();
             // stage.
@@ -55,7 +54,7 @@ public class EndGameMenu extends GameElements implements Serializable {
             pane.getChildren().add(btnExitGame);
             System.out.println("Hullo");
             pane.setStyle("-fx-background-color: #393f38;");
-     //       stage.setScene(new Scene(pane, 540, 650));
+            stage.setScene(new Scene(pane, 540, 650));
             stage.setResizable(false);
             //   Scene scene = new Scene(pane, 200, 200);
             //stage.setScene(scene);
@@ -311,7 +310,6 @@ public class EndGameMenu extends GameElements implements Serializable {
                 s1.close();
                 stage.close();
                 game.app.primaryStage.show();
-
             }
         });
     }
